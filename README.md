@@ -1,16 +1,16 @@
 # fiscaliza_recife
 
-A new Flutter project.
+Aplicativo Fiscaliza Recife
 
-## Getting Started
+Este aplicativo tem como objetivo facilitar o acesso e entendimento do conteúdo das bases de dados públicos abertos orçamentários da Prefeitura do Recife.
 
-This project is a starting point for a Flutter application.
+Desenvolvido para a disciplina de Fundamentos de Programação Aplicada (PPGIA/UFRPE)
 
-A few resources to get you started if this is your first Flutter project:
+Contato: menezesluiza1@gmail.com
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+Desenvolvido em Flutter (https://flutter.dev/) 
+
+Dados abertos em http://dados.recife.pe.gov.br/
+
