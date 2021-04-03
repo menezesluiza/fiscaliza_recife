@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import './drawer.dart';
 import './secionarAno.dart';
+import './grid.dart';
 
 void main() => runApp(const MyApp());
 
@@ -63,6 +64,12 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
               children: [
                 SelecionarAno(),
                 Text('Gráficos Despesas'),
+                Container(
+                  child: GridGraficos(),
+                  height: 500,
+                  width: 300,
+                  alignment: Alignment.center,
+                ),
               ],
             ),
           ),
@@ -71,6 +78,12 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
               children: [
                 SelecionarAno(),
                 Text('Gráficos Receitas'),
+                Container(
+                  child: GridGraficos(),
+                  height: 500,
+                  width: 300,
+                  alignment: Alignment.center,
+                )
               ],
             ),
           ),
