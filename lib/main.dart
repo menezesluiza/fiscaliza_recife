@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import './drawer.dart';
 import './secionarAno.dart';
@@ -12,10 +13,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: _title,
-      home: MyStatefulWidget(),
-    );
+    return MaterialApp(
+        title: _title,
+        home: MyStatefulWidget(),
+        theme: ThemeData(
+          primaryColor: Colors.lightBlue[900],
+          accentColor: Colors.orange[400],
+          fontFamily: 'Schyler',
+        ));
   }
 }
 
@@ -40,17 +45,16 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Fiscaliza Recife'),
-        backgroundColor: Colors.lightBlue[900],
+        title: Image.asset('images/FR_horizontal.png'),
         centerTitle: true,
         bottom: TabBar(
           controller: _tabController,
           tabs: const <Widget>[
             Tab(
-              child: Text('Despesas'),
+              child: Text('Despesas', style: TextStyle(fontSize: 18)),
             ),
             Tab(
-              child: Text('Receitas'),
+              child: Text('Receitas', style: TextStyle(fontSize: 18)),
             ),
           ],
         ),
@@ -58,33 +62,37 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget>
       drawer: Menu(),
       body: TabBarView(
         controller: _tabController,
-        children: <Widget>[
+        children: [
           Center(
-            child: Column(
-              children: [
-                SelecionarAno(),
-                Text('Gráficos Despesas'),
-                Container(
-                  child: GridGraficos(),
-                  height: 500,
-                  width: 300,
-                  alignment: Alignment.center,
-                ),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SelecionarAno(),
+                  //Text('Gráficos Despesas'),
+                  Container(
+                    child: GridGraficos(),
+                    height: 3000,
+                    width: double.maxFinite,
+                    alignment: Alignment.center,
+                  ),
+                ],
+              ),
             ),
           ),
           Center(
-            child: Column(
-              children: [
-                SelecionarAno(),
-                Text('Gráficos Receitas'),
-                Container(
-                  child: GridGraficos(),
-                  height: 500,
-                  width: 300,
-                  alignment: Alignment.center,
-                )
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SelecionarAno(),
+                  // Text('Gráficos Receitas'),
+                  Container(
+                    child: GridGraficos(),
+                    height: 3000,
+                    width: double.maxFinite,
+                    alignment: Alignment.center,
+                  )
+                ],
+              ),
             ),
           ),
         ],

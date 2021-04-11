@@ -1,4 +1,5 @@
-# Aplicativo Fiscaliza Recife
+
+# Fiscaliza Recife
 
 Desenvolvido para a disciplina de Fundamentos de Programação Aplicada (PPGIA/UFRPE)
 
@@ -15,6 +16,10 @@ Esse aplicativo é desenvolvido em Flutter/Dart, com suporte (até o momento) pa
 Todos os dados utilizados são fornecidos pela Prefeitura do Recife, pela iniciativa de dados abertos. 
 
 - [Dados Abertos Recife](http://dados.recife.pe.gov.br/)
+
+## Árvore de Widgets
+
+![Árvore de Widgets](https://github.com/menezesluiza/fiscaliza_recife/blob/master/widget_tree.png)
 
 
 ### Desenvolvido por: 

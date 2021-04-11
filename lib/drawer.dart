@@ -9,29 +9,32 @@ class Menu extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          DrawerHeader(
-            decoration: BoxDecoration(
-              color: Colors.lightBlue[900],
-            ),
-            child: Text(
-              'Opções:',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 24,
+          Container(
+            height: 100,
+            child: DrawerHeader(
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor,
+              ),
+              child: Text(
+                'Opções',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                ),
               ),
             ),
           ),
           ListTile(
             //leading: Icon(Icons.message),
-            title: Text('?'),
-          ),
-          ListTile(
-            //leading: Icon(Icons.account_circle),
             title: Text('Dados Abertos'),
           ),
           ListTile(
-            //leading: Icon(Icons.settings),
+            //leading: Icon(Icons.account_circle),
             title: Text('Sobre'),
+          ),
+          ListTile(
+            //leading: Icon(Icons.settings),
+            title: Text('Sair'),
           ),
         ],
       ),
