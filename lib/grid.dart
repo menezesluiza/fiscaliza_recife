@@ -12,8 +12,8 @@ class GridGraficos extends StatelessWidget {
       children: <Widget>[
         Container(
           padding: const EdgeInsets.all(8),
-          child: const Text('Grafico1'),
-          //child: Image.asset('images/FR_quadrado.png'),
+          //child: const Text('Grafico1'),
+          child: Image.asset('images/FR_quadrado.png'),
           color: Colors.orange[100],
         ),
         Container(
