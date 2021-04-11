@@ -21,6 +21,10 @@ Todos os dados utilizados são fornecidos pela Prefeitura do Recife, pela inicia
 
 ![Árvore de Widgets](https://github.com/menezesluiza/fiscaliza_recife/blob/master/images/arvore_widgets_V2.png)
 
+## Gráfico de Navegação
+
+![Gráfico de Navegação](https://github.com/menezesluiza/fiscaliza_recife/blob/master/images/grafico_navegacao.png)
+
 ### Desenvolvido por: 
 
 menezesluiza1@gmail.com
