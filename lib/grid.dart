@@ -1,3 +1,4 @@
+//import 'package:fiscaliza_recife/secionarAno.dart';
 import 'package:flutter/material.dart';
 
 class GridGraficos extends StatelessWidget {
@@ -10,15 +11,22 @@ class GridGraficos extends StatelessWidget {
       mainAxisSpacing: 10,
       crossAxisCount: 1,
       children: <Widget>[
-        Container(
-          padding: const EdgeInsets.all(8),
-          //child: const Text('Grafico1'),
-          child: Image.asset('images/FR_quadrado.png'),
-          color: Colors.orange[100],
+        Card(
+          elevation: 10,
+          //margin: EdgeInsets.all(8),
+          child: Container(
+            padding: const EdgeInsets.all(8),
+            //child: const Text('Grafico1'),
+            child: Image.asset('images/FR_quadrado.png'),
+            color: Colors.orange[100],
+          ),
         ),
-        Container(
-          padding: const EdgeInsets.all(8),
-          child: const Text('Grafico2'),
+        Card(
+          elevation: 10,
+          child: Container(
+            padding: const EdgeInsets.all(8),
+            child: const Text(''),
+          ),
           color: Colors.orange[200],
         ),
         Container(

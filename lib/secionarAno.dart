@@ -17,12 +17,15 @@ class _State extends State<SelecionarAno> {
       elevation: 20,
       dropdownColor: Colors.lightBlue[50],
       // isExpanded: true,
+
       style: TextStyle(color: Colors.blue[900]),
       onChanged: (String? newValue) {
         setState(() {
           dropdownValue = newValue!;
+          print(dropdownValue);
         });
       },
+
       items: anos.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,

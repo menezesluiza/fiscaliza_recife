@@ -16,7 +16,7 @@ class Menu extends StatelessWidget {
                 color: Theme.of(context).primaryColor,
               ),
               child: Text(
-                'Opções',
+                'Opções:',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,
@@ -25,16 +25,27 @@ class Menu extends StatelessWidget {
             ),
           ),
           ListTile(
-            //leading: Icon(Icons.message),
+            title: Text('Fiscaliza Recife'),
+            onTap: null,
+            subtitle: Text(
+              'Saiba mais sobre esse aplicativo',
+              style: TextStyle(color: Colors.grey[800]),
+            ),
+          ),
+          ListTile(
             title: Text('Dados Abertos'),
+            hoverColor: Colors.lightBlue[100],
+            onTap: null,
+            subtitle: Text(
+              'Saiba mais sobre dados abertos',
+              style: TextStyle(color: Colors.grey[800]),
+            ),
           ),
           ListTile(
-            //leading: Icon(Icons.account_circle),
-            title: Text('Sobre'),
-          ),
-          ListTile(
-            //leading: Icon(Icons.settings),
             title: Text('Sair'),
+            leading: Icon(Icons.exit_to_app),
+            onTap: null,
+            horizontalTitleGap: 0,
           ),
         ],
       ),
