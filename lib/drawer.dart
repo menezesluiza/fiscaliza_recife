@@ -15,7 +15,7 @@ class Menu extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Theme.of(context).primaryColor,
               ),
-              child: Text(
+              child: const Text(
                 'Opções:',
                 style: TextStyle(
                   color: Colors.white,
@@ -25,7 +25,7 @@ class Menu extends StatelessWidget {
             ),
           ),
           ListTile(
-            title: Text('Fiscaliza Recife'),
+            title: const Text('Fiscaliza Recife'),
             onTap: null,
             subtitle: Text(
               'Saiba mais sobre esse aplicativo',
@@ -33,7 +33,7 @@ class Menu extends StatelessWidget {
             ),
           ),
           ListTile(
-            title: Text('Dados Abertos'),
+            title: const Text('Dados Abertos'),
             hoverColor: Colors.lightBlue[100],
             onTap: null,
             subtitle: Text(
@@ -41,9 +41,9 @@ class Menu extends StatelessWidget {
               style: TextStyle(color: Colors.grey[800]),
             ),
           ),
-          ListTile(
-            title: Text('Sair'),
-            leading: Icon(Icons.exit_to_app),
+          const ListTile(
+            title: const Text('Sair'),
+            leading: const Icon(Icons.exit_to_app),
             onTap: null,
             horizontalTitleGap: 0,
           ),

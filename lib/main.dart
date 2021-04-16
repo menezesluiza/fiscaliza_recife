@@ -16,7 +16,6 @@ class FiscalizaRecife extends StatelessWidget {
         theme: ThemeData(
           primaryColor: Colors.lightBlue[900],
           accentColor: Colors.orange[400],
-          //fontFamily: 'Schyler',
         ));
   }
 }

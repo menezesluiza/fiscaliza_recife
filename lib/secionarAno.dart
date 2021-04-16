@@ -6,8 +6,12 @@ class SelecionarAno extends StatefulWidget {
 }
 
 class _State extends State<SelecionarAno> {
-  String dropdownValue = '2021';
+  //AnoSelecionado anoInicial = new AnoSelecionado.ano('2021');
+  //
 
+  //AnoSelecionado.ano(valor)
+  //
+  String dropdownValue = '2021';
   List<String> anos = ['2021', '2020', '2019', '2018', '2017'];
 
   @override
@@ -16,8 +20,6 @@ class _State extends State<SelecionarAno> {
       value: dropdownValue,
       elevation: 20,
       dropdownColor: Colors.lightBlue[50],
-      // isExpanded: true,
-
       style: TextStyle(color: Colors.blue[900]),
       onChanged: (String? newValue) {
         setState(() {
@@ -25,13 +27,22 @@ class _State extends State<SelecionarAno> {
           print(dropdownValue);
         });
       },
-
       items: anos.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
-          child: Text(value),
+          child: Center(child: Text(value)),
         );
       }).toList(),
     );
   }
+}
+
+class AnoSelecionado {
+  String ano = '2021';
+
+  AnoSelecionado.ano(String valor);
+
+  // String get anoBotao => this.ano;
+
+  // set anoBotao(String ano) => ano = this.ano;
 }

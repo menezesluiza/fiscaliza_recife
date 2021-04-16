@@ -1,8 +1,9 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import './drawer.dart';
-import './secionarAno.dart';
-import './grid.dart';
+//import './secionarAno.dart';
+import './gridDesp.dart';
+import './gridRec.dart';
 
 class TelaPrincipal extends StatefulWidget {
   const TelaPrincipal({Key? key}) : super(key: key);
@@ -21,6 +22,12 @@ class _TelaPrincipalState extends State<TelaPrincipal>
     _tabController = TabController(length: 2, vsync: this);
   }
 
+  String dropdownValueR = '2021';
+  List<String> anosR = ['2021', '2020', '2019', '2018', '2017'];
+
+  String dropdownValueD = '2021';
+  List<String> anosD = ['2021', '2020', '2019', '2018', '2017'];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,10 +38,10 @@ class _TelaPrincipalState extends State<TelaPrincipal>
           controller: _tabController,
           tabs: const <Widget>[
             Tab(
-              child: Text('Despesas', style: TextStyle(fontSize: 18)),
+              child: const Text('Despesas', style: TextStyle(fontSize: 18)),
             ),
             Tab(
-              child: Text('Receitas', style: TextStyle(fontSize: 18)),
+              child: const Text('Receitas', style: TextStyle(fontSize: 18)),
             ),
           ],
         ),
@@ -44,31 +51,102 @@ class _TelaPrincipalState extends State<TelaPrincipal>
         controller: _tabController,
         children: [
           Center(
+            //DESPESAS
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  SelecionarAno(),
-                  Container(
-                    child: GridGraficos(),
-                    height: 3000,
-                    width: double.maxFinite,
-                    alignment: Alignment.center,
+                  //SizedBox(
+                  //   height: 10,
+                  // ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          //padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                          decoration:
+                              BoxDecoration(color: Colors.lightBlue[50]),
+                          height: 50,
+                          child: Center(
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton<String>(
+                                value: dropdownValueD,
+                                elevation: 20,
+                                dropdownColor: Colors.lightBlue[50],
+                                style: TextStyle(color: Colors.blue[900]),
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    dropdownValueD = newValue!;
+                                  });
+                                },
+                                items: anosD.map<DropdownMenuItem<String>>(
+                                    (String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Center(child: Text(value)),
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                            //padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                            decoration:
+                                BoxDecoration(color: Colors.lightBlue[50]),
+                            height: 50,
+                            child: Center(
+                              child: Text(
+                                'Tipo dado',
+                              ),
+                            )),
+                      )
+                    ],
                   ),
+                  GridDesp(dropdownValueD: dropdownValueD),
                 ],
               ),
             ),
           ),
           Center(
+            //RECEITAS
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  SelecionarAno(),
-                  Container(
-                    child: GridGraficos(),
-                    height: 3000,
-                    width: double.maxFinite,
-                    alignment: Alignment.center,
-                  )
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          //padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                          decoration:
+                              BoxDecoration(color: Colors.lightBlue[50]),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton<String>(
+                              value: dropdownValueR,
+                              elevation: 20,
+                              dropdownColor: Colors.lightBlue[50],
+                              style: TextStyle(color: Colors.blue[900]),
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  dropdownValueR = newValue!;
+                                });
+                              },
+                              items: anosR.map<DropdownMenuItem<String>>(
+                                  (String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Center(child: Text(value)),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(child: Text('Tipo dado'))
+                    ],
+                  ),
+                  GridRec(dropdownValueR: dropdownValueR)
                 ],
               ),
             ),
