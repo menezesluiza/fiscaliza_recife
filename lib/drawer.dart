@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
+import './sobre.dart';
 
 class Menu extends StatelessWidget {
   Menu();
+
+  void _aboutScreen(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) {
+        return TelaSobre();
+      }),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +35,7 @@ class Menu extends StatelessWidget {
           ),
           ListTile(
             title: const Text('Fiscaliza Recife'),
-            onTap: null,
+            onTap: () => _aboutScreen(context),
             subtitle: Text(
               'Saiba mais sobre esse aplicativo',
               style: TextStyle(color: Colors.grey[800]),

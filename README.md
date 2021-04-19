@@ -1,8 +1,6 @@
 
 # Fiscaliza Recife
 
-Desenvolvido para a disciplina de Fundamentos de Programação Aplicada (PPGIA/UFRPE)
-
 Este aplicativo tem como objetivo facilitar o acesso e entendimento do conteúdo das bases de **dados abertos** orçamentários da **Prefeitura do Recife**.
 
 Aplicativo em construção, com atualizações constantes.
@@ -27,4 +25,6 @@ Todos os dados utilizados são fornecidos pela Prefeitura do Recife, pela inicia
 
 ### Desenvolvido por: 
 
-menezesluiza1@gmail.com
+Desenvolvido por Luíza Menezes para a disciplina de Fundamentos de Programação Aplicada (PPGIA/UFRPE)
+
+Contato: menezesluiza1@gmail.com

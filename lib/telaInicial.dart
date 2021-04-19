@@ -66,26 +66,24 @@ class _TelaPrincipalState extends State<TelaPrincipal>
                           decoration:
                               BoxDecoration(color: Colors.lightBlue[50]),
                           height: 50,
-                          child: Center(
-                            child: DropdownButtonHideUnderline(
-                              child: DropdownButton<String>(
-                                value: dropdownValueD,
-                                elevation: 20,
-                                dropdownColor: Colors.lightBlue[50],
-                                style: TextStyle(color: Colors.blue[900]),
-                                onChanged: (String? newValue) {
-                                  setState(() {
-                                    dropdownValueD = newValue!;
-                                  });
-                                },
-                                items: anosD.map<DropdownMenuItem<String>>(
-                                    (String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Center(child: Text(value)),
-                                  );
-                                }).toList(),
-                              ),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton<String>(
+                              value: dropdownValueD,
+                              elevation: 20,
+                              dropdownColor: Colors.lightBlue[50],
+                              style: TextStyle(color: Colors.blue[900]),
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  dropdownValueD = newValue!;
+                                });
+                              },
+                              items: anosD.map<DropdownMenuItem<String>>(
+                                  (String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Center(child: Text(value)),
+                                );
+                              }).toList(),
                             ),
                           ),
                         ),
@@ -143,7 +141,18 @@ class _TelaPrincipalState extends State<TelaPrincipal>
                           ),
                         ),
                       ),
-                      Expanded(child: Text('Tipo dado'))
+                      Expanded(
+                        child: Container(
+                            //padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                            decoration:
+                                BoxDecoration(color: Colors.lightBlue[50]),
+                            height: 50,
+                            child: Center(
+                              child: Text(
+                                'Tipo dado',
+                              ),
+                            )),
+                      )
                     ],
                   ),
                   GridRec(dropdownValueR: dropdownValueR)
