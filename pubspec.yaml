@@ -1,5 +1,5 @@
 name: fiscaliza_recife
-description: A new Flutter project.
+description: Este aplicativo tem como objetivo facilitar o acesso e entendimento do conteúdo das bases de dados abertos orçamentários da Prefeitura do Recife.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
@@ -25,13 +25,12 @@ dependencies:
     sdk: flutter
   provider: ^4.0.5
   intl: ^0.16.1
-  http: ^0.12.1
+  http: ^0.13.1
   
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   graphic: ^0.3.0
-  csv: ^5.0.0
 
 dev_dependencies:
   flutter_test:
@@ -52,7 +51,7 @@ flutter:
   assets:
     - images/FR_quadrado.png
     - images/FR_horizontal.png  
-    
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import './detalhesGrafico.dart';
 
-class GridRec extends StatelessWidget {
+class GridRec extends StatefulWidget {
   const GridRec({
     Key? key,
     required this.dropdownValueR,
@@ -9,12 +11,31 @@ class GridRec extends StatelessWidget {
 
   final String dropdownValueR;
 
+  @override
+  _GridRecState createState() => _GridRecState();
+}
+
+class _GridRecState extends State<GridRec> {
   void _chartScreen(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(builder: (_) {
-        return DetalhesGrafico(dropdownValueR);
+        return DetalhesGrafico(widget.dropdownValueR);
       }),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
+
+  final Uri _url = Uri.parse(
+      'https://fiscaliza-recife-default-rtdb.firebaseio.com/receitas/2021/0.json');
+
+  Future<void> loadData() async {
+    final response = await http.get(_url);
+    print(json.decode(response.body));
   }
 
   @override
@@ -36,13 +57,13 @@ class GridRec extends StatelessWidget {
               focusColor: Colors.pink,
               child: Container(
                 padding: const EdgeInsets.all(8),
-                child: Text('Gráfico receitas  $dropdownValueR'),
+                child: Text('Gráfico receitas  ${widget.dropdownValueR}'),
                 color: Colors.orange[100],
               ),
             ),
             Container(
               padding: const EdgeInsets.all(8),
-              child: Text('Gráfico receitas do ano $dropdownValueR'),
+              child: Text('Gráfico receitas do ano ${widget.dropdownValueR}'),
               color: Colors.orange[200],
             ),
             Container(

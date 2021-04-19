@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class DetalhesGrafico extends StatelessWidget {
-  @override
   final String ano;
 
   const DetalhesGrafico(this.ano);
