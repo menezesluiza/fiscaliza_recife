@@ -1,7 +1,7 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import './detalhesGrafico.dart';
+//import './Receitas.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class GridRec extends StatefulWidget {
   const GridRec({
@@ -27,15 +27,20 @@ class _GridRecState extends State<GridRec> {
   @override
   void initState() {
     super.initState();
-    loadData();
+    getData();
   }
 
-  final Uri _url = Uri.parse(
-      'https://fiscaliza-recife-default-rtdb.firebaseio.com/receitas/2021/0.json');
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  Future<void> loadData() async {
-    final response = await http.get(_url);
-    print(json.decode(response.body));
+  void getData() {
+    FirebaseFirestore.instance
+        .collection('receitas-2021')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        print(doc["orgao_nome"]);
+      });
+    });
   }
 
   @override
@@ -57,7 +62,7 @@ class _GridRecState extends State<GridRec> {
               focusColor: Colors.pink,
               child: Container(
                 padding: const EdgeInsets.all(8),
-                child: Text('Gráfico receitas  ${widget.dropdownValueR}'),
+                child: Text('Receita prevista:'),
                 color: Colors.orange[100],
               ),
             ),

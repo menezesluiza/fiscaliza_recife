@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class DetalhesGrafico extends StatelessWidget {
-  final String ano;
+  final String _ano;
 
-  const DetalhesGrafico(this.ano);
+  const DetalhesGrafico(this._ano);
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,7 +13,7 @@ class DetalhesGrafico extends StatelessWidget {
         toolbarHeight: 80,
       ),
       body: Center(
-        child: Text('Detalhes Gráfico $ano'),
+        child: Text('Detalhes Gráfico $_ano'),
       ),
     );
   }

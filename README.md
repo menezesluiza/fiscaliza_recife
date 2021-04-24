@@ -25,6 +25,6 @@ Todos os dados utilizados são fornecidos pela Prefeitura do Recife, pela inicia
 
 ### Desenvolvido por: 
 
-Desenvolvido por Luíza Menezes para a disciplina de Fundamentos de Programação Aplicada (PPGIA/UFRPE)
+Desenvolvido por Luíza Menezes para a disciplina Fundamentos de Programação Aplicada (PPGIA/UFRPE)
 
 Contato: menezesluiza1@gmail.com

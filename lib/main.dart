@@ -1,7 +1,12 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import './telaInicial.dart';
 
-void main() => runApp(const FiscalizaRecife());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(const FiscalizaRecife());
+}
 
 class FiscalizaRecife extends StatelessWidget {
   const FiscalizaRecife({Key? key}) : super(key: key);
