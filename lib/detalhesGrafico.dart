@@ -18,3 +18,11 @@ class DetalhesGrafico extends StatelessWidget {
     );
   }
 }
+/*
+void _chartScreen(BuildContext context) {
+  Navigator.of(context).push(
+    MaterialPageRoute(builder: (_) {
+      return DetalhesGrafico(widget.dropdownValueR);
+    }),
+  );
+}*/

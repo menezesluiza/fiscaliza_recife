@@ -4,6 +4,7 @@ import './drawer.dart';
 //import './secionarAno.dart';
 import './gridDesp.dart';
 import './gridRec.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TelaPrincipal extends StatefulWidget {
   const TelaPrincipal({Key? key}) : super(key: key);
@@ -20,6 +21,7 @@ class _TelaPrincipalState extends State<TelaPrincipal>
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    _loadOrgaosR();
   }
 
   String dropdownValueR = '2021';
@@ -27,6 +29,25 @@ class _TelaPrincipalState extends State<TelaPrincipal>
 
   String dropdownValueD = '2021';
   List<String> anosD = ['2021', '2020', '2019', '2018', '2017'];
+
+  String orgaoR = 'TODOS';
+  List<String> orgaosR = [];
+
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  void _loadOrgaosR() async {
+    String _anoOrgao = 'orgaos-' + dropdownValueR;
+    await FirebaseFirestore.instance
+        .collection(_anoOrgao)
+        .orderBy('id')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        orgaosR.add(doc['nome']);
+      });
+    });
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +155,11 @@ class _TelaPrincipalState extends State<TelaPrincipal>
                                   (String value) {
                                 return DropdownMenuItem<String>(
                                   value: value,
-                                  child: Center(child: Text(value)),
+                                  child: Center(
+                                      child: Text(
+                                    value,
+                                    style: TextStyle(fontSize: 15),
+                                  )),
                                 );
                               }).toList(),
                             ),
@@ -142,20 +167,40 @@ class _TelaPrincipalState extends State<TelaPrincipal>
                         ),
                       ),
                       Expanded(
+                        //BOTAO ORGAOS
                         child: Container(
-                            //padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                            decoration:
-                                BoxDecoration(color: Colors.lightBlue[50]),
-                            height: 50,
-                            child: Center(
-                              child: Text(
-                                'Tipo dado',
-                              ),
-                            )),
+                          //padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                          decoration:
+                              BoxDecoration(color: Colors.lightBlue[50]),
+                          height: 50,
+                          //width: double.maxFinite,
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton<String>(
+                              value: orgaoR,
+                              elevation: 20,
+                              isExpanded: true,
+                              dropdownColor: Colors.lightBlue[50],
+                              style: TextStyle(color: Colors.blue[900]),
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  orgaoR = newValue!;
+                                });
+                              },
+                              items: orgaosR.map<DropdownMenuItem<String>>(
+                                  (String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value,
+                                      style: TextStyle(fontSize: 12)),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        ),
                       )
                     ],
                   ),
-                  GridRec(dropdownValueR: dropdownValueR)
+                  GridRec(dropdownValueR: dropdownValueR, orgaoR: orgaoR)
                 ],
               ),
             ),
