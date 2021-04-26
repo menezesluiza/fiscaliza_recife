@@ -27,9 +27,11 @@ class _ChartRecPrevArrecState extends State<ChartRecPrevArrec> {
   @override
   Widget build(BuildContext context) {
     List<charts.Series<ChartRecPrevArrecData, String>> _seriesData = [];
-    var data = [
-      new ChartRecPrevArrecData('PREVISTA', widget.recPrev, Colors.red),
-      new ChartRecPrevArrecData('ARRECADADA', widget.recArrec, Colors.yellow),
+    var _data = [
+      new ChartRecPrevArrecData(
+          'PREVISTA', widget.recPrev, Colors.lightBlue[300]),
+      new ChartRecPrevArrecData(
+          'ARRECADADA', widget.recArrec, Colors.lightBlue[800]),
     ];
 
     _seriesData.add(
@@ -37,11 +39,12 @@ class _ChartRecPrevArrecState extends State<ChartRecPrevArrec> {
           domainFn: (ChartRecPrevArrecData rec, _) => rec.tipo,
           measureFn: (ChartRecPrevArrecData rec, _) => rec.valor,
           id: 'Receitas',
-          data: data,
+          data: _data,
           fillPatternFn: (_, __) => charts.FillPatternType.forwardHatch,
           fillColorFn: (ChartRecPrevArrecData rec, _) =>
-              charts.ColorUtil.fromDartColor(Colors.blue)),
+              charts.ColorUtil.fromDartColor(rec.colorval)),
     );
+
     return Container(
       padding: const EdgeInsets.all(8),
       //child: Text('Gráfico receitas do ano ${widget.dropdownValueR}'),
@@ -54,8 +57,8 @@ class _ChartRecPrevArrecState extends State<ChartRecPrevArrec> {
               child: charts.BarChart(
             _seriesData,
             animate: true,
-            barGroupingType: charts.BarGroupingType.grouped,
-            animationDuration: Duration(seconds: 2),
+            //barGroupingType: charts.BarGroupingType.grouped,
+            animationDuration: Duration(seconds: 1),
           ))
         ],
       ),

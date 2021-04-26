@@ -1,4 +1,5 @@
 // @dart=2.9
+import 'package:fiscaliza_recife/chartRecMensal.dart';
 import 'package:fiscaliza_recife/chartRecPrecArrec.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -32,6 +33,15 @@ class _GridRecState extends State<GridRec> {
   double recArrec = 0;
   double recPrev = 0;
 
+  double recArrecJan = 0;
+  double recPrevJan = 0;
+  double recArrecFev = 0;
+  double recPrevFev = 0;
+  double recArrecMar = 0;
+  double recPrevMar = 0;
+  double recArrecAbr = 0;
+  double recPrevAbr = 0;
+
   void getData() async {
     String _ano = 'receitas-' + widget.dropdownValueR;
     String _orgao = widget.orgaoR;
@@ -47,6 +57,32 @@ class _GridRecState extends State<GridRec> {
               .replaceAll(",", "."));
           recArrec += double.parse(
               doc['receita_arrecadada'].toString().replaceAll(",", "."));
+          //MENSAL
+          if (doc['mes'] == 1) {
+            recPrevJan += double.parse(doc['receita_prevista_atualizada']
+                .toString()
+                .replaceAll(",", "."));
+            recArrecJan += double.parse(
+                doc['receita_arrecadada'].toString().replaceAll(",", "."));
+          } else if (doc['mes'] == 2) {
+            recPrevFev += double.parse(doc['receita_prevista_atualizada']
+                .toString()
+                .replaceAll(",", "."));
+            recArrecFev += double.parse(
+                doc['receita_arrecadada'].toString().replaceAll(",", "."));
+          } else if (doc['mes'] == 3) {
+            recPrevMar += double.parse(doc['receita_prevista_atualizada']
+                .toString()
+                .replaceAll(",", "."));
+            recArrecMar += double.parse(
+                doc['receita_arrecadada'].toString().replaceAll(",", "."));
+          } else if (doc['mes'] == 4) {
+            recPrevAbr += double.parse(doc['receita_prevista_atualizada']
+                .toString()
+                .replaceAll(",", "."));
+            recArrecAbr += double.parse(
+                doc['receita_arrecadada'].toString().replaceAll(",", "."));
+          }
         });
       });
     } else {
@@ -61,6 +97,20 @@ class _GridRecState extends State<GridRec> {
               .replaceAll(",", "."));
           recArrec += double.parse(
               doc['receita_arrecadada'].toString().replaceAll(",", "."));
+          //MENSAL
+          if (doc['mes'] == 1) {
+            recArrecJan += double.parse(
+                doc['receita_arrecadada'].toString().replaceAll(",", "."));
+          } else if (doc['mes'] == 2) {
+            recArrecFev += double.parse(
+                doc['receita_arrecadada'].toString().replaceAll(",", "."));
+          } else if (doc['mes'] == 3) {
+            recArrecMar += double.parse(
+                doc['receita_arrecadada'].toString().replaceAll(",", "."));
+          } else if (doc['mes'] == 4) {
+            recArrecAbr += double.parse(
+                doc['receita_arrecadada'].toString().replaceAll(",", "."));
+          }
         });
       });
     }
@@ -82,19 +132,21 @@ class _GridRecState extends State<GridRec> {
           crossAxisCount: 1,
           children: <Widget>[
             ChartRecPrevArrec(real: real, recPrev: recPrev, recArrec: recArrec),
+            ChartRecPrevMensal(
+              real: real,
+              recArrecJan: recArrecJan,
+              recArrecFev: recArrecFev,
+              recArrecMar: recArrecMar,
+              recArrecAbr: recArrecAbr,
+            ),
             InkWell(
               onTap: null,
               child: Container(
                 padding: const EdgeInsets.all(8),
                 child: Text(
                     'Receita Arrecadada pelo ${widget.orgaoR} ${real.format(recArrec)} em ${widget.dropdownValueR}'),
-                color: Colors.orange[50],
+                color: Colors.orange[200],
               ),
-            ),
-            Container(
-              padding: const EdgeInsets.all(8),
-              child: const Text(''),
-              color: Colors.orange[300],
             ),
             Container(
               padding: const EdgeInsets.all(8),
@@ -104,12 +156,12 @@ class _GridRecState extends State<GridRec> {
             Container(
               padding: const EdgeInsets.all(8),
               child: const Text('Grafico fonte_origem_receita_nome '),
-              color: Colors.orange[500],
+              color: Colors.orange[300],
             ),
             Container(
               padding: const EdgeInsets.all(8),
               child: const Text('Grafico 6'),
-              color: Colors.orange[600],
+              color: Colors.orange[300],
             ),
           ],
         ));
