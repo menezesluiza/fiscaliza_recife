@@ -27,6 +27,7 @@ class _ChartRecPrevArrecState extends State<ChartRecPrevArrec> {
   @override
   Widget build(BuildContext context) {
     List<charts.Series<ChartRecPrevArrecData, String>> _seriesData = [];
+
     var _data = [
       new ChartRecPrevArrecData(
           'PREVISTA', widget.recPrev, Colors.lightBlue[300]),
@@ -52,7 +53,7 @@ class _ChartRecPrevArrecState extends State<ChartRecPrevArrec> {
         children: [
           Text(
               //'Receita prevista ${widget.real.format(widget.recPrev)} x arrecadada ${widget.real.format(widget.recArrec)}'
-              'Receita Prevista x Arrecadada '),
+              'Receita Prevista x Arrecadada'),
           Expanded(
               child: charts.BarChart(
             _seriesData,
