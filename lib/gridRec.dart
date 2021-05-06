@@ -68,7 +68,7 @@ class _GridRecState extends State<GridRec> {
     String _ano = 'receitas-' + widget.dropdownValueR;
     String _orgao = widget.orgaoR;
     //List<String> _dados = [];
-    if (widget.orgaoR == 'TODOS') {
+    if (widget.orgaoR == 'TODOS OS ÓRGÃOS') {
       await FirebaseFirestore.instance
           .collection(_ano)
           .get()
@@ -288,7 +288,7 @@ class _GridRecState extends State<GridRec> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 3000,
+      height: 2000,
       width: double.maxFinite,
       alignment: Alignment.center,
       child: GridView.count(

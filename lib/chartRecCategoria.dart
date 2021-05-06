@@ -27,14 +27,20 @@ class _ChartRecCategoriaState extends State<ChartRecCategoria> {
   Widget build(BuildContext context) {
     List<charts.Series<ChartRecCategoriaData, String>> _seriesData = [];
 
-    var _data = [
-      new ChartRecCategoriaData(
-          'CORRENTE', widget.recCorrente / 1000000, Colors.lightBlue[300]),
-      new ChartRecCategoriaData(
-          'CAPITAL', widget.recCapital / 1000000, Colors.lightBlue[500]),
-      new ChartRecCategoriaData('CORRENTES INTRAORÇAMENTÁRIAS',
-          widget.recCorrenteInfra / 1000000, Colors.lightBlue[800]),
-    ];
+    List<ChartRecCategoriaData> _data = [];
+
+    if (widget.recCorrente > 0) {
+      _data.add(new ChartRecCategoriaData(
+          'CORRENTE', widget.recCorrente, Colors.lightBlue[300]));
+    }
+    if (widget.recCapital > 0) {
+      _data.add(new ChartRecCategoriaData(
+          'CAPITAL', widget.recCapital, Colors.lightBlue[500]));
+    }
+    if (widget.recCorrenteInfra > 0) {
+      _data.add(new ChartRecCategoriaData('CORRENTES INTRAORÇAMENTÁRIAS',
+          widget.recCorrenteInfra, Colors.lightBlue[800]));
+    }
 
     _seriesData.add(
       charts.Series(
@@ -66,14 +72,13 @@ class _ChartRecCategoriaState extends State<ChartRecCategoria> {
                     desiredMaxRows: 2,
                     cellPadding: new EdgeInsets.only(right: 4.0, bottom: 4.0),
                     entryTextStyle: charts.TextStyleSpec(
-                        color: charts.MaterialPalette.blue.shadeDefault,
-                        fontSize: 11))
+                        color: charts.MaterialPalette.black, fontSize: 11))
               ],
               defaultRenderer: new charts.ArcRendererConfig(
                   arcWidth: 200,
                   arcRendererDecorators: [
                     new charts.ArcLabelDecorator(
-                        labelPosition: charts.ArcLabelPosition.auto),
+                        labelPosition: charts.ArcLabelPosition.inside),
                   ]),
             ),
           )

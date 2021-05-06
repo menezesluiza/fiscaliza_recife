@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
 class ChartRecOrigem extends StatefulWidget {
-  const ChartRecOrigem({
+  ChartRecOrigem({
     Key key,
     this.transfCorr,
     this.impostos,
@@ -18,17 +18,17 @@ class ChartRecOrigem extends StatefulWidget {
     this.amort,
   }) : super(key: key);
 
-  final double transfCorr;
-  final double impostos;
-  final double outrasCred;
-  final double opCredito;
-  final double outrasCap;
-  final double recPatri;
-  final double recServ;
-  final double transfCap;
-  final double contri;
-  final double alien;
-  final double amort;
+  double transfCorr;
+  double impostos;
+  double outrasCred;
+  double opCredito;
+  double outrasCap;
+  double recPatri;
+  double recServ;
+  double transfCap;
+  double contri;
+  double alien;
+  double amort;
 
   @override
   _ChartRecOrigemState createState() => _ChartRecOrigemState();
@@ -43,30 +43,68 @@ class _ChartRecOrigemState extends State<ChartRecOrigem> {
   Widget build(BuildContext context) {
     List<charts.Series<ChartRecOrigemData, String>> _seriesData = [];
 
-    var _data = [
-      new ChartRecOrigemData(
-          'TRANSF CORRENTES', widget.transfCorr / 1000000, Colors.blue[300]),
-      new ChartRecOrigemData(
-          'IMPOSTOS E TAXAS', widget.impostos / 1000000, Colors.blue[500]),
-      new ChartRecOrigemData(
-          'RECEITAS CORRENTES', widget.outrasCred / 1000000, Colors.blue[800]),
-      new ChartRecOrigemData('OPERAÇÕES DE CRÉDITO', widget.opCredito / 1000000,
-          Colors.green[300]),
-      new ChartRecOrigemData(
-          'RECEITAS DE CAPITAL', widget.outrasCap / 1000000, Colors.green[500]),
-      new ChartRecOrigemData(
-          'RECEITA PATRIMONIAL', widget.recPatri / 1000000, Colors.green[800]),
-      new ChartRecOrigemData(
-          'RECEITA DE SERVIÇOS', widget.recServ / 1000000, Colors.yellow[300]),
-      new ChartRecOrigemData(
-          'TRANSF DE CAPITAL', widget.transfCap / 1000000, Colors.yellow[500]),
-      new ChartRecOrigemData(
-          'CONTRIBUIÇÕES', widget.contri / 1000000, Colors.yellow[800]),
-      new ChartRecOrigemData(
-          'ALIENAÇÃO DE BENS', widget.alien / 1000000, Colors.indigo[300]),
-      new ChartRecOrigemData('AMORTIZAÇÃO EMPRÉSTIMOS', widget.amort / 1000000,
-          Colors.indigo[500]),
-    ];
+    List<ChartRecOrigemData> _data = [];
+
+    if (widget.transfCorr > 0) {
+      _data.add(new ChartRecOrigemData(
+          'TRANSF CORRENTES', widget.transfCorr, Colors.blue[300]));
+    }
+    if (widget.impostos > 0) {
+      _data.add(new ChartRecOrigemData(
+          'IMPOSTOS E TAXAS', widget.impostos, Colors.blue[300]));
+    }
+    if (widget.outrasCred > 0) {
+      _data.add(new ChartRecOrigemData(
+          'RECEITAS CORRENTES', widget.outrasCred, Colors.blue[800]));
+    }
+    if (widget.opCredito > 0) {
+      _data.add(
+        new ChartRecOrigemData(
+            'OPERAÇÕES DE CRÉDITO', widget.opCredito, Colors.green[300]),
+      );
+    }
+    if (widget.outrasCap > 0) {
+      _data.add(
+        new ChartRecOrigemData(
+            'RECEITAS DE CAPITAL', widget.outrasCap, Colors.green[500]),
+      );
+    }
+    if (widget.recPatri > 0) {
+      _data.add(
+        new ChartRecOrigemData(
+            'RECEITA PATRIMONIAL', widget.recPatri, Colors.green[800]),
+      );
+    }
+    if (widget.recServ > 0) {
+      _data.add(
+        new ChartRecOrigemData(
+            'RECEITA DE SERVIÇOS', widget.recServ, Colors.yellow[300]),
+      );
+    }
+    if (widget.transfCap > 0) {
+      _data.add(
+        new ChartRecOrigemData(
+            'TRANSF DE CAPITAL', widget.transfCap, Colors.yellow[500]),
+      );
+    }
+    if (widget.contri > 0) {
+      _data.add(
+        new ChartRecOrigemData(
+            'CONTRIBUIÇÕES', widget.contri, Colors.yellow[800]),
+      );
+    }
+    if (widget.alien > 0) {
+      _data.add(
+        new ChartRecOrigemData(
+            'ALIENAÇÃO DE BENS', widget.alien, Colors.indigo[300]),
+      );
+    }
+    if (widget.amort > 0) {
+      _data.add(
+        new ChartRecOrigemData(
+            'AMORTIZAÇÃO EMPRÉSTIMOS', widget.amort, Colors.indigo[500]),
+      );
+    }
 
     _seriesData.add(
       charts.Series(
@@ -104,7 +142,7 @@ class _ChartRecOrigemState extends State<ChartRecOrigem> {
                   arcWidth: 200,
                   arcRendererDecorators: [
                     new charts.ArcLabelDecorator(
-                        labelPosition: charts.ArcLabelPosition.auto),
+                        labelPosition: charts.ArcLabelPosition.inside),
                   ]),
             ),
           )

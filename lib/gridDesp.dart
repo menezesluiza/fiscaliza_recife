@@ -16,7 +16,7 @@ class GridDesp extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
-        crossAxisCount: 1,
+        crossAxisCount: 2,
         children: <Widget>[
           Card(
             elevation: 10,

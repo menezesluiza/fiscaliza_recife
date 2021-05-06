@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import './drawer.dart';
 //import './secionarAno.dart';
 import './gridDesp.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import './gridRec.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -30,7 +31,7 @@ class _TelaPrincipalState extends State<TelaPrincipal>
   String dropdownValueD = '2021';
   List<String> anosD = ['2021', '2020', '2019', '2018', '2017'];
 
-  String orgaoR = 'TODOS';
+  String orgaoR = 'TODOS OS ÓRGÃOS';
   List<String> orgaosR = [];
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -76,9 +77,6 @@ class _TelaPrincipalState extends State<TelaPrincipal>
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  //SizedBox(
-                  //   height: 10,
-                  // ),
                   Row(
                     children: [
                       Expanded(
@@ -133,18 +131,20 @@ class _TelaPrincipalState extends State<TelaPrincipal>
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          //padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                  Container(
+                    child: Row(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
                           decoration:
-                              BoxDecoration(color: Colors.lightBlue[50]),
+                              BoxDecoration(color: Colors.lightBlue[200]),
+                          padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
                           child: DropdownButtonHideUnderline(
                             child: DropdownButton<String>(
                               value: dropdownValueR,
-                              elevation: 20,
-                              dropdownColor: Colors.lightBlue[50],
+                              elevation: 8,
+                              icon: Icon(Icons.arrow_drop_down_rounded),
+                              dropdownColor: Colors.lightBlue[200],
                               style: TextStyle(color: Colors.blue[900]),
                               onChanged: (String? newValue) {
                                 setState(() {
@@ -158,47 +158,45 @@ class _TelaPrincipalState extends State<TelaPrincipal>
                                   child: Center(
                                       child: Text(
                                     value,
-                                    style: TextStyle(fontSize: 15),
+                                    style: TextStyle(fontSize: 14),
                                   )),
                                 );
                               }).toList(),
                             ),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        //BOTAO ORGAOS
-                        child: Container(
-                          //padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                          decoration:
-                              BoxDecoration(color: Colors.lightBlue[50]),
-                          height: 50,
-                          //width: double.maxFinite,
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton<String>(
-                              value: orgaoR,
-                              elevation: 20,
-                              isExpanded: true,
-                              dropdownColor: Colors.lightBlue[50],
-                              style: TextStyle(color: Colors.blue[900]),
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  orgaoR = newValue!;
-                                });
-                              },
-                              items: orgaosR.map<DropdownMenuItem<String>>(
-                                  (String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value,
-                                      style: TextStyle(fontSize: 12)),
-                                );
-                              }).toList(),
+                        Expanded(
+                          child: Container(
+                            margin: EdgeInsets.fromLTRB(0, 10, 10, 5),
+                            decoration:
+                                BoxDecoration(color: Colors.lightBlue[200]),
+                            padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton<String>(
+                                value: orgaoR,
+                                elevation: 8,
+                                isExpanded: true,
+                                dropdownColor: Colors.lightBlue[50],
+                                style: TextStyle(color: Colors.blue[900]),
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    orgaoR = newValue!;
+                                  });
+                                },
+                                items: orgaosR.map<DropdownMenuItem<String>>(
+                                    (String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value,
+                                        style: TextStyle(fontSize: 14)),
+                                  );
+                                }).toList(),
+                              ),
                             ),
                           ),
-                        ),
-                      )
-                    ],
+                        )
+                      ],
+                    ),
                   ),
                   GridRec(dropdownValueR: dropdownValueR, orgaoR: orgaoR)
                 ],
