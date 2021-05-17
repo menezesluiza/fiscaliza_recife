@@ -11,6 +11,10 @@ class GridDesp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+      height: 565,
+      width: double.maxFinite,
+      alignment: Alignment.center,
       child: GridView.count(
         primary: false,
         padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
@@ -58,9 +62,6 @@ class GridDesp extends StatelessWidget {
           ),
         ],
       ),
-      height: 3000,
-      width: double.maxFinite,
-      alignment: Alignment.center,
     );
   }
 }

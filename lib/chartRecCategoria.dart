@@ -56,9 +56,11 @@ class _ChartRecCategoriaState extends State<ChartRecCategoria> {
 
     return Container(
       padding: const EdgeInsets.all(8),
+      height: 350,
+      margin: EdgeInsets.fromLTRB(10, 5, 10, 5),
+      color: Colors.white,
       child: Column(
         children: [
-          Text('Receita Arrecadada por Categoria'),
           Expanded(
             child: charts.PieChart(
               _seriesData,
@@ -75,16 +77,16 @@ class _ChartRecCategoriaState extends State<ChartRecCategoria> {
                         color: charts.MaterialPalette.black, fontSize: 11))
               ],
               defaultRenderer: new charts.ArcRendererConfig(
-                  arcWidth: 200,
-                  arcRendererDecorators: [
-                    new charts.ArcLabelDecorator(
-                        labelPosition: charts.ArcLabelPosition.inside),
-                  ]),
+                arcWidth: 200,
+                //arcRendererDecorators: [
+                //new charts.ArcLabelDecorator(
+                //labelPosition: charts.ArcLabelPosition.inside),
+                //],
+              ),
             ),
           )
         ],
       ),
-      color: Colors.orange[100],
     );
   }
 }

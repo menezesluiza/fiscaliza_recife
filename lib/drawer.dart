@@ -19,7 +19,7 @@ class Menu extends StatelessWidget {
       child: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
-          children: <Widget>[
+          children: [
             Container(
               height: 200,
               child: DrawerHeader(

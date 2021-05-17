@@ -51,7 +51,7 @@ class _ChartRecOrigemState extends State<ChartRecOrigem> {
     }
     if (widget.impostos > 0) {
       _data.add(new ChartRecOrigemData(
-          'IMPOSTOS E TAXAS', widget.impostos, Colors.blue[300]));
+          'IMPOSTOS E TAXAS', widget.impostos, Colors.blue[500]));
     }
     if (widget.outrasCred > 0) {
       _data.add(new ChartRecOrigemData(
@@ -120,9 +120,11 @@ class _ChartRecOrigemState extends State<ChartRecOrigem> {
 
     return Container(
       padding: const EdgeInsets.all(8),
+      height: 500,
+      margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
+      color: Colors.white,
       child: Column(
         children: [
-          Text('Receita Arrecadada por Categoria'),
           Expanded(
             child: charts.PieChart(
               _seriesData,
@@ -130,25 +132,27 @@ class _ChartRecOrigemState extends State<ChartRecOrigem> {
               animationDuration: Duration(seconds: 2),
               behaviors: [
                 new charts.DatumLegend(
-                  outsideJustification: charts.OutsideJustification.endDrawArea,
+                  outsideJustification:
+                      charts.OutsideJustification.middleDrawArea,
                   horizontalFirst: false,
                   desiredMaxRows: 6,
-                  cellPadding: new EdgeInsets.only(right: 4.0, bottom: 4.0),
+                  cellPadding:
+                      new EdgeInsets.only(bottom: 4, right: 4, left: 4),
                   entryTextStyle: charts.TextStyleSpec(
-                      color: charts.MaterialPalette.black, fontSize: 11),
+                      color: charts.MaterialPalette.black, fontSize: 13),
                 )
               ],
               defaultRenderer: new charts.ArcRendererConfig(
-                  arcWidth: 200,
-                  arcRendererDecorators: [
-                    new charts.ArcLabelDecorator(
-                        labelPosition: charts.ArcLabelPosition.inside),
-                  ]),
+                arcWidth: 200,
+                arcRendererDecorators: [
+                  new charts.ArcLabelDecorator(
+                      labelPosition: charts.ArcLabelPosition.outside),
+                ],
+              ),
             ),
           )
         ],
       ),
-      color: Colors.orange[100],
     );
   }
 }

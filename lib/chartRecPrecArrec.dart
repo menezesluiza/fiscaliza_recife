@@ -48,22 +48,27 @@ class _ChartRecPrevArrecState extends State<ChartRecPrevArrec> {
 
     return Container(
       padding: const EdgeInsets.all(8),
-      //child: Text('Gráfico receitas do ano ${widget.dropdownValueR}'),
+      height: 250,
+      margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
+      color: Colors.white,
       child: Column(
         children: [
-          Text(
-              //'Receita prevista ${widget.real.format(widget.recPrev)} x arrecadada ${widget.real.format(widget.recArrec)}'
-              'Receita Prevista x Arrecadada'),
           Expanded(
               child: charts.BarChart(
             _seriesData,
             animate: true,
+            primaryMeasureAxis: new charts.NumericAxisSpec(
+              renderSpec: new charts.GridlineRendererSpec(
+                labelAnchor: charts.TickLabelAnchor.after,
+                labelJustification: charts.TickLabelJustification.inside,
+              ),
+            ),
+
             //barGroupingType: charts.BarGroupingType.grouped,
             animationDuration: Duration(seconds: 1),
           ))
         ],
       ),
-      color: Colors.orange[100],
     );
   }
 }

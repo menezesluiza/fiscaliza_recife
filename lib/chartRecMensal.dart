@@ -86,10 +86,11 @@ class _ChartRecPrevMensalState extends State<ChartRecPrevMensal> {
 
     return Container(
       padding: const EdgeInsets.all(8),
-      //child: Text('Gráfico receitas do ano ${widget.dropdownValueR}'),
+      height: 350,
+      margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
+      color: Colors.white,
       child: Column(
         children: [
-          Text('Receita Arrecadada por mês (em milhões)'),
           Expanded(
               child: charts.BarChart(
             _seriesData,
@@ -103,7 +104,6 @@ class _ChartRecPrevMensalState extends State<ChartRecPrevMensal> {
           ))
         ],
       ),
-      color: Colors.orange[100],
     );
   }
 }

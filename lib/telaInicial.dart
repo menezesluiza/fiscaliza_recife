@@ -5,7 +5,7 @@ import './drawer.dart';
 import './gridDesp.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import './gridRec.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+//import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TelaPrincipal extends StatefulWidget {
   const TelaPrincipal({Key? key}) : super(key: key);
@@ -16,194 +16,53 @@ class TelaPrincipal extends StatefulWidget {
 
 class _TelaPrincipalState extends State<TelaPrincipal>
     with TickerProviderStateMixin {
-  late TabController _tabController;
-
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
-    _loadOrgaosR();
   }
 
-  String dropdownValueR = '2021';
-  List<String> anosR = ['2021', '2020', '2019', '2018', '2017'];
+  int _selectedIndex = 0;
 
-  String dropdownValueD = '2021';
-  List<String> anosD = ['2021', '2020', '2019', '2018', '2017'];
-
-  String orgaoR = 'TODOS OS ÓRGÃOS';
-  List<String> orgaosR = [];
-
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-  void _loadOrgaosR() async {
-    String _anoOrgao = 'orgaos-' + dropdownValueR;
-    await FirebaseFirestore.instance
-        .collection(_anoOrgao)
-        .orderBy('id')
-        .get()
-        .then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
-        orgaosR.add(doc['nome']);
-      });
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
     });
-    setState(() {});
   }
+
+  List<Widget> _widgetOptions = <Widget>[];
 
   @override
   Widget build(BuildContext context) {
+    _widgetOptions.add(GridDesp(dropdownValueD: '2021'));
+    _widgetOptions.add(GridRec());
+
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.lightBlue[900],
         title: Image.asset('images/FR_horizontal.png'),
         centerTitle: true,
-        bottom: TabBar(
-          controller: _tabController,
-          tabs: const <Widget>[
-            Tab(
-              child: const Text('Despesas', style: TextStyle(fontSize: 18)),
-            ),
-            Tab(
-              child: const Text('Receitas', style: TextStyle(fontSize: 18)),
-            ),
-          ],
-        ),
+        //bottom:
       ),
       drawer: Menu(),
-      body: TabBarView(
-        controller: _tabController,
+      body: Column(
         children: [
-          Center(
-            //DESPESAS
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          //padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                          decoration:
-                              BoxDecoration(color: Colors.lightBlue[50]),
-                          height: 50,
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton<String>(
-                              value: dropdownValueD,
-                              elevation: 20,
-                              dropdownColor: Colors.lightBlue[50],
-                              style: TextStyle(color: Colors.blue[900]),
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  dropdownValueD = newValue!;
-                                });
-                              },
-                              items: anosD.map<DropdownMenuItem<String>>(
-                                  (String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Center(child: Text(value)),
-                                );
-                              }).toList(),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Container(
-                            //padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                            decoration:
-                                BoxDecoration(color: Colors.lightBlue[50]),
-                            height: 50,
-                            child: Center(
-                              child: Text(
-                                'Tipo dado',
-                              ),
-                            )),
-                      )
-                    ],
-                  ),
-                  GridDesp(dropdownValueD: dropdownValueD),
-                ],
-              ),
-            ),
+          _widgetOptions.elementAt(_selectedIndex),
+        ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.monetization_on_outlined),
+            label: 'Despesas',
           ),
-          Center(
-            //RECEITAS
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Container(
-                    child: Row(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
-                          decoration:
-                              BoxDecoration(color: Colors.lightBlue[200]),
-                          padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton<String>(
-                              value: dropdownValueR,
-                              elevation: 8,
-                              icon: Icon(Icons.arrow_drop_down_rounded),
-                              dropdownColor: Colors.lightBlue[200],
-                              style: TextStyle(color: Colors.blue[900]),
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  dropdownValueR = newValue!;
-                                });
-                              },
-                              items: anosR.map<DropdownMenuItem<String>>(
-                                  (String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Center(
-                                      child: Text(
-                                    value,
-                                    style: TextStyle(fontSize: 14),
-                                  )),
-                                );
-                              }).toList(),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            margin: EdgeInsets.fromLTRB(0, 10, 10, 5),
-                            decoration:
-                                BoxDecoration(color: Colors.lightBlue[200]),
-                            padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
-                            child: DropdownButtonHideUnderline(
-                              child: DropdownButton<String>(
-                                value: orgaoR,
-                                elevation: 8,
-                                isExpanded: true,
-                                dropdownColor: Colors.lightBlue[50],
-                                style: TextStyle(color: Colors.blue[900]),
-                                onChanged: (String? newValue) {
-                                  setState(() {
-                                    orgaoR = newValue!;
-                                  });
-                                },
-                                items: orgaosR.map<DropdownMenuItem<String>>(
-                                    (String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(value,
-                                        style: TextStyle(fontSize: 14)),
-                                  );
-                                }).toList(),
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  GridRec(dropdownValueR: dropdownValueR, orgaoR: orgaoR)
-                ],
-              ),
-            ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.arrow_upward_outlined),
+            label: 'Receitas',
           ),
         ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.amber[800],
+        onTap: _onItemTapped,
       ),
     );
   }

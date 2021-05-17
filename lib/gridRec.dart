@@ -11,12 +11,12 @@ import 'package:intl/intl.dart';
 class GridRec extends StatefulWidget {
   GridRec({
     Key key,
-    this.dropdownValueR,
-    this.orgaoR,
+    //this.dropdownValueR,
+    //this.orgaoR,
   }) : super(key: key);
 
-  String dropdownValueR;
-  String orgaoR;
+  //String dropdownValueR;
+  //String orgaoR;
 
   @override
   _GridRecState createState() => _GridRecState();
@@ -29,8 +29,14 @@ class _GridRecState extends State<GridRec> {
   @override
   void initState() {
     super.initState();
-    getData();
+    _loadOrgaosR();
+    _getData();
   }
+
+  String dropdownValueR = '2021';
+  List<String> anosR = ['2021', '2020', '2019', '2018', '2017'];
+  String orgaoR = 'TODOS OS ÓRGÃOS';
+  List<String> orgaosR = [];
 
   double recArrec = 0;
   double recPrev = 0;
@@ -64,11 +70,58 @@ class _GridRecState extends State<GridRec> {
   double alien = 0;
   double amort = 0;
 
-  void getData() async {
-    String _ano = 'receitas-' + widget.dropdownValueR;
-    String _orgao = widget.orgaoR;
-    //List<String> _dados = [];
-    if (widget.orgaoR == 'TODOS OS ÓRGÃOS') {
+  TextStyle chartTitle = TextStyle(fontSize: 15, fontWeight: FontWeight.bold);
+
+  BoxDecoration chartDecor =
+      BoxDecoration(border: Border(bottom: BorderSide(color: Colors.black26)));
+
+  void _loadOrgaosR() async {
+    String _anoOrgao = 'orgaos-' + dropdownValueR;
+    await FirebaseFirestore.instance
+        .collection(_anoOrgao)
+        .orderBy('id')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        orgaosR.add(doc['nome']);
+      });
+    });
+    setState(() {});
+  }
+
+  void _getData() async {
+    String _ano = 'receitas-' + dropdownValueR;
+    String _orgao = orgaoR;
+    recArrec = 0;
+    recPrev = 0;
+    recArrecJan = 0;
+    recArrecFev = 0;
+    recArrecMar = 0;
+    recArrecAbr = 0;
+    recArrecMai = 0;
+    recArrecJun = 0;
+    recArrecJul = 0;
+    recArrecAgo = 0;
+    recArrecSet = 0;
+    recArrecOut = 0;
+    recArrecNov = 0;
+    recArrecDez = 0;
+    recCorrente = 0;
+    recCapital = 0;
+    recCorrenteInfra = 0;
+    transfCorr = 0;
+    impostos = 0;
+    outrasCred = 0;
+    opCredito = 0;
+    outrasCap = 0;
+    recPatri = 0;
+    recServ = 0;
+    transfCap = 0;
+    contri = 0;
+    alien = 0;
+    amort = 0;
+
+    if (orgaoR == 'TODOS OS ÓRGÃOS') {
       await FirebaseFirestore.instance
           .collection(_ano)
           .get()
@@ -287,61 +340,157 @@ class _GridRecState extends State<GridRec> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 2000,
-      width: double.maxFinite,
-      alignment: Alignment.center,
-      child: GridView.count(
-        primary: false,
-        padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-        crossAxisCount: 1,
-        children: <Widget>[
-          ChartRecPrevArrec(real: real, recPrev: recPrev, recArrec: recArrec),
-          ChartRecPrevMensal(
-            recArrecJan: recArrecJan,
-            recArrecFev: recArrecFev,
-            recArrecMar: recArrecMar,
-            recArrecAbr: recArrecAbr,
-            recArrecMai: recArrecMai,
-            recArrecJun: recArrecJun,
-            recArrecJul: recArrecJul,
-            recArrecAgo: recArrecAgo,
-            recArrecSet: recArrecSet,
-            recArrecOut: recArrecOut,
-            recArrecNov: recArrecNov,
-            recArrecDez: recArrecDez,
+    return Column(
+      children: [
+        Container(
+          child: Row(
+            children: [
+              Container(
+                height: 45,
+                margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
+                decoration: BoxDecoration(color: Colors.lightBlue[200]),
+                padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+                    value: dropdownValueR,
+                    elevation: 8,
+                    //icon: Icon(Icons.arrow_drop_down_rounded),
+                    dropdownColor: Colors.lightBlue[200],
+                    style: TextStyle(color: Colors.blue[900]),
+                    onChanged: (String newValue) {
+                      setState(() {
+                        dropdownValueR = newValue;
+                        _getData();
+                      });
+                      //_getData();
+                    },
+                    items: anosR.map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Center(
+                            child: Text(
+                          value,
+                          style: TextStyle(fontSize: 14),
+                        )),
+                      );
+                    }).toList(),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  height: 45,
+                  margin: EdgeInsets.fromLTRB(0, 10, 10, 5),
+                  decoration: BoxDecoration(color: Colors.lightBlue[200]),
+                  padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<String>(
+                      value: orgaoR,
+                      elevation: 8,
+                      isExpanded: true,
+                      dropdownColor: Colors.lightBlue[50],
+                      style: TextStyle(color: Colors.blue[900]),
+                      onChanged: (String newValue) {
+                        setState(() {
+                          orgaoR = newValue;
+                          _getData();
+                        });
+                        //_getData();
+                      },
+                      items:
+                          orgaosR.map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value, style: TextStyle(fontSize: 14)),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ),
+              )
+            ],
           ),
-          ChartRecCategoria(
-            recCorrente: recCorrente,
-            recCapital: recCapital,
-            recCorrenteInfra: recCorrenteInfra,
-          ),
-          ChartRecOrigem(
-            alien: alien,
-            amort: amort,
-            contri: contri,
-            impostos: impostos,
-            opCredito: opCredito,
-            outrasCap: outrasCap,
-            outrasCred: outrasCred,
-            recPatri: recPatri,
-            recServ: recServ,
-            transfCap: transfCap,
-            transfCorr: transfCorr,
-          ),
-          InkWell(
-            onTap: null,
-            child: Container(
-              padding: const EdgeInsets.all(8),
-              child: Text(
-                  'Receita Arrecadada pelo ${widget.orgaoR} ${real.format(recArrec)} em ${widget.dropdownValueR}'),
-              color: Colors.orange[200],
-            ),
-          ),
-        ],
-      ),
+        ),
+        SingleChildScrollView(
+          child: Container(
+              margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+              height: 560,
+              width: double.maxFinite,
+              alignment: Alignment.center,
+              child: ListView(padding: EdgeInsets.zero, children: [
+                Container(
+                  alignment: Alignment.topLeft,
+                  padding: EdgeInsets.fromLTRB(0, 15, 0, 10),
+                  child: Text(
+                    'RECEITA PREVISTA X ARRECADADA',
+                    style: chartTitle,
+                  ),
+                  decoration: chartDecor,
+                ),
+                ChartRecPrevArrec(
+                    real: real, recPrev: recPrev, recArrec: recArrec),
+                Container(
+                  alignment: Alignment.topLeft,
+                  padding: EdgeInsets.fromLTRB(0, 15, 0, 10),
+                  child: Text(
+                    'RECEITA ARRECADADA POR MÊS',
+                    style: chartTitle,
+                  ),
+                  decoration: chartDecor,
+                ),
+                ChartRecPrevMensal(
+                  recArrecJan: recArrecJan,
+                  recArrecFev: recArrecFev,
+                  recArrecMar: recArrecMar,
+                  recArrecAbr: recArrecAbr,
+                  recArrecMai: recArrecMai,
+                  recArrecJun: recArrecJun,
+                  recArrecJul: recArrecJul,
+                  recArrecAgo: recArrecAgo,
+                  recArrecSet: recArrecSet,
+                  recArrecOut: recArrecOut,
+                  recArrecNov: recArrecNov,
+                  recArrecDez: recArrecDez,
+                ),
+                Container(
+                  alignment: Alignment.topLeft,
+                  padding: EdgeInsets.fromLTRB(0, 15, 0, 10),
+                  child: Text(
+                    'RECEITA POR CATEGORIA',
+                    style: chartTitle,
+                  ),
+                  decoration: chartDecor,
+                ),
+                ChartRecCategoria(
+                  recCorrente: recCorrente,
+                  recCapital: recCapital,
+                  recCorrenteInfra: recCorrenteInfra,
+                ),
+                Container(
+                  alignment: Alignment.topLeft,
+                  padding: EdgeInsets.fromLTRB(0, 15, 0, 10),
+                  child: Text(
+                    'RECEITA POR FONTE DE ORIGEM',
+                    style: chartTitle,
+                  ),
+                  decoration: chartDecor,
+                ),
+                ChartRecOrigem(
+                  alien: alien,
+                  amort: amort,
+                  contri: contri,
+                  impostos: impostos,
+                  opCredito: opCredito,
+                  outrasCap: outrasCap,
+                  outrasCred: outrasCred,
+                  recPatri: recPatri,
+                  recServ: recServ,
+                  transfCap: transfCap,
+                  transfCorr: transfCorr,
+                ),
+              ])),
+        ),
+      ],
     );
   }
 }
