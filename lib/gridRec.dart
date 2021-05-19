@@ -11,12 +11,7 @@ import 'package:intl/intl.dart';
 class GridRec extends StatefulWidget {
   GridRec({
     Key key,
-    //this.dropdownValueR,
-    //this.orgaoR,
   }) : super(key: key);
-
-  //String dropdownValueR;
-  //String orgaoR;
 
   @override
   _GridRecState createState() => _GridRecState();
@@ -24,6 +19,7 @@ class GridRec extends StatefulWidget {
 
 class _GridRecState extends State<GridRec> {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
+
   final real = new NumberFormat("#,##0.00", "en_US");
 
   @override
@@ -70,13 +66,14 @@ class _GridRecState extends State<GridRec> {
   double alien = 0;
   double amort = 0;
 
-  TextStyle chartTitle = TextStyle(fontSize: 15, fontWeight: FontWeight.bold);
+  TextStyle chartTitle = TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
 
   BoxDecoration chartDecor =
       BoxDecoration(border: Border(bottom: BorderSide(color: Colors.black26)));
 
   void _loadOrgaosR() async {
     String _anoOrgao = 'orgaos-' + dropdownValueR;
+
     await FirebaseFirestore.instance
         .collection(_anoOrgao)
         .orderBy('id')
@@ -86,6 +83,7 @@ class _GridRecState extends State<GridRec> {
         orgaosR.add(doc['nome']);
       });
     });
+    FirebaseFirestore.instance.terminate();
     setState(() {});
   }
 
@@ -335,6 +333,8 @@ class _GridRecState extends State<GridRec> {
         });
       });
     }
+    FirebaseFirestore.instance.terminate();
+
     setState(() {});
   }
 
@@ -348,15 +348,18 @@ class _GridRecState extends State<GridRec> {
               Container(
                 height: 45,
                 margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
-                decoration: BoxDecoration(color: Colors.lightBlue[200]),
-                padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: new BorderRadius.circular(5)),
+                padding: EdgeInsets.fromLTRB(14, 0, 0, 4),
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
                     value: dropdownValueR,
+                    //iconSize: ,
                     elevation: 8,
                     //icon: Icon(Icons.arrow_drop_down_rounded),
-                    dropdownColor: Colors.lightBlue[200],
-                    style: TextStyle(color: Colors.blue[900]),
+                    dropdownColor: Colors.grey[300],
+                    style: TextStyle(color: Colors.black87),
                     onChanged: (String newValue) {
                       setState(() {
                         dropdownValueR = newValue;
@@ -367,11 +370,10 @@ class _GridRecState extends State<GridRec> {
                     items: anosR.map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
-                        child: Center(
-                            child: Text(
+                        child: Text(
                           value,
                           style: TextStyle(fontSize: 14),
-                        )),
+                        ),
                       );
                     }).toList(),
                   ),
@@ -381,21 +383,22 @@ class _GridRecState extends State<GridRec> {
                 child: Container(
                   height: 45,
                   margin: EdgeInsets.fromLTRB(0, 10, 10, 5),
-                  decoration: BoxDecoration(color: Colors.lightBlue[200]),
-                  padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                  decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      borderRadius: new BorderRadius.circular(5)),
+                  padding: EdgeInsets.fromLTRB(14, 0, 0, 4),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton<String>(
                       value: orgaoR,
                       elevation: 8,
                       isExpanded: true,
-                      dropdownColor: Colors.lightBlue[50],
-                      style: TextStyle(color: Colors.blue[900]),
+                      dropdownColor: Colors.grey[300],
+                      style: TextStyle(color: Colors.black87),
                       onChanged: (String newValue) {
                         setState(() {
                           orgaoR = newValue;
                           _getData();
                         });
-                        //_getData();
                       },
                       items:
                           orgaosR.map<DropdownMenuItem<String>>((String value) {

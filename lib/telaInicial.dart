@@ -1,11 +1,9 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import './drawer.dart';
-//import './secionarAno.dart';
 import './gridDesp.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import './gridRec.dart';
-//import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TelaPrincipal extends StatefulWidget {
   const TelaPrincipal({Key? key}) : super(key: key);
@@ -23,6 +21,11 @@ class _TelaPrincipalState extends State<TelaPrincipal>
 
   int _selectedIndex = 0;
 
+  final _selectedItemColor = Colors.white;
+  final _unselectedItemColor = Colors.white70;
+  final Color _selectedBgColor = Colors.lightBlue[900] as Color;
+  final Color _unselectedBgColor = Colors.lightBlue[700] as Color;
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -30,6 +33,42 @@ class _TelaPrincipalState extends State<TelaPrincipal>
   }
 
   List<Widget> _widgetOptions = <Widget>[];
+
+  Color _getBgColor(int index) =>
+      _selectedIndex == index ? _selectedBgColor : _unselectedBgColor;
+
+  Color _getItemColor(int index) =>
+      _selectedIndex == index ? _selectedItemColor : _unselectedItemColor;
+
+  Widget _buildIcon(IconData iconData, String text, int index) => Container(
+        width: double.infinity,
+        height: kBottomNavigationBarHeight,
+        child: Material(
+          color: _getBgColor(index),
+          child: InkWell(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(
+                  iconData,
+                  size: 25,
+                ),
+                SizedBox(
+                  height: 3,
+                ),
+                Text(
+                  text,
+                  style: TextStyle(
+                      fontSize: 14,
+                      color: _getItemColor(index),
+                      fontWeight: FontWeight.w500),
+                ),
+              ],
+            ),
+            onTap: () => _onItemTapped(index),
+          ),
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -50,19 +89,26 @@ class _TelaPrincipalState extends State<TelaPrincipal>
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
+        selectedFontSize: 0,
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+        //backgroundColor: Colors.white,
+        selectedItemColor: _selectedItemColor,
+        unselectedItemColor: _unselectedItemColor,
+        elevation: 8.0,
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.monetization_on_outlined),
-            label: 'Despesas',
+            //icon: Icon(Icons.arrow_downward_outlined),
+            icon: _buildIcon(Icons.insert_chart_rounded, 'DESPESAS', 0),
+            label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.arrow_upward_outlined),
-            label: 'Receitas',
+            icon:
+                _buildIcon(Icons.insert_chart_outlined_rounded, 'RECEITAS', 1),
+            //icon: Icon(Icons.arrow_upward_outlined),
+            label: '',
           ),
         ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
       ),
     );
   }

@@ -47,7 +47,9 @@ class _ChartRecOrigemState extends State<ChartRecOrigem> {
 
     if (widget.transfCorr > 0) {
       _data.add(new ChartRecOrigemData(
-          'TRANSF CORRENTES', widget.transfCorr, Colors.blue[300]));
+          'TRANSF CORRENTES: R\$ ' + '${widget.transfCorr.toStringAsFixed(0)}',
+          widget.transfCorr,
+          Colors.blue[300]));
     }
     if (widget.impostos > 0) {
       _data.add(new ChartRecOrigemData(
@@ -120,7 +122,7 @@ class _ChartRecOrigemState extends State<ChartRecOrigem> {
 
     return Container(
       padding: const EdgeInsets.all(8),
-      height: 500,
+      height: 600,
       margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
       color: Colors.white,
       child: Column(
@@ -132,10 +134,9 @@ class _ChartRecOrigemState extends State<ChartRecOrigem> {
               animationDuration: Duration(seconds: 2),
               behaviors: [
                 new charts.DatumLegend(
-                  outsideJustification:
-                      charts.OutsideJustification.middleDrawArea,
+                  outsideJustification: charts.OutsideJustification.start,
                   horizontalFirst: false,
-                  desiredMaxRows: 6,
+                  desiredMaxRows: 12,
                   cellPadding:
                       new EdgeInsets.only(bottom: 4, right: 4, left: 4),
                   entryTextStyle: charts.TextStyleSpec(
@@ -145,8 +146,8 @@ class _ChartRecOrigemState extends State<ChartRecOrigem> {
               defaultRenderer: new charts.ArcRendererConfig(
                 arcWidth: 200,
                 arcRendererDecorators: [
-                  new charts.ArcLabelDecorator(
-                      labelPosition: charts.ArcLabelPosition.outside),
+                  // new charts.ArcLabelDecorator(
+                  //    labelPosition: charts.ArcLabelPosition.),
                 ],
               ),
             ),
