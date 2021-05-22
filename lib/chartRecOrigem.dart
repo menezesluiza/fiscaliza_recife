@@ -1,6 +1,7 @@
 // @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:intl/intl.dart';
 
 class ChartRecOrigem extends StatefulWidget {
   ChartRecOrigem({
@@ -39,6 +40,11 @@ class _ChartRecOrigemState extends State<ChartRecOrigem> {
     super.initState();
   }
 
+  String getCurrency(value) {
+    NumberFormat formatter = NumberFormat.simpleCurrency(locale: 'pt_BR');
+    return formatter.format(value);
+  }
+
   @override
   Widget build(BuildContext context) {
     List<charts.Series<ChartRecOrigemData, String>> _seriesData = [];
@@ -47,64 +53,82 @@ class _ChartRecOrigemState extends State<ChartRecOrigem> {
 
     if (widget.transfCorr > 0) {
       _data.add(new ChartRecOrigemData(
-          'TRANSF CORRENTES: R\$ ' + '${widget.transfCorr.toStringAsFixed(0)}',
+          'TRANSFERÊNCIAS CORRENTES: ${getCurrency(widget.transfCorr)}',
           widget.transfCorr,
           Colors.blue[300]));
     }
     if (widget.impostos > 0) {
       _data.add(new ChartRecOrigemData(
-          'IMPOSTOS E TAXAS', widget.impostos, Colors.blue[500]));
+          'IMPOSTOS E TAXAS: ${getCurrency(widget.impostos)}',
+          widget.impostos,
+          Colors.blue[500]));
     }
     if (widget.outrasCred > 0) {
       _data.add(new ChartRecOrigemData(
-          'RECEITAS CORRENTES', widget.outrasCred, Colors.blue[800]));
+          'RECEITAS CORRENTES: ${getCurrency(widget.outrasCred)}',
+          widget.outrasCred,
+          Colors.blue[800]));
     }
     if (widget.opCredito > 0) {
       _data.add(
         new ChartRecOrigemData(
-            'OPERAÇÕES DE CRÉDITO', widget.opCredito, Colors.green[300]),
+            'OPERAÇÕES DE CRÉDITO: ${getCurrency(widget.opCredito)}',
+            widget.opCredito,
+            Colors.green[300]),
       );
     }
     if (widget.outrasCap > 0) {
       _data.add(
         new ChartRecOrigemData(
-            'RECEITAS DE CAPITAL', widget.outrasCap, Colors.green[500]),
+            'RECEITAS DE CAPITAL: ${getCurrency(widget.outrasCap)}',
+            widget.outrasCap,
+            Colors.green[500]),
       );
     }
     if (widget.recPatri > 0) {
       _data.add(
         new ChartRecOrigemData(
-            'RECEITA PATRIMONIAL', widget.recPatri, Colors.green[800]),
+            'RECEITA PATRIMONIAL: ${getCurrency(widget.recPatri)}',
+            widget.recPatri,
+            Colors.green[800]),
       );
     }
     if (widget.recServ > 0) {
       _data.add(
         new ChartRecOrigemData(
-            'RECEITA DE SERVIÇOS', widget.recServ, Colors.yellow[300]),
+            'RECEITA DE SERVIÇOS: ${getCurrency(widget.recServ)}',
+            widget.recServ,
+            Colors.yellow[300]),
       );
     }
     if (widget.transfCap > 0) {
       _data.add(
         new ChartRecOrigemData(
-            'TRANSF DE CAPITAL', widget.transfCap, Colors.yellow[500]),
+            'TRANSFERÊNCIAS DE CAPITAL: ${getCurrency(widget.transfCap)}',
+            widget.transfCap,
+            Colors.yellow[500]),
       );
     }
     if (widget.contri > 0) {
       _data.add(
-        new ChartRecOrigemData(
-            'CONTRIBUIÇÕES', widget.contri, Colors.yellow[800]),
+        new ChartRecOrigemData('CONTRIBUIÇÕES: ${getCurrency(widget.contri)}',
+            widget.contri, Colors.yellow[800]),
       );
     }
     if (widget.alien > 0) {
       _data.add(
         new ChartRecOrigemData(
-            'ALIENAÇÃO DE BENS', widget.alien, Colors.indigo[300]),
+            'ALIENAÇÃO DE BENS: ${getCurrency(widget.alien)}',
+            widget.alien,
+            Colors.indigo[300]),
       );
     }
     if (widget.amort > 0) {
       _data.add(
         new ChartRecOrigemData(
-            'AMORTIZAÇÃO EMPRÉSTIMOS', widget.amort, Colors.indigo[500]),
+            'AMORTIZAÇÃO EMPRÉSTIMOS: ${getCurrency(widget.amort)}',
+            widget.amort,
+            Colors.indigo[500]),
       );
     }
 
@@ -137,18 +161,15 @@ class _ChartRecOrigemState extends State<ChartRecOrigem> {
                   outsideJustification: charts.OutsideJustification.start,
                   horizontalFirst: false,
                   desiredMaxRows: 12,
+                  position: charts.BehaviorPosition.bottom,
                   cellPadding:
                       new EdgeInsets.only(bottom: 4, right: 4, left: 4),
                   entryTextStyle: charts.TextStyleSpec(
-                      color: charts.MaterialPalette.black, fontSize: 13),
+                      color: charts.MaterialPalette.black, fontSize: 14),
                 )
               ],
               defaultRenderer: new charts.ArcRendererConfig(
                 arcWidth: 200,
-                arcRendererDecorators: [
-                  // new charts.ArcLabelDecorator(
-                  //    labelPosition: charts.ArcLabelPosition.),
-                ],
               ),
             ),
           )

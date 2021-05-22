@@ -1,17 +1,15 @@
 // @dart=2.9
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:intl/intl.dart';
 
 class ChartRecPrevArrec extends StatefulWidget {
   const ChartRecPrevArrec({
     Key key,
-    this.real,
     this.recPrev,
     this.recArrec,
   }) : super(key: key);
 
-  final NumberFormat real;
   final double recPrev;
   final double recArrec;
 
@@ -24,49 +22,88 @@ class _ChartRecPrevArrecState extends State<ChartRecPrevArrec> {
     super.initState();
   }
 
+  String getCurrency(value) {
+    NumberFormat formatter = NumberFormat.simpleCurrency(locale: 'pt_BR');
+    return formatter.format(value);
+  }
+
   @override
   Widget build(BuildContext context) {
     List<charts.Series<ChartRecPrevArrecData, String>> _seriesData = [];
 
     var _data = [
-      new ChartRecPrevArrecData(
-          'PREVISTA', widget.recPrev, Colors.lightBlue[300]),
-      new ChartRecPrevArrecData(
-          'ARRECADADA', widget.recArrec, Colors.lightBlue[800]),
+      new ChartRecPrevArrecData('ARRECADADA: ${getCurrency(widget.recArrec)}',
+          widget.recArrec, Colors.green),
+      new ChartRecPrevArrecData('PREVISTA: ${getCurrency(widget.recPrev)}',
+          widget.recPrev, Colors.amber[300]),
     ];
 
     _seriesData.add(
       charts.Series(
-          domainFn: (ChartRecPrevArrecData rec, _) => rec.tipo,
-          measureFn: (ChartRecPrevArrecData rec, _) => rec.valor,
-          id: 'Receitas',
-          data: _data,
-          fillPatternFn: (_, __) => charts.FillPatternType.forwardHatch,
-          fillColorFn: (ChartRecPrevArrecData rec, _) =>
-              charts.ColorUtil.fromDartColor(rec.colorval)),
+        domainFn: (ChartRecPrevArrecData rec, _) => rec.tipo,
+        measureFn: (ChartRecPrevArrecData rec, _) => rec.valor,
+        id: 'Receitas',
+        data: _data,
+        fillPatternFn: (_, __) => charts.FillPatternType.solid,
+        fillColorFn: (ChartRecPrevArrecData rec, _) =>
+            charts.ColorUtil.fromDartColor(rec.colorval),
+        colorFn: (ChartRecPrevArrecData rec, _) =>
+            charts.ColorUtil.fromDartColor(rec.colorval),
+        labelAccessorFn: (ChartRecPrevArrecData rec, _) =>
+            '${getCurrency(rec.valor)}',
+        insideLabelStyleAccessorFn: (ChartRecPrevArrecData rec, _) =>
+            new charts.TextStyleSpec(
+          color: charts.ColorUtil.fromDartColor(Colors.black87),
+          fontSize: 14,
+        ),
+        outsideLabelStyleAccessorFn: (ChartRecPrevArrecData rec, _) =>
+            new charts.TextStyleSpec(
+          color: charts.ColorUtil.fromDartColor(Colors.black87),
+          fontSize: 14,
+        ),
+      ),
     );
 
     return Container(
       padding: const EdgeInsets.all(8),
-      height: 250,
+      height: 280,
       margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
       color: Colors.white,
       child: Column(
         children: [
           Expanded(
-              child: charts.BarChart(
-            _seriesData,
-            animate: true,
-            primaryMeasureAxis: new charts.NumericAxisSpec(
-              renderSpec: new charts.GridlineRendererSpec(
-                labelAnchor: charts.TickLabelAnchor.after,
-                labelJustification: charts.TickLabelJustification.inside,
+            child: charts.BarChart(
+              _seriesData,
+              animate: true,
+              barGroupingType: charts.BarGroupingType.grouped,
+              animationDuration: Duration(seconds: 1),
+              vertical: true,
+              domainAxis: new charts.OrdinalAxisSpec(
+                renderSpec: new charts.NoneRenderSpec(),
               ),
+              primaryMeasureAxis: new charts.NumericAxisSpec(
+                renderSpec: new charts.GridlineRendererSpec(
+                  labelAnchor: charts.TickLabelAnchor.centered,
+                  minimumPaddingBetweenLabelsPx: 1,
+                  labelStyle: new charts.TextStyleSpec(
+                    fontSize: 11, // size in Pts.
+                  ),
+                ),
+              ),
+              behaviors: [
+                new charts.DatumLegend(
+                  outsideJustification: charts.OutsideJustification.start,
+                  horizontalFirst: false,
+                  desiredMaxRows: 12,
+                  position: charts.BehaviorPosition.bottom,
+                  cellPadding:
+                      new EdgeInsets.only(bottom: 4, right: 4, left: 4),
+                  entryTextStyle: charts.TextStyleSpec(
+                      color: charts.MaterialPalette.black, fontSize: 14),
+                )
+              ],
             ),
-
-            //barGroupingType: charts.BarGroupingType.grouped,
-            animationDuration: Duration(seconds: 1),
-          ))
+          )
         ],
       ),
     );

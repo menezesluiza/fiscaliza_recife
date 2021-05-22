@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
+import 'SemRecArrec.dart';
+
 // ignore: must_be_immutable
 class GridRec extends StatefulWidget {
   GridRec({
@@ -19,8 +21,6 @@ class GridRec extends StatefulWidget {
 
 class _GridRecState extends State<GridRec> {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-  final real = new NumberFormat("#,##0.00", "en_US");
 
   @override
   void initState() {
@@ -338,6 +338,13 @@ class _GridRecState extends State<GridRec> {
     setState(() {});
   }
 
+  _semReceita(double rec) {
+    if (rec > 0) {
+      return true;
+    } else
+      return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -425,13 +432,12 @@ class _GridRecState extends State<GridRec> {
                   alignment: Alignment.topLeft,
                   padding: EdgeInsets.fromLTRB(0, 15, 0, 10),
                   child: Text(
-                    'RECEITA PREVISTA X ARRECADADA',
+                    'RECEITA ARRECADADA X PREVISTA',
                     style: chartTitle,
                   ),
                   decoration: chartDecor,
                 ),
-                ChartRecPrevArrec(
-                    real: real, recPrev: recPrev, recArrec: recArrec),
+                ChartRecPrevArrec(recPrev: recPrev, recArrec: recArrec),
                 Container(
                   alignment: Alignment.topLeft,
                   padding: EdgeInsets.fromLTRB(0, 15, 0, 10),
@@ -441,20 +447,22 @@ class _GridRecState extends State<GridRec> {
                   ),
                   decoration: chartDecor,
                 ),
-                ChartRecPrevMensal(
-                  recArrecJan: recArrecJan,
-                  recArrecFev: recArrecFev,
-                  recArrecMar: recArrecMar,
-                  recArrecAbr: recArrecAbr,
-                  recArrecMai: recArrecMai,
-                  recArrecJun: recArrecJun,
-                  recArrecJul: recArrecJul,
-                  recArrecAgo: recArrecAgo,
-                  recArrecSet: recArrecSet,
-                  recArrecOut: recArrecOut,
-                  recArrecNov: recArrecNov,
-                  recArrecDez: recArrecDez,
-                ),
+                _semReceita(recArrec)
+                    ? ChartRecPrevMensal(
+                        recArrecJan: recArrecJan,
+                        recArrecFev: recArrecFev,
+                        recArrecMar: recArrecMar,
+                        recArrecAbr: recArrecAbr,
+                        recArrecMai: recArrecMai,
+                        recArrecJun: recArrecJun,
+                        recArrecJul: recArrecJul,
+                        recArrecAgo: recArrecAgo,
+                        recArrecSet: recArrecSet,
+                        recArrecOut: recArrecOut,
+                        recArrecNov: recArrecNov,
+                        recArrecDez: recArrecDez,
+                      )
+                    : SemRecArrec(),
                 Container(
                   alignment: Alignment.topLeft,
                   padding: EdgeInsets.fromLTRB(0, 15, 0, 10),
@@ -464,11 +472,13 @@ class _GridRecState extends State<GridRec> {
                   ),
                   decoration: chartDecor,
                 ),
-                ChartRecCategoria(
-                  recCorrente: recCorrente,
-                  recCapital: recCapital,
-                  recCorrenteInfra: recCorrenteInfra,
-                ),
+                _semReceita(recArrec)
+                    ? ChartRecCategoria(
+                        recCorrente: recCorrente,
+                        recCapital: recCapital,
+                        recCorrenteInfra: recCorrenteInfra,
+                      )
+                    : SemRecArrec(),
                 Container(
                   alignment: Alignment.topLeft,
                   padding: EdgeInsets.fromLTRB(0, 15, 0, 10),
@@ -478,19 +488,21 @@ class _GridRecState extends State<GridRec> {
                   ),
                   decoration: chartDecor,
                 ),
-                ChartRecOrigem(
-                  alien: alien,
-                  amort: amort,
-                  contri: contri,
-                  impostos: impostos,
-                  opCredito: opCredito,
-                  outrasCap: outrasCap,
-                  outrasCred: outrasCred,
-                  recPatri: recPatri,
-                  recServ: recServ,
-                  transfCap: transfCap,
-                  transfCorr: transfCorr,
-                ),
+                _semReceita(recArrec)
+                    ? ChartRecOrigem(
+                        alien: alien,
+                        amort: amort,
+                        contri: contri,
+                        impostos: impostos,
+                        opCredito: opCredito,
+                        outrasCap: outrasCap,
+                        outrasCred: outrasCred,
+                        recPatri: recPatri,
+                        recServ: recServ,
+                        transfCap: transfCap,
+                        transfCorr: transfCorr,
+                      )
+                    : SemRecArrec(),
               ])),
         ),
       ],
