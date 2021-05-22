@@ -32,7 +32,8 @@ class _GridRecState extends State<GridRec> {
   String dropdownValueR = '2021';
   List<String> anosR = ['2021', '2020', '2019', '2018', '2017'];
   String orgaoR = 'TODOS OS ÓRGÃOS';
-  List<String> orgaosR = [];
+  List<String> orgaosR2021 = [];
+  List<String> orgaosR2020 = [];
 
   double recArrec = 0;
   double recPrev = 0;
@@ -71,20 +72,44 @@ class _GridRecState extends State<GridRec> {
   BoxDecoration chartDecor =
       BoxDecoration(border: Border(bottom: BorderSide(color: Colors.black26)));
 
-  void _loadOrgaosR() async {
-    String _anoOrgao = 'orgaos-' + dropdownValueR;
+  void _loadOrgaosR() {
+    _loadO2020();
+    _loadO2021();
+    //FirebaseFirestore.instance.terminate();
+    setState(() {});
+  }
 
+  void _loadO2020() async {
     await FirebaseFirestore.instance
-        .collection(_anoOrgao)
+        .collection('orgaos-2020')
         .orderBy('id')
         .get()
         .then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) {
-        orgaosR.add(doc['nome']);
+        orgaosR2020.add(doc['nome']);
       });
     });
-    FirebaseFirestore.instance.terminate();
-    setState(() {});
+  }
+
+  void _loadO2021() async {
+    await FirebaseFirestore.instance
+        .collection('orgaos-2021')
+        .orderBy('id')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        orgaosR2021.add(doc['nome']);
+      });
+    });
+  }
+
+  List<String> _returnOrgaoList(String ano) {
+    if (ano == '2021') {
+      return orgaosR2021;
+    } else if (ano == '2020') {
+      return orgaosR2020;
+    } else
+      return null;
   }
 
   void _getData() async {
@@ -353,6 +378,7 @@ class _GridRecState extends State<GridRec> {
           child: Row(
             children: [
               Container(
+                //ANO
                 height: 45,
                 margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
                 decoration: BoxDecoration(
@@ -362,9 +388,7 @@ class _GridRecState extends State<GridRec> {
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
                     value: dropdownValueR,
-                    //iconSize: ,
                     elevation: 8,
-                    //icon: Icon(Icons.arrow_drop_down_rounded),
                     dropdownColor: Colors.grey[300],
                     style: TextStyle(color: Colors.black87),
                     onChanged: (String newValue) {
@@ -372,7 +396,6 @@ class _GridRecState extends State<GridRec> {
                         dropdownValueR = newValue;
                         _getData();
                       });
-                      //_getData();
                     },
                     items: anosR.map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
@@ -387,6 +410,7 @@ class _GridRecState extends State<GridRec> {
                 ),
               ),
               Expanded(
+                //ORGAOS
                 child: Container(
                   height: 45,
                   margin: EdgeInsets.fromLTRB(0, 10, 10, 5),
@@ -407,11 +431,15 @@ class _GridRecState extends State<GridRec> {
                           _getData();
                         });
                       },
-                      items:
-                          orgaosR.map<DropdownMenuItem<String>>((String value) {
+                      items: _returnOrgaoList(dropdownValueR)
+                          .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
-                          child: Text(value, style: TextStyle(fontSize: 14)),
+                          child: Text(
+                            value,
+                            style: TextStyle(fontSize: 14),
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         );
                       }).toList(),
                     ),

@@ -53,36 +53,41 @@ class _ChartRecOrigemState extends State<ChartRecOrigem> {
 
     if (widget.transfCorr > 0) {
       _data.add(new ChartRecOrigemData(
-          'TRANSFERÊNCIAS CORRENTES: ${getCurrency(widget.transfCorr)}',
-          widget.transfCorr,
-          Colors.blue[300]));
+        'TRANSFERÊNCIAS CORRENTES: ${getCurrency(widget.transfCorr)}',
+        widget.transfCorr,
+        Colors.blue[500],
+      ));
     }
     if (widget.impostos > 0) {
       _data.add(new ChartRecOrigemData(
-          'IMPOSTOS E TAXAS: ${getCurrency(widget.impostos)}',
-          widget.impostos,
-          Colors.blue[500]));
+        'IMPOSTOS E TAXAS: ${getCurrency(widget.impostos)}',
+        widget.impostos,
+        Colors.blue[700],
+      ));
     }
     if (widget.outrasCred > 0) {
       _data.add(new ChartRecOrigemData(
-          'RECEITAS CORRENTES: ${getCurrency(widget.outrasCred)}',
-          widget.outrasCred,
-          Colors.blue[800]));
+        'RECEITAS CORRENTES: ${getCurrency(widget.outrasCred)}',
+        widget.outrasCred,
+        Colors.blue[300],
+      ));
     }
     if (widget.opCredito > 0) {
       _data.add(
         new ChartRecOrigemData(
-            'OPERAÇÕES DE CRÉDITO: ${getCurrency(widget.opCredito)}',
-            widget.opCredito,
-            Colors.green[300]),
+          'OPERAÇÕES DE CRÉDITO: ${getCurrency(widget.opCredito)}',
+          widget.opCredito,
+          Colors.blue[900],
+        ),
       );
     }
     if (widget.outrasCap > 0) {
       _data.add(
         new ChartRecOrigemData(
-            'RECEITAS DE CAPITAL: ${getCurrency(widget.outrasCap)}',
-            widget.outrasCap,
-            Colors.green[500]),
+          'RECEITAS DE CAPITAL: ${getCurrency(widget.outrasCap)}',
+          widget.outrasCap,
+          Colors.blue[100],
+        ),
       );
     }
     if (widget.recPatri > 0) {
@@ -90,7 +95,7 @@ class _ChartRecOrigemState extends State<ChartRecOrigem> {
         new ChartRecOrigemData(
             'RECEITA PATRIMONIAL: ${getCurrency(widget.recPatri)}',
             widget.recPatri,
-            Colors.green[800]),
+            Colors.yellow[700]),
       );
     }
     if (widget.recServ > 0) {
@@ -98,7 +103,7 @@ class _ChartRecOrigemState extends State<ChartRecOrigem> {
         new ChartRecOrigemData(
             'RECEITA DE SERVIÇOS: ${getCurrency(widget.recServ)}',
             widget.recServ,
-            Colors.yellow[300]),
+            Colors.yellow[400]),
       );
     }
     if (widget.transfCap > 0) {
@@ -106,13 +111,13 @@ class _ChartRecOrigemState extends State<ChartRecOrigem> {
         new ChartRecOrigemData(
             'TRANSFERÊNCIAS DE CAPITAL: ${getCurrency(widget.transfCap)}',
             widget.transfCap,
-            Colors.yellow[500]),
+            Colors.green[800]),
       );
     }
     if (widget.contri > 0) {
       _data.add(
         new ChartRecOrigemData('CONTRIBUIÇÕES: ${getCurrency(widget.contri)}',
-            widget.contri, Colors.yellow[800]),
+            widget.contri, Colors.yellow[900]),
       );
     }
     if (widget.alien > 0) {
@@ -120,7 +125,7 @@ class _ChartRecOrigemState extends State<ChartRecOrigem> {
         new ChartRecOrigemData(
             'ALIENAÇÃO DE BENS: ${getCurrency(widget.alien)}',
             widget.alien,
-            Colors.indigo[300]),
+            Colors.green),
       );
     }
     if (widget.amort > 0) {
@@ -128,7 +133,7 @@ class _ChartRecOrigemState extends State<ChartRecOrigem> {
         new ChartRecOrigemData(
             'AMORTIZAÇÃO EMPRÉSTIMOS: ${getCurrency(widget.amort)}',
             widget.amort,
-            Colors.indigo[500]),
+            Colors.green[300]),
       );
     }
 

@@ -1,6 +1,7 @@
 // @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:intl/intl.dart';
 
 class ChartRecCategoria extends StatefulWidget {
   const ChartRecCategoria({
@@ -23,6 +24,11 @@ class _ChartRecCategoriaState extends State<ChartRecCategoria> {
     super.initState();
   }
 
+  String getCurrency(value) {
+    NumberFormat formatter = NumberFormat.simpleCurrency(locale: 'pt_BR');
+    return formatter.format(value);
+  }
+
   @override
   Widget build(BuildContext context) {
     List<charts.Series<ChartRecCategoriaData, String>> _seriesData = [];
@@ -31,15 +37,21 @@ class _ChartRecCategoriaState extends State<ChartRecCategoria> {
 
     if (widget.recCorrente > 0) {
       _data.add(new ChartRecCategoriaData(
-          'CORRENTE', widget.recCorrente, Colors.lightBlue[300]));
+          'CORRENTE: ${getCurrency(widget.recCorrente)}',
+          widget.recCorrente,
+          Colors.orange[200]));
     }
     if (widget.recCapital > 0) {
       _data.add(new ChartRecCategoriaData(
-          'CAPITAL', widget.recCapital, Colors.lightBlue[500]));
+          'CAPITAL: ${getCurrency(widget.recCapital)}',
+          widget.recCapital,
+          Colors.orange[500]));
     }
     if (widget.recCorrenteInfra > 0) {
-      _data.add(new ChartRecCategoriaData('CORRENTES INTRAORÇAMENTÁRIAS',
-          widget.recCorrenteInfra, Colors.lightBlue[800]));
+      _data.add(new ChartRecCategoriaData(
+          'CORR.INTRAORÇAMENTÁRIAS: ${getCurrency(widget.recCorrenteInfra)}',
+          widget.recCorrenteInfra,
+          Colors.orange[800]));
     }
 
     _seriesData.add(
@@ -51,12 +63,12 @@ class _ChartRecCategoriaState extends State<ChartRecCategoria> {
           colorFn: (ChartRecCategoriaData rec, _) =>
               charts.ColorUtil.fromDartColor(rec.colorval),
           labelAccessorFn: (ChartRecCategoriaData rec, _) =>
-              '${rec.valor.toStringAsFixed(3)}'),
+              '${getCurrency(rec.valor)}'),
     );
 
     return Container(
       padding: const EdgeInsets.all(8),
-      height: 350,
+      height: 450,
       margin: EdgeInsets.fromLTRB(10, 5, 10, 5),
       color: Colors.white,
       child: Column(
@@ -68,13 +80,15 @@ class _ChartRecCategoriaState extends State<ChartRecCategoria> {
               animationDuration: Duration(seconds: 2),
               behaviors: [
                 new charts.DatumLegend(
-                    outsideJustification:
-                        charts.OutsideJustification.endDrawArea,
-                    horizontalFirst: false,
-                    desiredMaxRows: 2,
-                    cellPadding: new EdgeInsets.only(right: 4.0, bottom: 4.0),
-                    entryTextStyle: charts.TextStyleSpec(
-                        color: charts.MaterialPalette.black, fontSize: 11))
+                  outsideJustification: charts.OutsideJustification.start,
+                  horizontalFirst: false,
+                  desiredMaxRows: 3,
+                  position: charts.BehaviorPosition.bottom,
+                  cellPadding:
+                      new EdgeInsets.only(bottom: 4, right: 0, left: 0),
+                  entryTextStyle: charts.TextStyleSpec(
+                      color: charts.MaterialPalette.black, fontSize: 13),
+                )
               ],
               defaultRenderer: new charts.ArcRendererConfig(
                 arcWidth: 200,
