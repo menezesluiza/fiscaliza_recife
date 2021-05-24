@@ -98,8 +98,8 @@ class _GridRecState extends State<GridRec> {
   }
 
   void _loadO2020() async {
-    orgaosR2020.clear();
-    orgaosR2020 = {'0': 'TODOS OS ÓRGÃOS'};
+    //orgaosR2020.clear();
+    //orgaosR2020 = {'0': 'TODOS OS ÓRGÃOS'};
     await FirebaseFirestore.instance
         .collection('orgaos_receitas')
         .where('ano', isEqualTo: '2020')
@@ -116,8 +116,8 @@ class _GridRecState extends State<GridRec> {
   }
 
   void _loadO2021() async {
-    orgaosR2021.clear();
-    orgaosR2021 = {'0': 'TODOS OS ÓRGÃOS'};
+    //orgaosR2021.clear();
+    //orgaosR2021 = {'0': 'TODOS OS ÓRGÃOS'};
     await FirebaseFirestore.instance
         .collection('orgaos_receitas')
         .where('ano', isEqualTo: '2021')
@@ -320,6 +320,7 @@ class _GridRecState extends State<GridRec> {
                       setState(() {
                         dropdownValueR = newValue;
                         orgaoCod = '0';
+                        orgaoR = 'TODOS OS ÓRGÃOS';
                         _getData();
                       });
                     },
