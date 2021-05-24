@@ -5,6 +5,14 @@ Este aplicativo tem como objetivo facilitar o acesso e entendimento do conteúdo
 
 Aplicativo em construção, com atualizações constantes.
 
+## Demo:
+
+
+
+https://user-images.githubusercontent.com/48093105/119374444-f57eb880-bc8f-11eb-9085-ee5430597f7c.mp4
+
+
+
 ## Como começar?
 
 Esse aplicativo é desenvolvido em Flutter/Dart, com suporte (até o momento) para dispositivos Android. 
