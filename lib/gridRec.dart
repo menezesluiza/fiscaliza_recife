@@ -5,8 +5,6 @@ import 'package:fiscaliza_recife/chartRecOrigem.dart';
 import 'package:fiscaliza_recife/chartRecPrecArrec.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:intl/intl.dart';
-
 import 'SemRecArrec.dart';
 
 // ignore: must_be_immutable
@@ -30,10 +28,12 @@ class _GridRecState extends State<GridRec> {
   }
 
   String dropdownValueR = '2021';
-  List<String> anosR = ['2021', '2020', '2019', '2018', '2017'];
+  List<String> anosR = ['2021', '2020', '2019', '2018', '2017', '2016', '2015'];
   String orgaoR = 'TODOS OS ÓRGÃOS';
-  List<String> orgaosR2021 = [];
-  List<String> orgaosR2020 = [];
+  Map<String, String> orgaosR2021 = {'0': 'TODOS OS ÓRGÃOS'};
+  Map<String, String> orgaosR2020 = {'0': 'TODOS OS ÓRGÃOS'};
+  Map<String, String> orgaosR2019 = {'0': 'TODOS OS ÓRGÃOS'};
+  String orgaoCod = '0';
 
   double recArrec = 0;
   double recPrev = 0;
@@ -67,54 +67,99 @@ class _GridRecState extends State<GridRec> {
   double alien = 0;
   double amort = 0;
 
+  String orgaoCodigo = '0';
+
   TextStyle chartTitle = TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
 
   BoxDecoration chartDecor =
       BoxDecoration(border: Border(bottom: BorderSide(color: Colors.black26)));
 
   void _loadOrgaosR() {
+    //_loadO2019();
     _loadO2020();
     _loadO2021();
-    //FirebaseFirestore.instance.terminate();
     setState(() {});
   }
 
-  void _loadO2020() async {
+  void _loadO2019() async {
     await FirebaseFirestore.instance
-        .collection('orgaos-2020')
-        .orderBy('id')
+        .collection('orgaos_receitas')
+        .where('ano', isEqualTo: '2020')
+        //.orderBy('id')
         .get()
         .then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) {
-        orgaosR2020.add(doc['nome']);
+        if (doc['orgao_codigo'] != '0') {
+          orgaosR2019.addAll({doc['orgao_codigo']: doc['orgao_nome']});
+        }
       });
     });
+    FirebaseFirestore.instance.terminate();
+  }
+
+  void _loadO2020() async {
+    orgaosR2020.clear();
+    orgaosR2020 = {'0': 'TODOS OS ÓRGÃOS'};
+    await FirebaseFirestore.instance
+        .collection('orgaos_receitas')
+        .where('ano', isEqualTo: '2020')
+        //.orderBy('id')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        if (doc['orgao_codigo'] != '0') {
+          orgaosR2020.addAll({doc['orgao_codigo']: doc['orgao_nome']});
+        }
+      });
+    });
+    FirebaseFirestore.instance.terminate();
   }
 
   void _loadO2021() async {
+    orgaosR2021.clear();
+    orgaosR2021 = {'0': 'TODOS OS ÓRGÃOS'};
     await FirebaseFirestore.instance
-        .collection('orgaos-2021')
-        .orderBy('id')
+        .collection('orgaos_receitas')
+        .where('ano', isEqualTo: '2021')
         .get()
         .then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) {
-        orgaosR2021.add(doc['nome']);
+        if (doc['orgao_codigo'] != '0') {
+          orgaosR2021.addAll({doc['orgao_codigo']: doc['orgao_nome']});
+        }
       });
     });
+    FirebaseFirestore.instance.terminate();
   }
 
-  List<String> _returnOrgaoList(String ano) {
+  Map<String, String> _returnOrgaoList(String ano) {
     if (ano == '2021') {
       return orgaosR2021;
     } else if (ano == '2020') {
       return orgaosR2020;
+    } else if (ano == '2019') {
+      return orgaosR2019;
     } else
       return null;
   }
 
+  String _returncod(String value, String ano) {
+    Map _lista = _returnOrgaoList(ano);
+    var _key =
+        _lista.keys.firstWhere((k) => _lista[k] == value, orElse: () => null);
+    return _key;
+  }
+
+  _isZero(var value) {
+    if (value == 0 || value == null) {
+      return true;
+    } else
+      return false;
+  }
+
   void _getData() async {
-    String _ano = 'receitas-' + dropdownValueR;
-    String _orgao = orgaoR;
+    //String _ano = 'receitas-' + dropdownValueR;
+    //String _orgao = orgaoR;
     recArrec = 0;
     recPrev = 0;
     recArrecJan = 0;
@@ -144,222 +189,102 @@ class _GridRecState extends State<GridRec> {
     alien = 0;
     amort = 0;
 
-    if (orgaoR == 'TODOS OS ÓRGÃOS') {
-      await FirebaseFirestore.instance
-          .collection(_ano)
-          .get()
-          .then((QuerySnapshot querySnapshot) {
-        querySnapshot.docs.forEach((doc) {
-          recPrev += double.parse(doc['receita_prevista_atualizada']
-              .toString()
-              .replaceAll(",", "."));
-          recArrec += double.parse(
-              doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          //MENSAL
-          if (doc['mes'] == 1) {
-            recArrecJan += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['mes'] == 2) {
-            recArrecFev += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['mes'] == 3) {
-            recArrecMar += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['mes'] == 4) {
-            recArrecAbr += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['mes'] == 5) {
-            recArrecMai += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['mes'] == 6) {
-            recArrecJun += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['mes'] == 7) {
-            recArrecJul += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['mes'] == 8) {
-            recArrecAgo += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['mes'] == 9) {
-            recArrecSet += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['mes'] == 10) {
-            recArrecOut += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['mes'] == 11) {
-            recArrecNov += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['mes'] == 12) {
-            recArrecDez += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          }
-          //CATEGORIA
-          if (doc['categoria_receita_nome'] == 'RECEITAS CORRENTES') {
-            recCorrente += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['categoria_receita_nome'] == 'RECEITAS DE CAPITAL') {
-            recCapital += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['categoria_receita_nome'] ==
-              'RECEITAS CORRENTES INTRAORÇAMENTÁRIAS') {
-            recCorrenteInfra += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          }
-          //ORIGEM RECEITA
-          if (doc['fonte_origem_receita_nome'] == 'TRANSFERÊNCIAS CORRENTES') {
-            transfCorr += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['fonte_origem_receita_nome'] ==
-              'IMPOSTOS, TAXAS E CONTRIBUIÇÕES DE MELHORIA') {
-            impostos += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['fonte_origem_receita_nome'] ==
-              'OUTRAS RECEITAS CORRENTES') {
-            outrasCred += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['fonte_origem_receita_nome'] ==
-              'OPERAÇÕES DE CRÉDITO') {
-            opCredito += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['fonte_origem_receita_nome'] ==
-              'OUTRAS RECEITAS DE CAPITAL') {
-            outrasCap += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['fonte_origem_receita_nome'] ==
-              'RECEITA PATRIMONIAL') {
-            recPatri += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['fonte_origem_receita_nome'] ==
-              'RECEITA DE SERVIÇOS') {
-            recServ += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['fonte_origem_receita_nome'] ==
-              'TRANSFERÊNCIAS DE CAPITAL') {
-            transfCap += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['fonte_origem_receita_nome'] == 'CONTRIBUIÇÕES') {
-            contri += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['fonte_origem_receita_nome'] == 'ALIENAÇÃO DE BENS') {
-            alien += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['fonte_origem_receita_nome'] ==
-              'AMORTIZAÇÃO DE EMPRÉSTIMOS') {
-            amort += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          }
-        });
+    await FirebaseFirestore.instance
+        .collection('totais_receitas')
+        .where('ano', isEqualTo: dropdownValueR)
+        .where('orgao_codigo', isEqualTo: orgaoCod)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        _isZero(doc['recarrec'])
+            ? recArrec = 0
+            : recArrec = double.parse(doc['recarrec'].toString());
+        _isZero(doc['recprev'])
+            ? recPrev = 0
+            : recPrev = double.parse(doc['recprev'].toString());
+        _isZero(doc['recarrecjan'])
+            ? recArrecJan = 0
+            : recArrecJan = double.parse(doc['recarrecjan'].toString());
+        _isZero(doc['recarrecfev'])
+            ? recArrecFev = 0
+            : recArrecFev = double.parse(doc['recarrecfev'].toString());
+        _isZero(doc['recarrecmar'])
+            ? recArrecMar = 0
+            : recArrecMar = double.parse(doc['recarrecmar'].toString());
+        _isZero(doc['recarrecabr'])
+            ? recArrecAbr = 0
+            : recArrecAbr = double.parse(doc['recarrecabr'].toString());
+        _isZero(doc['recarrecmai'])
+            ? recArrecMai = 0
+            : recArrecMai = double.parse(doc['recarrecmai'].toString());
+        _isZero(doc['recarrecjun'])
+            ? recArrecJun = 0
+            : recArrecJun = double.parse(doc['recarrecjun'].toString());
+        _isZero(doc['recarrecjul'])
+            ? recArrecJul = 0
+            : recArrecJul = double.parse(doc['recarrecjul'].toString());
+        _isZero(doc['recarrecago'])
+            ? recArrecAgo = 0
+            : recArrecAgo = double.parse(doc['recarrecago'].toString());
+        _isZero(doc['recarrecset'])
+            ? recArrecSet = 0
+            : recArrecSet = double.parse(doc['recarrecset'].toString());
+        _isZero(doc['recarrecout'])
+            ? recArrecOut = 0
+            : recArrecOut = double.parse(doc['recarrecout'].toString());
+        _isZero(doc['recarrecnov'])
+            ? recArrecNov = 0
+            : recArrecNov = double.parse(doc['recarrecnov'].toString());
+        _isZero(doc['recarrecdez'])
+            ? recArrecDez = 0
+            : recArrecDez = double.parse(doc['recarrecdez'].toString());
+        _isZero(doc['reccorrente'])
+            ? recCorrente = 0
+            : recCorrente = double.parse(doc['reccorrente'].toString());
+        _isZero(doc['reccapital'])
+            ? recCapital = 0
+            : recCapital = double.parse(doc['reccapital'].toString());
+        _isZero(doc['reccorrenteinfra'])
+            ? recCorrenteInfra = 0
+            : recCorrenteInfra =
+                double.parse(doc['reccorrenteinfra'].toString());
+        _isZero(doc['transfcorr'])
+            ? transfCorr = 0
+            : transfCorr = double.parse(doc['transfcorr'].toString());
+        _isZero(doc['impostos'])
+            ? impostos = 0
+            : impostos = double.parse(doc['impostos'].toString());
+        _isZero(doc['outrascred'])
+            ? outrasCred = 0
+            : outrasCred = double.parse(doc['outrascred'].toString());
+        _isZero(doc['opcredito'])
+            ? opCredito = 0
+            : opCredito = double.parse(doc['opcredito'].toString());
+        _isZero(doc['outrascap'])
+            ? outrasCap = 0
+            : outrasCap = double.parse(doc['outrascap'].toString());
+        _isZero(doc['recpatri'])
+            ? recPatri = 0
+            : recPatri = double.parse(doc['recpatri'].toString());
+        _isZero(doc['recserv'])
+            ? recServ = 0
+            : recServ = double.parse(doc['recserv'].toString());
+        _isZero(doc['transfcap'])
+            ? transfCap = 0
+            : transfCap = double.parse(doc['transfcap'].toString());
+        _isZero(doc['contri'])
+            ? contri = 0
+            : contri = double.parse(doc['contri'].toString());
+        _isZero(doc['alien'])
+            ? alien = 0
+            : alien = double.parse(doc['alien'].toString());
+        _isZero(doc['amort'])
+            ? amort = 0
+            : amort = double.parse(doc['amort'].toString());
       });
-    } else {
-      await FirebaseFirestore.instance
-          .collection(_ano)
-          .where('orgao_nome', isEqualTo: _orgao)
-          .get()
-          .then((QuerySnapshot querySnapshot) {
-        querySnapshot.docs.forEach((doc) {
-          recPrev += double.parse(doc['receita_prevista_atualizada']
-              .toString()
-              .replaceAll(",", "."));
-          recArrec += double.parse(
-              doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          //MENSAL
-          if (doc['mes'] == 1) {
-            recArrecJan += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['mes'] == 2) {
-            recArrecFev += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['mes'] == 3) {
-            recArrecMar += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['mes'] == 4) {
-            recArrecAbr += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['mes'] == 5) {
-            recArrecMai += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['mes'] == 6) {
-            recArrecJun += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['mes'] == 7) {
-            recArrecJul += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['mes'] == 8) {
-            recArrecAgo += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['mes'] == 9) {
-            recArrecSet += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['mes'] == 10) {
-            recArrecOut += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['mes'] == 11) {
-            recArrecNov += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['mes'] == 12) {
-            recArrecDez += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          }
-          //CATEGORIA
-          if (doc['categoria_receita_nome'] == 'RECEITAS CORRENTES') {
-            recCorrente += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['categoria_receita_nome'] == 'RECEITAS DE CAPITAL') {
-            recCapital += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['categoria_receita_nome'] ==
-              'RECEITAS CORRENTES INTRAORÇAMENTÁRIAS') {
-            recCorrenteInfra += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          }
-          //ORIGEM RECEITA
-          if (doc['fonte_origem_receita_nome'] == 'TRANSFERÊNCIAS CORRENTES') {
-            transfCorr += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['fonte_origem_receita_nome'] ==
-              'IMPOSTOS, TAXAS E CONTRIBUIÇÕES DE MELHORIA') {
-            impostos += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['fonte_origem_receita_nome'] ==
-              'OUTRAS RECEITAS CORRENTES') {
-            outrasCred += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['fonte_origem_receita_nome'] ==
-              'OPERAÇÕES DE CRÉDITO') {
-            opCredito += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['fonte_origem_receita_nome'] ==
-              'OUTRAS RECEITAS DE CAPITAL') {
-            outrasCap += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['fonte_origem_receita_nome'] ==
-              'RECEITA PATRIMONIAL') {
-            recPatri += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['fonte_origem_receita_nome'] ==
-              'RECEITA DE SERVIÇOS') {
-            recServ += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['fonte_origem_receita_nome'] ==
-              'TRANSFERÊNCIAS DE CAPITAL') {
-            transfCap += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['fonte_origem_receita_nome'] == 'CONTRIBUIÇÕES') {
-            contri += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['fonte_origem_receita_nome'] == 'ALIENAÇÃO DE BENS') {
-            alien += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          } else if (doc['fonte_origem_receita_nome'] ==
-              'AMORTIZAÇÃO DE EMPRÉSTIMOS') {
-            amort += double.parse(
-                doc['receita_arrecadada'].toString().replaceAll(",", "."));
-          }
-        });
-      });
-    }
-    FirebaseFirestore.instance.terminate();
+    });
 
+    FirebaseFirestore.instance.terminate();
     setState(() {});
   }
 
@@ -394,6 +319,7 @@ class _GridRecState extends State<GridRec> {
                     onChanged: (String newValue) {
                       setState(() {
                         dropdownValueR = newValue;
+                        orgaoCod = '0';
                         _getData();
                       });
                     },
@@ -428,10 +354,12 @@ class _GridRecState extends State<GridRec> {
                       onChanged: (String newValue) {
                         setState(() {
                           orgaoR = newValue;
+                          orgaoCod = _returncod(newValue, dropdownValueR);
                           _getData();
                         });
                       },
                       items: _returnOrgaoList(dropdownValueR)
+                          .values
                           .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,

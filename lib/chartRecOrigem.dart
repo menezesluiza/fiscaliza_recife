@@ -53,7 +53,7 @@ class _ChartRecOrigemState extends State<ChartRecOrigem> {
 
     if (widget.transfCorr > 0) {
       _data.add(new ChartRecOrigemData(
-        'TRANSFERÊNCIAS CORRENTES: ${getCurrency(widget.transfCorr)}',
+        'TRANSF. CORRENTES: ${getCurrency(widget.transfCorr)}',
         widget.transfCorr,
         Colors.blue[500],
       ));
@@ -109,7 +109,7 @@ class _ChartRecOrigemState extends State<ChartRecOrigem> {
     if (widget.transfCap > 0) {
       _data.add(
         new ChartRecOrigemData(
-            'TRANSFERÊNCIAS DE CAPITAL: ${getCurrency(widget.transfCap)}',
+            'TRANSF. DE CAPITAL: ${getCurrency(widget.transfCap)}',
             widget.transfCap,
             Colors.green[800]),
       );
