@@ -6,11 +6,13 @@ import 'package:intl/intl.dart';
 class ChartRecCategoria extends StatefulWidget {
   const ChartRecCategoria({
     Key key,
+    this.recArrec,
     this.recCorrente,
     this.recCapital,
     this.recCorrenteInfra,
   }) : super(key: key);
 
+  final double recArrec;
   final double recCorrente;
   final double recCapital;
   final double recCorrenteInfra;
@@ -27,6 +29,11 @@ class _ChartRecCategoriaState extends State<ChartRecCategoria> {
   String getCurrency(value) {
     NumberFormat formatter = NumberFormat.simpleCurrency(locale: 'pt_BR');
     return formatter.format(value);
+  }
+
+  String _getPercentual(double value) {
+    var _percn = value * 100 / widget.recArrec;
+    return _percn.toStringAsFixed(2);
   }
 
   @override
@@ -60,15 +67,25 @@ class _ChartRecCategoriaState extends State<ChartRecCategoria> {
           measureFn: (ChartRecCategoriaData rec, _) => rec.valor,
           id: 'Receitas',
           data: _data,
+          insideLabelStyleAccessorFn: (ChartRecCategoriaData rec, _) =>
+              new charts.TextStyleSpec(
+                color: charts.ColorUtil.fromDartColor(Colors.black87),
+                fontSize: 13,
+              ),
+          outsideLabelStyleAccessorFn: (ChartRecCategoriaData rec, _) =>
+              new charts.TextStyleSpec(
+                color: charts.ColorUtil.fromDartColor(Colors.black87),
+                fontSize: 13,
+              ),
           colorFn: (ChartRecCategoriaData rec, _) =>
               charts.ColorUtil.fromDartColor(rec.colorval),
           labelAccessorFn: (ChartRecCategoriaData rec, _) =>
-              '${getCurrency(rec.valor)}'),
+              '${_getPercentual(rec.valor)}%'),
     );
 
     return Container(
       padding: const EdgeInsets.all(8),
-      height: 450,
+      height: 400,
       margin: EdgeInsets.fromLTRB(10, 5, 10, 5),
       color: Colors.white,
       child: Column(
@@ -92,10 +109,11 @@ class _ChartRecCategoriaState extends State<ChartRecCategoria> {
               ],
               defaultRenderer: new charts.ArcRendererConfig(
                 arcWidth: 200,
-                //arcRendererDecorators: [
-                //new charts.ArcLabelDecorator(
-                //labelPosition: charts.ArcLabelPosition.inside),
-                //],
+                arcRendererDecorators: [
+                  new charts.ArcLabelDecorator(
+                      showLeaderLines: true,
+                      labelPosition: charts.ArcLabelPosition.outside),
+                ],
               ),
             ),
           )

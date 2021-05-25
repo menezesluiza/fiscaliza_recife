@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 class ChartRecOrigem extends StatefulWidget {
   ChartRecOrigem({
     Key key,
+    this.recArrec,
     this.transfCorr,
     this.impostos,
     this.outrasCred,
@@ -19,6 +20,7 @@ class ChartRecOrigem extends StatefulWidget {
     this.amort,
   }) : super(key: key);
 
+  double recArrec;
   double transfCorr;
   double impostos;
   double outrasCred;
@@ -45,6 +47,11 @@ class _ChartRecOrigemState extends State<ChartRecOrigem> {
     return formatter.format(value);
   }
 
+  String _getPercentual(double value) {
+    var _percn = value * 100 / widget.recArrec;
+    return _percn.toStringAsFixed(2);
+  }
+
   @override
   Widget build(BuildContext context) {
     List<charts.Series<ChartRecOrigemData, String>> _seriesData = [];
@@ -55,7 +62,7 @@ class _ChartRecOrigemState extends State<ChartRecOrigem> {
       _data.add(new ChartRecOrigemData(
         'TRANSF. CORRENTES: ${getCurrency(widget.transfCorr)}',
         widget.transfCorr,
-        Colors.blue[500],
+        Colors.blue[300],
       ));
     }
     if (widget.impostos > 0) {
@@ -69,7 +76,7 @@ class _ChartRecOrigemState extends State<ChartRecOrigem> {
       _data.add(new ChartRecOrigemData(
         'RECEITAS CORRENTES: ${getCurrency(widget.outrasCred)}',
         widget.outrasCred,
-        Colors.blue[300],
+        Colors.green[900],
       ));
     }
     if (widget.opCredito > 0) {
@@ -143,15 +150,25 @@ class _ChartRecOrigemState extends State<ChartRecOrigem> {
           measureFn: (ChartRecOrigemData rec, _) => rec.valor,
           id: 'Origem',
           data: _data,
+          insideLabelStyleAccessorFn: (ChartRecOrigemData rec, _) =>
+              new charts.TextStyleSpec(
+                color: charts.ColorUtil.fromDartColor(Colors.black87),
+                fontSize: 13,
+              ),
+          outsideLabelStyleAccessorFn: (ChartRecOrigemData rec, _) =>
+              new charts.TextStyleSpec(
+                color: charts.ColorUtil.fromDartColor(Colors.black87),
+                fontSize: 13,
+              ),
           colorFn: (ChartRecOrigemData rec, _) =>
               charts.ColorUtil.fromDartColor(rec.colorval),
           labelAccessorFn: (ChartRecOrigemData rec, _) =>
-              '${rec.valor.toStringAsFixed(3)}'),
+              '${_getPercentual(rec.valor)}%'),
     );
 
     return Container(
       padding: const EdgeInsets.all(8),
-      height: 600,
+      height: 570,
       margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
       color: Colors.white,
       child: Column(
@@ -175,6 +192,12 @@ class _ChartRecOrigemState extends State<ChartRecOrigem> {
               ],
               defaultRenderer: new charts.ArcRendererConfig(
                 arcWidth: 200,
+                arcRendererDecorators: [
+                  new charts.ArcLabelDecorator(
+                      showLeaderLines: true,
+                      labelPadding: 0,
+                      labelPosition: charts.ArcLabelPosition.auto),
+                ],
               ),
             ),
           )

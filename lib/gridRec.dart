@@ -28,7 +28,10 @@ class _GridRecState extends State<GridRec> {
   }
 
   String dropdownValueR = '2021';
-  List<String> anosR = ['2021', '2020', '2019', '2018', '2017', '2016', '2015'];
+  List<String> anosR = [
+    '2021',
+    '2020'
+  ]; //, '2019', '2018', '2017', '2016', '2015'
   String orgaoR = 'TODOS OS ÓRGÃOS';
   Map<String, String> orgaosR2021 = {'0': 'TODOS OS ÓRGÃOS'};
   Map<String, String> orgaosR2020 = {'0': 'TODOS OS ÓRGÃOS'};
@@ -75,61 +78,22 @@ class _GridRecState extends State<GridRec> {
       BoxDecoration(border: Border(bottom: BorderSide(color: Colors.black26)));
 
   void _loadOrgaosR() {
-    //_loadO2019();
-    _loadO2020();
-    _loadO2021();
+    anosR.forEach((element) {
+      FirebaseFirestore.instance
+          .collection('orgaos_receitas')
+          .where('ano', isEqualTo: element)
+          .get()
+          .then((QuerySnapshot querySnapshot) {
+        querySnapshot.docs.forEach((doc) {
+          if (doc['orgao_codigo'] != '0') {
+            _returnOrgaoList(element)
+                .addAll({doc['orgao_codigo']: doc['orgao_nome']});
+          }
+        });
+      });
+    });
+
     setState(() {});
-  }
-
-  void _loadO2019() async {
-    await FirebaseFirestore.instance
-        .collection('orgaos_receitas')
-        .where('ano', isEqualTo: '2020')
-        //.orderBy('id')
-        .get()
-        .then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
-        if (doc['orgao_codigo'] != '0') {
-          orgaosR2019.addAll({doc['orgao_codigo']: doc['orgao_nome']});
-        }
-      });
-    });
-    FirebaseFirestore.instance.terminate();
-  }
-
-  void _loadO2020() async {
-    //orgaosR2020.clear();
-    //orgaosR2020 = {'0': 'TODOS OS ÓRGÃOS'};
-    await FirebaseFirestore.instance
-        .collection('orgaos_receitas')
-        .where('ano', isEqualTo: '2020')
-        //.orderBy('id')
-        .get()
-        .then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
-        if (doc['orgao_codigo'] != '0') {
-          orgaosR2020.addAll({doc['orgao_codigo']: doc['orgao_nome']});
-        }
-      });
-    });
-    FirebaseFirestore.instance.terminate();
-  }
-
-  void _loadO2021() async {
-    //orgaosR2021.clear();
-    //orgaosR2021 = {'0': 'TODOS OS ÓRGÃOS'};
-    await FirebaseFirestore.instance
-        .collection('orgaos_receitas')
-        .where('ano', isEqualTo: '2021')
-        .get()
-        .then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
-        if (doc['orgao_codigo'] != '0') {
-          orgaosR2021.addAll({doc['orgao_codigo']: doc['orgao_nome']});
-        }
-      });
-    });
-    FirebaseFirestore.instance.terminate();
   }
 
   Map<String, String> _returnOrgaoList(String ano) {
@@ -158,8 +122,6 @@ class _GridRecState extends State<GridRec> {
   }
 
   void _getData() async {
-    //String _ano = 'receitas-' + dropdownValueR;
-    //String _orgao = orgaoR;
     recArrec = 0;
     recPrev = 0;
     recArrecJan = 0;
@@ -431,6 +393,7 @@ class _GridRecState extends State<GridRec> {
                 ),
                 _semReceita(recArrec)
                     ? ChartRecCategoria(
+                        recArrec: recArrec,
                         recCorrente: recCorrente,
                         recCapital: recCapital,
                         recCorrenteInfra: recCorrenteInfra,
@@ -447,6 +410,7 @@ class _GridRecState extends State<GridRec> {
                 ),
                 _semReceita(recArrec)
                     ? ChartRecOrigem(
+                        recArrec: recArrec,
                         alien: alien,
                         amort: amort,
                         contri: contri,
