@@ -21,19 +21,19 @@ class Menu extends StatelessWidget {
           padding: EdgeInsets.zero,
           children: [
             Container(
-              height: 200,
+              height: 100,
               child: DrawerHeader(
                 padding: EdgeInsets.fromLTRB(20, 50, 20, 50),
                 decoration: BoxDecoration(
                   color: Theme.of(context).primaryColor,
                 ),
-                child: const Text(
+                child: null,
+                /* child: const Text(
                   'Fiscaliza Recife',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 20,
-                  ),
-                ),
+                  ),*/
               ),
             ),
             ListTile(
@@ -56,12 +56,12 @@ class Menu extends StatelessWidget {
               //'Saiba mais sobre esse aplicativo',
               //style: TextStyle(color: Colors.grey[800]),
             ),
-            const ListTile(
+            /* const ListTile(
               title: const Text('Sair'),
               leading: const Icon(Icons.exit_to_app),
               onTap: null,
               horizontalTitleGap: 0,
-            ),
+            ), */
           ],
         ),
       ),

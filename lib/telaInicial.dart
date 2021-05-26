@@ -72,7 +72,7 @@ class _TelaPrincipalState extends State<TelaPrincipal>
 
   @override
   Widget build(BuildContext context) {
-    _widgetOptions.add(GridDesp(dropdownValueD: '2021'));
+    _widgetOptions.add(GridDesp());
     _widgetOptions.add(GridRec());
 
     return Scaffold(

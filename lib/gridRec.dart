@@ -70,8 +70,6 @@ class _GridRecState extends State<GridRec> {
   double alien = 0;
   double amort = 0;
 
-  String orgaoCodigo = '0';
-
   TextStyle chartTitle = TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
 
   BoxDecoration chartDecor =
@@ -122,7 +120,7 @@ class _GridRecState extends State<GridRec> {
   }
 
   void _getData() async {
-    recArrec = 0;
+    /* recArrec = 0;
     recPrev = 0;
     recArrecJan = 0;
     recArrecFev = 0;
@@ -149,7 +147,7 @@ class _GridRecState extends State<GridRec> {
     transfCap = 0;
     contri = 0;
     alien = 0;
-    amort = 0;
+    amort = 0; */
 
     await FirebaseFirestore.instance
         .collection('totais_receitas')
