@@ -1,6 +1,9 @@
 import 'dart:ui';
+// ignore: import_of_legacy_library_into_null_safe
+import 'package:fiscaliza_recife/gridTemp.dart';
 import 'package:flutter/material.dart';
 import './drawer.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import './gridDesp.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import './gridRec.dart';
@@ -73,6 +76,7 @@ class _TelaPrincipalState extends State<TelaPrincipal>
   @override
   Widget build(BuildContext context) {
     _widgetOptions.add(GridDesp());
+    _widgetOptions.add(GridTemp());
     _widgetOptions.add(GridRec());
 
     return Scaffold(
@@ -103,8 +107,13 @@ class _TelaPrincipalState extends State<TelaPrincipal>
             label: '',
           ),
           BottomNavigationBarItem(
+            icon: _buildIcon(Icons.pie_chart, 'COMPARATIVO', 1),
+            label: '',
+            //icon: Icon(Icons.arrow_upward_outlined),
+          ),
+          BottomNavigationBarItem(
             icon:
-                _buildIcon(Icons.insert_chart_outlined_rounded, 'RECEITAS', 1),
+                _buildIcon(Icons.insert_chart_outlined_rounded, 'RECEITAS', 2),
             //icon: Icon(Icons.arrow_upward_outlined),
             label: '',
           ),

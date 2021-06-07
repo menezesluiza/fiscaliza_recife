@@ -80,6 +80,7 @@ class _GridRecState extends State<GridRec> {
       FirebaseFirestore.instance
           .collection('orgaos_receitas')
           .where('ano', isEqualTo: element)
+          //.orderBy('id')
           .get()
           .then((QuerySnapshot querySnapshot) {
         querySnapshot.docs.forEach((doc) {
@@ -120,35 +121,6 @@ class _GridRecState extends State<GridRec> {
   }
 
   void _getData() async {
-    /* recArrec = 0;
-    recPrev = 0;
-    recArrecJan = 0;
-    recArrecFev = 0;
-    recArrecMar = 0;
-    recArrecAbr = 0;
-    recArrecMai = 0;
-    recArrecJun = 0;
-    recArrecJul = 0;
-    recArrecAgo = 0;
-    recArrecSet = 0;
-    recArrecOut = 0;
-    recArrecNov = 0;
-    recArrecDez = 0;
-    recCorrente = 0;
-    recCapital = 0;
-    recCorrenteInfra = 0;
-    transfCorr = 0;
-    impostos = 0;
-    outrasCred = 0;
-    opCredito = 0;
-    outrasCap = 0;
-    recPatri = 0;
-    recServ = 0;
-    transfCap = 0;
-    contri = 0;
-    alien = 0;
-    amort = 0; */
-
     await FirebaseFirestore.instance
         .collection('totais_receitas')
         .where('ano', isEqualTo: dropdownValueR)

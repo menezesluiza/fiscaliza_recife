@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fiscaliza_recife/chartDespFunc.dart';
 import 'package:fiscaliza_recife/chartDespMensal.dart';
+import 'package:fiscaliza_recife/chartDespMod.dart';
 import 'package:fiscaliza_recife/semDesp.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -21,14 +22,17 @@ class _GridDespState extends State<GridDesp> {
     super.initState();
     _loadOrgaosD();
     _getData();
+    //orgaosD2020.addAll({'0': 'TODOS OS ÓRGÃOS'});
   }
 
   String dropdownValueD = '2021';
   List<String> anosD = [
-    '2021' //,
-    //'2020'
+    '2021',
+    '2020'
   ]; //, '2019', '2018', '2017', '2016', '2015'
   String orgaoD = 'TODOS OS ÓRGÃOS';
+  //var orgaosD2020 = new SortedMap(Ordering.byValue());
+
   Map<String, String> orgaosD2021 = {'0': 'TODOS OS ÓRGÃOS'};
   Map<String, String> orgaosD2020 = {'0': 'TODOS OS ÓRGÃOS'};
   Map<String, String> orgaosD2019 = {'0': 'TODOS OS ÓRGÃOS'};
@@ -65,6 +69,20 @@ class _GridDespState extends State<GridDesp> {
   double trab = 0;
   double urbanismo = 0;
   double dirCid = 0;
+  double naoInfo = 0;
+  double dispensa = 0;
+  double selecaoPub = 0;
+  double concurso = 0;
+  double pregRegPrec = 0;
+  double concRegPrec = 0;
+  double pregElet = 0;
+  double inexig = 0;
+  double credenc = 0;
+  double pregao = 0;
+  double convite = 0;
+  double tomadaPreco = 0;
+  double concorrencia = 0;
+  double convenio = 0;
 
   TextStyle chartTitle = TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
 
@@ -76,12 +94,14 @@ class _GridDespState extends State<GridDesp> {
       FirebaseFirestore.instance
           .collection('orgaos_despesas')
           .where('ano', isEqualTo: element)
+          //.orderBy('id')
           .get()
           .then((QuerySnapshot querySnapshot) {
         querySnapshot.docs.forEach((doc) {
           if (doc['orgao_codigo'] != '0') {
             _returnOrgaoList(element)
                 .addAll({doc['orgao_codigo']: doc['orgao_nome']});
+            //print(doc['orgao_nome']);
           }
         });
       });
@@ -130,7 +150,7 @@ class _GridDespState extends State<GridDesp> {
   _getData() async {
     await FirebaseFirestore.instance
         .collection('totais_despesas')
-        .where('ano', isEqualTo: dropdownValueD)
+        .where('ano_mov', isEqualTo: dropdownValueD)
         .where('orgao_codigo', isEqualTo: orgaoCod)
         .get()
         .then((QuerySnapshot querySnapshot) {
@@ -228,6 +248,48 @@ class _GridDespState extends State<GridDesp> {
         _isZero(doc['dircid'])
             ? dirCid = 0
             : dirCid = double.parse(doc['dircid'].toString());
+        _isZero(doc['naoinfo'])
+            ? naoInfo = 0
+            : naoInfo = double.parse(doc['naoinfo'].toString());
+        _isZero(doc['dispensa'])
+            ? dispensa = 0
+            : dispensa = double.parse(doc['dispensa'].toString());
+        _isZero(doc['selecaopub'])
+            ? selecaoPub = 0
+            : selecaoPub = double.parse(doc['selecaopub'].toString());
+        _isZero(doc['concurso'])
+            ? concurso = 0
+            : concurso = double.parse(doc['concurso'].toString());
+        _isZero(doc['pregregprec'])
+            ? pregRegPrec = 0
+            : pregRegPrec = double.parse(doc['pregregprec'].toString());
+        _isZero(doc['concregprec'])
+            ? concRegPrec = 0
+            : concRegPrec = double.parse(doc['concregprec'].toString());
+        _isZero(doc['pregelet'])
+            ? pregElet = 0
+            : pregElet = double.parse(doc['pregelet'].toString());
+        _isZero(doc['inexig'])
+            ? inexig = 0
+            : inexig = double.parse(doc['inexig'].toString());
+        _isZero(doc['credenc'])
+            ? credenc = 0
+            : credenc = double.parse(doc['credenc'].toString());
+        _isZero(doc['pregao'])
+            ? pregao = 0
+            : pregao = double.parse(doc['pregao'].toString());
+        _isZero(doc['convite'])
+            ? convite = 0
+            : convite = double.parse(doc['convite'].toString());
+        _isZero(doc['convenio'])
+            ? convenio = 0
+            : convenio = double.parse(doc['convenio'].toString());
+        _isZero(doc['concorrencia'])
+            ? concorrencia = 0
+            : concorrencia = double.parse(doc['concorrencia'].toString());
+        _isZero(doc['tomadapreco'])
+            ? tomadaPreco = 0
+            : tomadaPreco = double.parse(doc['tomadapreco'].toString());
       });
     });
 
@@ -262,6 +324,7 @@ class _GridDespState extends State<GridDesp> {
                         orgaoCod = '0';
                         orgaoD = 'TODOS OS ÓRGÃOS';
                         _getData();
+                        print(desp);
                       });
                     },
                     items: anosD.map<DropdownMenuItem<String>>((String value) {
@@ -411,6 +474,25 @@ class _GridDespState extends State<GridDesp> {
                   ),
                   decoration: chartDecor,
                 ),
+                _semDespesa(desp)
+                    ? ChartDespMod(
+                        concRegPrec: concRegPrec,
+                        concorrencia: concorrencia,
+                        concurso: concurso,
+                        convite: convite,
+                        convenio: convenio,
+                        credenc: credenc,
+                        desp: desp,
+                        dispensa: dispensa,
+                        naoInfo: naoInfo,
+                        inexig: inexig,
+                        pregElet: pregElet,
+                        pregRegPrec: pregRegPrec,
+                        pregao: pregao,
+                        selecaoPub: selecaoPub,
+                        tomadaPreco: tomadaPreco,
+                      )
+                    : SemDesp(),
               ])),
         ),
       ],
