@@ -36,6 +36,10 @@ class _GridDespState extends State<GridDesp> {
   Map<String, String> orgaosD2021 = {'0': 'TODOS OS ÓRGÃOS'};
   Map<String, String> orgaosD2020 = {'0': 'TODOS OS ÓRGÃOS'};
   Map<String, String> orgaosD2019 = {'0': 'TODOS OS ÓRGÃOS'};
+  Map<String, String> orgaosD2018 = {'0': 'TODOS OS ÓRGÃOS'};
+  Map<String, String> orgaosD2017 = {'0': 'TODOS OS ÓRGÃOS'};
+  Map<String, String> orgaosD2016 = {'0': 'TODOS OS ÓRGÃOS'};
+  Map<String, String> orgaosD2015 = {'0': 'TODOS OS ÓRGÃOS'};
   String orgaoCod = '0';
 
   double desp = 0;
@@ -116,6 +120,14 @@ class _GridDespState extends State<GridDesp> {
     } else if (ano == '2020') {
       return orgaosD2020;
     } else if (ano == '2019') {
+      return orgaosD2019;
+    } else if (ano == '2018') {
+      return orgaosD2019;
+    } else if (ano == '2017') {
+      return orgaosD2019;
+    } else if (ano == '2016') {
+      return orgaosD2019;
+    } else if (ano == '2015') {
       return orgaosD2019;
     } else
       return null;
@@ -293,7 +305,7 @@ class _GridDespState extends State<GridDesp> {
       });
     });
 
-    FirebaseFirestore.instance.terminate();
+    //FirebaseFirestore.instance.terminate();
     setState(() {});
   }
 

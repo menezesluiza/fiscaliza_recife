@@ -1,5 +1,5 @@
 // @dart=2.9
-import 'package:fiscaliza_recife/semDesp.dart';
+import 'package:fiscaliza_recife/chartTempAnual.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -22,35 +22,58 @@ class _GridTempState extends State<GridTemp> {
     _getData();
   }
 
-  String dropdownValueI = '2021';
-  String dropdownValueF = '2020';
-  List<String> anos = [
-    '2021',
-    '2020'
-  ]; //, '2019', '2018', '2017', '2016', '2015'
+  String dropdownValue = '2021';
+  String dropTipo = 'ANÁLISE TEMPORAL POR ANO';
+  List<String> anos = ['2021', '2020', '2019', '2018', '2017', '2016', '2015'];
+
+  List<String> tipos = ['ANÁLISE TEMPORAL POR ANO', 'ANÁLISE TEMPORAL POR MÊS'];
+
+  Map<double, double> desp = {0: 0};
+  Map<double, double> rec = {0: 0};
+
+  var loaded = false;
 
   TextStyle chartTitle = TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
 
   BoxDecoration chartDecor =
       BoxDecoration(border: Border(bottom: BorderSide(color: Colors.black26)));
 
-  _isZero(var value) {
-    if (value == 0 || value == null) {
-      return true;
-    } else
-      return false;
+  void _getDataRec() async {
+    await FirebaseFirestore.instance
+        .collection('totais_despesas')
+        .where('orgao_codigo', isEqualTo: '0')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        desp.addAll({
+          double.parse(doc['ano_mov'].toString()):
+              double.parse(doc['desp'].toString())
+        });
+        setState(() {});
+      });
+    });
   }
 
-  void _getData() async {
-    FirebaseFirestore.instance.terminate();
-    setState(() {});
+  void _getDataDesp() async {
+    await FirebaseFirestore.instance
+        .collection('totais_receitas')
+        .where('orgao_codigo', isEqualTo: '0')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        rec.addAll({
+          double.parse(doc['ano'].toString()):
+              double.parse(doc['recarrec'].toString())
+        });
+        setState(() {});
+      });
+    });
   }
 
-  _semReceita(double rec) {
-    if (rec > 0) {
-      return true;
-    } else
-      return false;
+  void _getData() {
+    _getDataDesp();
+    _getDataRec();
+    loaded = true;
   }
 
   @override
@@ -62,18 +85,6 @@ class _GridTempState extends State<GridTemp> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                //ANO
-                height: 45,
-                margin: EdgeInsets.fromLTRB(5, 10, 5, 5),
-                //decoration: BoxDecoration(
-                //color: Colors.grey[300],
-                //borderRadius: new BorderRadius.circular(5)),
-                padding: EdgeInsets.fromLTRB(4, 0, 20, 4),
-                alignment: Alignment.center,
-                child: Text('ANÁLISE TEMPORAL:'),
-              ),
-              Container(
-                //ANO
                 height: 45,
                 margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
                 decoration: BoxDecoration(
@@ -82,17 +93,17 @@ class _GridTempState extends State<GridTemp> {
                 padding: EdgeInsets.fromLTRB(14, 0, 0, 4),
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
-                    value: dropdownValueI,
+                    value: dropTipo,
                     elevation: 8,
                     dropdownColor: Colors.grey[300],
                     style: TextStyle(color: Colors.black87),
                     onChanged: (String newValue) {
                       setState(() {
-                        dropdownValueI = newValue;
+                        dropTipo = newValue;
                         _getData();
                       });
                     },
-                    items: anos.map<DropdownMenuItem<String>>((String value) {
+                    items: tipos.map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(
@@ -105,7 +116,6 @@ class _GridTempState extends State<GridTemp> {
                 ),
               ),
               Container(
-                //ANO
                 height: 45,
                 margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
                 decoration: BoxDecoration(
@@ -114,13 +124,13 @@ class _GridTempState extends State<GridTemp> {
                 padding: EdgeInsets.fromLTRB(14, 0, 0, 4),
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
-                    value: dropdownValueF,
+                    value: dropdownValue,
                     elevation: 8,
                     dropdownColor: Colors.grey[300],
                     style: TextStyle(color: Colors.black87),
                     onChanged: (String newValue) {
                       setState(() {
-                        dropdownValueF = newValue;
+                        dropdownValue = newValue;
                         _getData();
                       });
                     },
@@ -150,17 +160,22 @@ class _GridTempState extends State<GridTemp> {
                   alignment: Alignment.topLeft,
                   padding: EdgeInsets.fromLTRB(0, 15, 0, 10),
                   child: Text(
-                    'RECEITA X DESPESAS ANUAL',
+                    'RECEITA X DESPESAS',
                     style: chartTitle,
                   ),
                   decoration: chartDecor,
                 ),
-                SemDesp(),
+                loaded
+                    ? ChartTempAnual(
+                        desp: desp,
+                        rec: rec,
+                      )
+                    : Text('SEM DADOS'),
                 Container(
                   alignment: Alignment.topLeft,
                   padding: EdgeInsets.fromLTRB(0, 15, 0, 10),
                   child: Text(
-                    'RECEITA X DESPESAS MENSAL',
+                    'COMPARATIVO MOVIMENTAÇÃO',
                     style: chartTitle,
                   ),
                   decoration: chartDecor,

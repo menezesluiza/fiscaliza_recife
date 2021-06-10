@@ -36,6 +36,10 @@ class _GridRecState extends State<GridRec> {
   Map<String, String> orgaosR2021 = {'0': 'TODOS OS ÓRGÃOS'};
   Map<String, String> orgaosR2020 = {'0': 'TODOS OS ÓRGÃOS'};
   Map<String, String> orgaosR2019 = {'0': 'TODOS OS ÓRGÃOS'};
+  Map<String, String> orgaosR2018 = {'0': 'TODOS OS ÓRGÃOS'};
+  Map<String, String> orgaosR2017 = {'0': 'TODOS OS ÓRGÃOS'};
+  Map<String, String> orgaosR2016 = {'0': 'TODOS OS ÓRGÃOS'};
+  Map<String, String> orgaosR2015 = {'0': 'TODOS OS ÓRGÃOS'};
   String orgaoCod = '0';
 
   double recArrec = 0;
@@ -101,6 +105,14 @@ class _GridRecState extends State<GridRec> {
     } else if (ano == '2020') {
       return orgaosR2020;
     } else if (ano == '2019') {
+      return orgaosR2019;
+    } else if (ano == '2018') {
+      return orgaosR2019;
+    } else if (ano == '2017') {
+      return orgaosR2019;
+    } else if (ano == '2016') {
+      return orgaosR2019;
+    } else if (ano == '2015') {
       return orgaosR2019;
     } else
       return null;
@@ -216,7 +228,7 @@ class _GridRecState extends State<GridRec> {
       });
     });
 
-    FirebaseFirestore.instance.terminate();
+    //FirebaseFirestore.instance.terminate();
     setState(() {});
   }
 

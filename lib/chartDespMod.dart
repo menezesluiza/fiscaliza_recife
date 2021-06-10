@@ -68,14 +68,14 @@ class _ChartDespModState extends State<ChartDespMod> {
       _data.add(new ChartDespModData(
         'NÃO INFORMADA: ${getCurrency(widget.naoInfo)}',
         widget.naoInfo,
-        Colors.blue[300],
+        Colors.red[300],
       ));
     }
     if (widget.dispensa > 0) {
       _data.add(new ChartDespModData(
         'DISPENSA: ${getCurrency(widget.dispensa)}',
         widget.dispensa,
-        Colors.blue[700],
+        Colors.red[900],
       ));
     }
     if (widget.selecaoPub > 0) {
@@ -90,7 +90,7 @@ class _ChartDespModState extends State<ChartDespMod> {
         new ChartDespModData(
           'CONCURSO: ${getCurrency(widget.concurso)}',
           widget.concurso,
-          Colors.blue[900],
+          Colors.blue[400],
         ),
       );
     }
@@ -108,7 +108,7 @@ class _ChartDespModState extends State<ChartDespMod> {
         new ChartDespModData(
             'CONCORRENCIA - REG. PREÇO: ${getCurrency(widget.concRegPrec)}',
             widget.concRegPrec,
-            Colors.yellow[700]),
+            Colors.blue[700]),
       );
     }
     if (widget.pregElet > 0) {
@@ -122,7 +122,7 @@ class _ChartDespModState extends State<ChartDespMod> {
     if (widget.inexig > 0) {
       _data.add(
         new ChartDespModData('INEXIGIBILIDADE: ${getCurrency(widget.inexig)}',
-            widget.inexig, Colors.green[800]),
+            widget.inexig, Colors.green[200]),
       );
     }
     if (widget.credenc > 0) {
@@ -140,7 +140,7 @@ class _ChartDespModState extends State<ChartDespMod> {
     if (widget.convite > 0) {
       _data.add(
         new ChartDespModData('CONVITE: ${getCurrency(widget.convite)}',
-            widget.convite, Colors.green[300]),
+            widget.convite, Colors.indigo[300]),
       );
     }
     if (widget.tomadaPreco > 0) {
@@ -148,7 +148,7 @@ class _ChartDespModState extends State<ChartDespMod> {
         new ChartDespModData(
             'TOMADA DE PREÇO: ${getCurrency(widget.tomadaPreco)}',
             widget.tomadaPreco,
-            Colors.green[300]),
+            Colors.indigo[700]),
       );
     }
     if (widget.concorrencia > 0) {
@@ -156,13 +156,13 @@ class _ChartDespModState extends State<ChartDespMod> {
         new ChartDespModData(
             'CONCORRÊNCIA: ${getCurrency(widget.concorrencia)}',
             widget.concorrencia,
-            Colors.green[300]),
+            Colors.cyan[200]),
       );
     }
     if (widget.convenio > 0) {
       _data.add(
         new ChartDespModData('CONVÊNIO: ${getCurrency(widget.convenio)}',
-            widget.convenio, Colors.green[300]),
+            widget.convenio, Colors.cyan[900]),
       );
     }
 

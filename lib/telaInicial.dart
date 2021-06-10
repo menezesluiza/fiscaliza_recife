@@ -22,7 +22,7 @@ class _TelaPrincipalState extends State<TelaPrincipal>
     super.initState();
   }
 
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
 
   final _selectedItemColor = Colors.white;
   final _unselectedItemColor = Colors.white70;
