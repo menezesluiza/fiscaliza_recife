@@ -67,24 +67,25 @@ class _ChartRecPrevMensalState extends State<ChartRecPrevMensal> {
 
     _seriesData.add(
       charts.Series(
-          domainFn: (ChartRecPrevMensalData rec, _) => rec.desc,
-          measureFn: (ChartRecPrevMensalData rec, _) => rec.valor,
-          id: 'ARRECADADA',
-          data: _data,
-          fillColorFn: (ChartRecPrevMensalData rec, _) =>
-              charts.ColorUtil.fromDartColor(rec.colorval),
-          labelAccessorFn: (ChartRecPrevMensalData rec, _) =>
-              '${getCurrency(rec.valor)}',
-          insideLabelStyleAccessorFn: (ChartRecPrevMensalData rec, _) =>
-              new charts.TextStyleSpec(
-                color: charts.ColorUtil.fromDartColor(Colors.white),
-                fontSize: 14,
-              ),
-          outsideLabelStyleAccessorFn: (ChartRecPrevMensalData rec, _) =>
-              new charts.TextStyleSpec(
-                color: charts.ColorUtil.fromDartColor(Colors.black54),
-                fontSize: 14,
-              )),
+        domainFn: (ChartRecPrevMensalData rec, _) => rec.desc,
+        measureFn: (ChartRecPrevMensalData rec, _) => rec.valor,
+        id: 'ARRECADADA',
+        data: _data,
+        fillColorFn: (ChartRecPrevMensalData rec, _) =>
+            charts.ColorUtil.fromDartColor(rec.colorval),
+        labelAccessorFn: (ChartRecPrevMensalData rec, _) =>
+            '${getCurrency(rec.valor)}',
+        insideLabelStyleAccessorFn: (ChartRecPrevMensalData rec, _) =>
+            new charts.TextStyleSpec(
+          color: charts.ColorUtil.fromDartColor(Colors.white),
+          fontSize: 14,
+        ),
+        outsideLabelStyleAccessorFn: (ChartRecPrevMensalData rec, _) =>
+            new charts.TextStyleSpec(
+          color: charts.ColorUtil.fromDartColor(Colors.black54),
+          fontSize: 14,
+        ),
+      ),
     );
 
     return Container(

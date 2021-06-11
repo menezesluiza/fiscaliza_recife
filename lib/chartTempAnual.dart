@@ -30,7 +30,7 @@ class _ChartTempAnualState extends State<ChartTempAnual> {
 
   @override
   Widget build(BuildContext context) {
-    List<charts.Series<ChartTempAnualData, DateTime>> _seriesData = [];
+    List<charts.Series<ChartTempAnualData, double>> _seriesData = [];
 
     List<ChartTempAnualData> _dataD = [];
     List<ChartTempAnualData> _dataR = [];
@@ -39,13 +39,11 @@ class _ChartTempAnualState extends State<ChartTempAnual> {
     widget.rec.remove(0);
 
     widget.desp.forEach((key, value) {
-      _dataD.add(
-          new ChartTempAnualData(new DateTime(key.toInt()), value / 1000000));
+      _dataD.add(new ChartTempAnualData(key, value / 1000000000));
     });
 
     widget.rec.forEach((key, value) {
-      _dataR.add(
-          new ChartTempAnualData(new DateTime(key.toInt()), value / 1000000));
+      _dataR.add(new ChartTempAnualData(key, value / 1000000000));
     });
 
     _seriesData.add(charts.Series(
@@ -70,10 +68,17 @@ class _ChartTempAnualState extends State<ChartTempAnual> {
       child: Column(
         children: [
           Expanded(
-              child: charts.TimeSeriesChart(
+              child: charts.LineChart(
             _seriesData,
             animate: true,
             defaultRenderer: new charts.LineRendererConfig(includePoints: true),
+            domainAxis: new charts.NumericAxisSpec(
+              tickProviderSpec:
+                  new charts.BasicNumericTickProviderSpec(zeroBound: false),
+              viewport: new charts.NumericExtents(2015.0, 2021.0),
+              showAxisLine: true,
+            ),
+            behaviors: [new charts.PanAndZoomBehavior()],
           ))
         ],
       ),
@@ -82,7 +87,7 @@ class _ChartTempAnualState extends State<ChartTempAnual> {
 }
 
 class ChartTempAnualData {
-  DateTime ano;
+  double ano;
   double valor;
 
   ChartTempAnualData(this.ano, this.valor);

@@ -28,10 +28,7 @@ class _GridRecState extends State<GridRec> {
   }
 
   String dropdownValueR = '2021';
-  List<String> anosR = [
-    '2021',
-    '2020'
-  ]; //, '2019', '2018', '2017', '2016', '2015'
+  List<String> anosR = ['2021', '2020', '2019', '2018', '2017', '2016', '2015'];
   String orgaoR = 'TODOS OS ÓRGÃOS';
   Map<String, String> orgaosR2021 = {'0': 'TODOS OS ÓRGÃOS'};
   Map<String, String> orgaosR2020 = {'0': 'TODOS OS ÓRGÃOS'};
@@ -84,7 +81,7 @@ class _GridRecState extends State<GridRec> {
       FirebaseFirestore.instance
           .collection('orgaos_receitas')
           .where('ano', isEqualTo: element)
-          //.orderBy('id')
+          .orderBy('id')
           .get()
           .then((QuerySnapshot querySnapshot) {
         querySnapshot.docs.forEach((doc) {

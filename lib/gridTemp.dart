@@ -1,5 +1,6 @@
 // @dart=2.9
 import 'package:fiscaliza_recife/chartTempAnual.dart';
+import 'package:fiscaliza_recife/chartTempAnualComp.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -42,6 +43,7 @@ class _GridTempState extends State<GridTemp> {
     await FirebaseFirestore.instance
         .collection('totais_despesas')
         .where('orgao_codigo', isEqualTo: '0')
+        .orderBy('ano_mov')
         .get()
         .then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) {
@@ -58,6 +60,7 @@ class _GridTempState extends State<GridTemp> {
     await FirebaseFirestore.instance
         .collection('totais_receitas')
         .where('orgao_codigo', isEqualTo: '0')
+        .orderBy('ano')
         .get()
         .then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) {
@@ -160,7 +163,7 @@ class _GridTempState extends State<GridTemp> {
                   alignment: Alignment.topLeft,
                   padding: EdgeInsets.fromLTRB(0, 15, 0, 10),
                   child: Text(
-                    'RECEITA X DESPESAS',
+                    'RECEITA X DESPESAS (R\$ MILHÃO)',
                     style: chartTitle,
                   ),
                   decoration: chartDecor,
@@ -175,11 +178,17 @@ class _GridTempState extends State<GridTemp> {
                   alignment: Alignment.topLeft,
                   padding: EdgeInsets.fromLTRB(0, 15, 0, 10),
                   child: Text(
-                    'COMPARATIVO MOVIMENTAÇÃO',
+                    'COMPARATIVO DE MOVIMENTAÇÃO',
                     style: chartTitle,
                   ),
                   decoration: chartDecor,
                 ),
+                loaded
+                    ? ChartTempAnualComp(
+                        desp: desp,
+                        rec: rec,
+                      )
+                    : Text('SEM DADOS'),
               ])),
         ),
       ],

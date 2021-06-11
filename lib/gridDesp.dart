@@ -22,16 +22,12 @@ class _GridDespState extends State<GridDesp> {
     super.initState();
     _loadOrgaosD();
     _getData();
-    //orgaosD2020.addAll({'0': 'TODOS OS ÓRGÃOS'});
   }
 
   String dropdownValueD = '2021';
-  List<String> anosD = [
-    '2021',
-    '2020'
-  ]; //, '2019', '2018', '2017', '2016', '2015'
+  List<String> anosD = ['2021', '2020', '2019', '2018', '2017', '2016', '2015'];
+
   String orgaoD = 'TODOS OS ÓRGÃOS';
-  //var orgaosD2020 = new SortedMap(Ordering.byValue());
 
   Map<String, String> orgaosD2021 = {'0': 'TODOS OS ÓRGÃOS'};
   Map<String, String> orgaosD2020 = {'0': 'TODOS OS ÓRGÃOS'};
@@ -98,7 +94,7 @@ class _GridDespState extends State<GridDesp> {
       FirebaseFirestore.instance
           .collection('orgaos_despesas')
           .where('ano', isEqualTo: element)
-          //.orderBy('id')
+          .orderBy('id')
           .get()
           .then((QuerySnapshot querySnapshot) {
         querySnapshot.docs.forEach((doc) {
