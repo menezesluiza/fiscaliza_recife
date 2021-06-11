@@ -1,7 +1,7 @@
 // @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:intl/intl.dart';
+import 'package:fiscaliza_recife/funcoes.dart';
 
 class ChartRecCategoria extends StatefulWidget {
   const ChartRecCategoria({
@@ -24,11 +24,6 @@ class ChartRecCategoria extends StatefulWidget {
 class _ChartRecCategoriaState extends State<ChartRecCategoria> {
   void initState() {
     super.initState();
-  }
-
-  String getCurrency(value) {
-    NumberFormat formatter = NumberFormat.simpleCurrency(locale: 'pt_BR');
-    return formatter.format(value);
   }
 
   String _getPercentual(double value) {

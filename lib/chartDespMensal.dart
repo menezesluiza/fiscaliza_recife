@@ -1,7 +1,7 @@
 // @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:intl/intl.dart';
+import 'package:fiscaliza_recife/funcoes.dart';
 
 class ChartDespMensal extends StatefulWidget {
   ChartDespMensal({
@@ -40,11 +40,6 @@ class ChartDespMensal extends StatefulWidget {
 class _ChartDespMensalState extends State<ChartDespMensal> {
   void initState() {
     super.initState();
-  }
-
-  String getCurrency(value) {
-    NumberFormat formatter = NumberFormat.simpleCurrency(locale: 'pt_BR');
-    return formatter.format(value);
   }
 
   @override

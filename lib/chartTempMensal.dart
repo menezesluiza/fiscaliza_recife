@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
 // ignore: must_be_immutable
-class ChartTempAnual extends StatefulWidget {
-  ChartTempAnual({
+class ChartTempMensal extends StatefulWidget {
+  ChartTempMensal({
     Key key,
     this.desp,
     this.rec,
@@ -14,42 +14,42 @@ class ChartTempAnual extends StatefulWidget {
   final Map<double, double> rec;
 
   @override
-  _ChartTempAnualState createState() => _ChartTempAnualState();
+  _ChartTempMensalState createState() => _ChartTempMensalState();
 }
 
-class _ChartTempAnualState extends State<ChartTempAnual> {
+class _ChartTempMensalState extends State<ChartTempMensal> {
   void initState() {
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    List<charts.Series<ChartTempAnualData, double>> _seriesData = [];
+    List<charts.Series<ChartTempMensalData, double>> _seriesData = [];
 
-    List<ChartTempAnualData> _dataD = [];
-    List<ChartTempAnualData> _dataR = [];
+    List<ChartTempMensalData> _dataD = [];
+    List<ChartTempMensalData> _dataR = [];
 
     widget.desp.remove(0);
     widget.rec.remove(0);
 
     widget.desp.forEach((key, value) {
-      _dataD.add(new ChartTempAnualData(key, value / 1000000000));
+      _dataD.add(new ChartTempMensalData(key, value / 1000000));
     });
 
     widget.rec.forEach((key, value) {
-      _dataR.add(new ChartTempAnualData(key, value / 1000000000));
+      _dataR.add(new ChartTempMensalData(key, value / 1000000));
     });
 
     _seriesData.add(charts.Series(
-        domainFn: (ChartTempAnualData rec, _) => rec.ano,
-        measureFn: (ChartTempAnualData rec, _) => rec.valor,
+        domainFn: (ChartTempMensalData rec, _) => rec.ano,
+        measureFn: (ChartTempMensalData rec, _) => rec.valor,
         id: 'DESP',
         data: _dataD,
         colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault));
 
     _seriesData.add(charts.Series(
-        domainFn: (ChartTempAnualData rec, _) => rec.ano,
-        measureFn: (ChartTempAnualData rec, _) => rec.valor,
+        domainFn: (ChartTempMensalData rec, _) => rec.ano,
+        measureFn: (ChartTempMensalData rec, _) => rec.valor,
         id: 'REC',
         data: _dataR,
         colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault));
@@ -69,7 +69,7 @@ class _ChartTempAnualState extends State<ChartTempAnual> {
             domainAxis: new charts.NumericAxisSpec(
               tickProviderSpec:
                   new charts.BasicNumericTickProviderSpec(zeroBound: false),
-              viewport: new charts.NumericExtents(2015.0, 2021.0),
+              viewport: new charts.NumericExtents(1.0, 12.0),
               showAxisLine: true,
             ),
             behaviors: [new charts.PanAndZoomBehavior()],
@@ -80,9 +80,9 @@ class _ChartTempAnualState extends State<ChartTempAnual> {
   }
 }
 
-class ChartTempAnualData {
+class ChartTempMensalData {
   double ano;
   double valor;
 
-  ChartTempAnualData(this.ano, this.valor);
+  ChartTempMensalData(this.ano, this.valor);
 }

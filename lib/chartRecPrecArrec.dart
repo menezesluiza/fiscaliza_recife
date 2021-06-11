@@ -1,7 +1,7 @@
 // @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:intl/intl.dart';
+import 'package:fiscaliza_recife/funcoes.dart';
 
 class ChartRecPrevArrec extends StatefulWidget {
   const ChartRecPrevArrec({
@@ -20,11 +20,6 @@ class ChartRecPrevArrec extends StatefulWidget {
 class _ChartRecPrevArrecState extends State<ChartRecPrevArrec> {
   void initState() {
     super.initState();
-  }
-
-  String getCurrency(value) {
-    NumberFormat formatter = NumberFormat.simpleCurrency(locale: 'pt_BR');
-    return formatter.format(value);
   }
 
   @override

@@ -1,7 +1,7 @@
 // @dart=2.9
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:intl/intl.dart';
+import 'package:fiscaliza_recife/funcoes.dart';
 
 class ChartDespMod extends StatefulWidget {
   ChartDespMod({
@@ -46,11 +46,6 @@ class ChartDespMod extends StatefulWidget {
 class _ChartDespModState extends State<ChartDespMod> {
   void initState() {
     super.initState();
-  }
-
-  String getCurrency(value) {
-    NumberFormat formatter = NumberFormat.simpleCurrency(locale: 'pt_BR');
-    return formatter.format(value);
   }
 
   String _getPercentual(double value) {

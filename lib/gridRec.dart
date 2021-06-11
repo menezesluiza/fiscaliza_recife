@@ -3,6 +3,7 @@ import 'package:fiscaliza_recife/chartRecCategoria.dart';
 import 'package:fiscaliza_recife/chartRecMensal.dart';
 import 'package:fiscaliza_recife/chartRecOrigem.dart';
 import 'package:fiscaliza_recife/chartRecPrecArrec.dart';
+import 'package:fiscaliza_recife/funcoes.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'SemRecArrec.dart';
@@ -71,11 +72,6 @@ class _GridRecState extends State<GridRec> {
   double alien = 0;
   double amort = 0;
 
-  TextStyle chartTitle = TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
-
-  BoxDecoration chartDecor =
-      BoxDecoration(border: Border(bottom: BorderSide(color: Colors.black26)));
-
   void _loadOrgaosR() {
     anosR.forEach((element) {
       FirebaseFirestore.instance
@@ -104,13 +100,13 @@ class _GridRecState extends State<GridRec> {
     } else if (ano == '2019') {
       return orgaosR2019;
     } else if (ano == '2018') {
-      return orgaosR2019;
+      return orgaosR2018;
     } else if (ano == '2017') {
-      return orgaosR2019;
+      return orgaosR2017;
     } else if (ano == '2016') {
-      return orgaosR2019;
+      return orgaosR2016;
     } else if (ano == '2015') {
-      return orgaosR2019;
+      return orgaosR2015;
     } else
       return null;
   }
@@ -122,13 +118,6 @@ class _GridRecState extends State<GridRec> {
     return _key;
   }
 
-  _isZero(var value) {
-    if (value == 0 || value == null) {
-      return true;
-    } else
-      return false;
-  }
-
   void _getData() async {
     await FirebaseFirestore.instance
         .collection('totais_receitas')
@@ -137,89 +126,89 @@ class _GridRecState extends State<GridRec> {
         .get()
         .then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) {
-        _isZero(doc['recarrec'])
+        isZero(doc['recarrec'])
             ? recArrec = 0
             : recArrec = double.parse(doc['recarrec'].toString());
-        _isZero(doc['recprev'])
+        isZero(doc['recprev'])
             ? recPrev = 0
             : recPrev = double.parse(doc['recprev'].toString());
-        _isZero(doc['recarrecjan'])
+        isZero(doc['recarrecjan'])
             ? recArrecJan = 0
             : recArrecJan = double.parse(doc['recarrecjan'].toString());
-        _isZero(doc['recarrecfev'])
+        isZero(doc['recarrecfev'])
             ? recArrecFev = 0
             : recArrecFev = double.parse(doc['recarrecfev'].toString());
-        _isZero(doc['recarrecmar'])
+        isZero(doc['recarrecmar'])
             ? recArrecMar = 0
             : recArrecMar = double.parse(doc['recarrecmar'].toString());
-        _isZero(doc['recarrecabr'])
+        isZero(doc['recarrecabr'])
             ? recArrecAbr = 0
             : recArrecAbr = double.parse(doc['recarrecabr'].toString());
-        _isZero(doc['recarrecmai'])
+        isZero(doc['recarrecmai'])
             ? recArrecMai = 0
             : recArrecMai = double.parse(doc['recarrecmai'].toString());
-        _isZero(doc['recarrecjun'])
+        isZero(doc['recarrecjun'])
             ? recArrecJun = 0
             : recArrecJun = double.parse(doc['recarrecjun'].toString());
-        _isZero(doc['recarrecjul'])
+        isZero(doc['recarrecjul'])
             ? recArrecJul = 0
             : recArrecJul = double.parse(doc['recarrecjul'].toString());
-        _isZero(doc['recarrecago'])
+        isZero(doc['recarrecago'])
             ? recArrecAgo = 0
             : recArrecAgo = double.parse(doc['recarrecago'].toString());
-        _isZero(doc['recarrecset'])
+        isZero(doc['recarrecset'])
             ? recArrecSet = 0
             : recArrecSet = double.parse(doc['recarrecset'].toString());
-        _isZero(doc['recarrecout'])
+        isZero(doc['recarrecout'])
             ? recArrecOut = 0
             : recArrecOut = double.parse(doc['recarrecout'].toString());
-        _isZero(doc['recarrecnov'])
+        isZero(doc['recarrecnov'])
             ? recArrecNov = 0
             : recArrecNov = double.parse(doc['recarrecnov'].toString());
-        _isZero(doc['recarrecdez'])
+        isZero(doc['recarrecdez'])
             ? recArrecDez = 0
             : recArrecDez = double.parse(doc['recarrecdez'].toString());
-        _isZero(doc['reccorrente'])
+        isZero(doc['reccorrente'])
             ? recCorrente = 0
             : recCorrente = double.parse(doc['reccorrente'].toString());
-        _isZero(doc['reccapital'])
+        isZero(doc['reccapital'])
             ? recCapital = 0
             : recCapital = double.parse(doc['reccapital'].toString());
-        _isZero(doc['reccorrenteinfra'])
+        isZero(doc['reccorrenteinfra'])
             ? recCorrenteInfra = 0
             : recCorrenteInfra =
                 double.parse(doc['reccorrenteinfra'].toString());
-        _isZero(doc['transfcorr'])
+        isZero(doc['transfcorr'])
             ? transfCorr = 0
             : transfCorr = double.parse(doc['transfcorr'].toString());
-        _isZero(doc['impostos'])
+        isZero(doc['impostos'])
             ? impostos = 0
             : impostos = double.parse(doc['impostos'].toString());
-        _isZero(doc['outrascred'])
+        isZero(doc['outrascred'])
             ? outrasCred = 0
             : outrasCred = double.parse(doc['outrascred'].toString());
-        _isZero(doc['opcredito'])
+        isZero(doc['opcredito'])
             ? opCredito = 0
             : opCredito = double.parse(doc['opcredito'].toString());
-        _isZero(doc['outrascap'])
+        isZero(doc['outrascap'])
             ? outrasCap = 0
             : outrasCap = double.parse(doc['outrascap'].toString());
-        _isZero(doc['recpatri'])
+        isZero(doc['recpatri'])
             ? recPatri = 0
             : recPatri = double.parse(doc['recpatri'].toString());
-        _isZero(doc['recserv'])
+        isZero(doc['recserv'])
             ? recServ = 0
             : recServ = double.parse(doc['recserv'].toString());
-        _isZero(doc['transfcap'])
+        isZero(doc['transfcap'])
             ? transfCap = 0
             : transfCap = double.parse(doc['transfcap'].toString());
-        _isZero(doc['contri'])
+        isZero(doc['contri'])
             ? contri = 0
             : contri = double.parse(doc['contri'].toString());
-        _isZero(doc['alien'])
+        isZero(doc['alien'])
             ? alien = 0
             : alien = double.parse(doc['alien'].toString());
-        _isZero(doc['amort'])
+        isZero(doc['amort'])
             ? amort = 0
             : amort = double.parse(doc['amort'].toString());
       });

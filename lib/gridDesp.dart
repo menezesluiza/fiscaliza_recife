@@ -3,9 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fiscaliza_recife/chartDespFunc.dart';
 import 'package:fiscaliza_recife/chartDespMensal.dart';
 import 'package:fiscaliza_recife/chartDespMod.dart';
+import 'package:fiscaliza_recife/funcoes.dart';
 import 'package:fiscaliza_recife/semDesp.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 // ignore: must_be_immutable
 class GridDesp extends StatefulWidget {
@@ -84,11 +84,6 @@ class _GridDespState extends State<GridDesp> {
   double concorrencia = 0;
   double convenio = 0;
 
-  TextStyle chartTitle = TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
-
-  BoxDecoration chartDecor =
-      BoxDecoration(border: Border(bottom: BorderSide(color: Colors.black26)));
-
   void _loadOrgaosD() {
     anosD.forEach((element) {
       FirebaseFirestore.instance
@@ -101,7 +96,6 @@ class _GridDespState extends State<GridDesp> {
           if (doc['orgao_codigo'] != '0') {
             _returnOrgaoList(element)
                 .addAll({doc['orgao_codigo']: doc['orgao_nome']});
-            //print(doc['orgao_nome']);
           }
         });
       });
@@ -118,13 +112,13 @@ class _GridDespState extends State<GridDesp> {
     } else if (ano == '2019') {
       return orgaosD2019;
     } else if (ano == '2018') {
-      return orgaosD2019;
+      return orgaosD2018;
     } else if (ano == '2017') {
-      return orgaosD2019;
+      return orgaosD2017;
     } else if (ano == '2016') {
-      return orgaosD2019;
+      return orgaosD2016;
     } else if (ano == '2015') {
-      return orgaosD2019;
+      return orgaosD2015;
     } else
       return null;
   }
@@ -136,23 +130,11 @@ class _GridDespState extends State<GridDesp> {
     return _key;
   }
 
-  _isZero(var value) {
-    if (value == 0 || value == null) {
-      return true;
-    } else
-      return false;
-  }
-
   _semDespesa(double desp) {
     if (desp > 0) {
       return true;
     } else
       return false;
-  }
-
-  String getCurrency(value) {
-    NumberFormat formatter = NumberFormat.simpleCurrency(locale: 'pt_BR');
-    return formatter.format(value);
   }
 
   _getData() async {
@@ -163,145 +145,143 @@ class _GridDespState extends State<GridDesp> {
         .get()
         .then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) {
-        _isZero(doc['desp'])
+        isZero(doc['desp'])
             ? desp = 0
             : desp = double.parse(doc['desp'].toString());
-        _isZero(doc['despjan'])
+        isZero(doc['despjan'])
             ? despJan = 0
             : despJan = double.parse(doc['despjan'].toString());
-        _isZero(doc['despfev'])
+        isZero(doc['despfev'])
             ? despFev = 0
             : despFev = double.parse(doc['despfev'].toString());
-        _isZero(doc['despmar'])
+        isZero(doc['despmar'])
             ? despMar = 0
             : despMar = double.parse(doc['despmar'].toString());
-        _isZero(doc['despabr'])
+        isZero(doc['despabr'])
             ? despAbr = 0
             : despAbr = double.parse(doc['despabr'].toString());
-        _isZero(doc['despmai'])
+        isZero(doc['despmai'])
             ? despMai = 0
             : despMai = double.parse(doc['despmai'].toString());
-        _isZero(doc['despjun'])
+        isZero(doc['despjun'])
             ? despJun = 0
             : despJun = double.parse(doc['despjun'].toString());
-        _isZero(doc['despjul'])
+        isZero(doc['despjul'])
             ? despJul = 0
             : despJul = double.parse(doc['despjul'].toString());
-        _isZero(doc['despago'])
+        isZero(doc['despago'])
             ? despAgo = 0
             : despAgo = double.parse(doc['despago'].toString());
-        _isZero(doc['despset'])
+        isZero(doc['despset'])
             ? despSet = 0
             : despSet = double.parse(doc['despset'].toString());
-        _isZero(doc['despout'])
+        isZero(doc['despout'])
             ? despOut = 0
             : despOut = double.parse(doc['despout'].toString());
-        _isZero(doc['despnov'])
+        isZero(doc['despnov'])
             ? despNov = 0
             : despNov = double.parse(doc['despnov'].toString());
-        _isZero(doc['despdez'])
+        isZero(doc['despdez'])
             ? despDez = 0
             : despDez = double.parse(doc['despdez'].toString());
-        _isZero(doc['adminis'])
+        isZero(doc['adminis'])
             ? adminis = 0
             : adminis = double.parse(doc['adminis'].toString());
-        _isZero(doc['asssocial'])
+        isZero(doc['asssocial'])
             ? assSocial = 0
             : assSocial = double.parse(doc['asssocial'].toString());
-        _isZero(doc['cietec'])
+        isZero(doc['cietec'])
             ? cieTec = 0
             : cieTec = double.parse(doc['cietec'].toString());
-        _isZero(doc['comserv'])
+        isZero(doc['comserv'])
             ? comServ = 0
             : comServ = double.parse(doc['comserv'].toString());
-        _isZero(doc['cultura'])
+        isZero(doc['cultura'])
             ? cultura = 0
             : cultura = double.parse(doc['cultura'].toString());
-        _isZero(doc['desporlaz'])
+        isZero(doc['desporlaz'])
             ? desporLaz = 0
             : desporLaz = double.parse(doc['desporlaz'].toString());
-        _isZero(doc['educ'])
+        isZero(doc['educ'])
             ? educ = 0
             : educ = double.parse(doc['educ'].toString());
-        _isZero(doc['encarg'])
+        isZero(doc['encarg'])
             ? encarg = 0
             : encarg = double.parse(doc['encarg'].toString());
-        _isZero(doc['essjustica'])
+        isZero(doc['essjustica'])
             ? essJustica = 0
             : essJustica = double.parse(doc['essjustica'].toString());
-        _isZero(doc['gestamb'])
+        isZero(doc['gestamb'])
             ? gestAmb = 0
             : gestAmb = double.parse(doc['gestamb'].toString());
-        _isZero(doc['habit'])
+        isZero(doc['habit'])
             ? habit = 0
             : habit = double.parse(doc['habit'].toString());
-        _isZero(doc['prevsocial'])
+        isZero(doc['prevsocial'])
             ? prevSocial = 0
             : prevSocial = double.parse(doc['prevsocial'].toString());
-        _isZero(doc['sane'])
+        isZero(doc['sane'])
             ? sane = 0
             : sane = double.parse(doc['sane'].toString());
-        _isZero(doc['saude'])
+        isZero(doc['saude'])
             ? saude = 0
             : saude = double.parse(doc['saude'].toString());
-        _isZero(doc['segpub'])
+        isZero(doc['segpub'])
             ? segPub = 0
             : segPub = double.parse(doc['segpub'].toString());
-        _isZero(doc['trab'])
+        isZero(doc['trab'])
             ? trab = 0
             : trab = double.parse(doc['trab'].toString());
-        _isZero(doc['urbanismo'])
+        isZero(doc['urbanismo'])
             ? urbanismo = 0
             : urbanismo = double.parse(doc['urbanismo'].toString());
-        _isZero(doc['dircid'])
+        isZero(doc['dircid'])
             ? dirCid = 0
             : dirCid = double.parse(doc['dircid'].toString());
-        _isZero(doc['naoinfo'])
+        isZero(doc['naoinfo'])
             ? naoInfo = 0
             : naoInfo = double.parse(doc['naoinfo'].toString());
-        _isZero(doc['dispensa'])
+        isZero(doc['dispensa'])
             ? dispensa = 0
             : dispensa = double.parse(doc['dispensa'].toString());
-        _isZero(doc['selecaopub'])
+        isZero(doc['selecaopub'])
             ? selecaoPub = 0
             : selecaoPub = double.parse(doc['selecaopub'].toString());
-        _isZero(doc['concurso'])
+        isZero(doc['concurso'])
             ? concurso = 0
             : concurso = double.parse(doc['concurso'].toString());
-        _isZero(doc['pregregprec'])
+        isZero(doc['pregregprec'])
             ? pregRegPrec = 0
             : pregRegPrec = double.parse(doc['pregregprec'].toString());
-        _isZero(doc['concregprec'])
+        isZero(doc['concregprec'])
             ? concRegPrec = 0
             : concRegPrec = double.parse(doc['concregprec'].toString());
-        _isZero(doc['pregelet'])
+        isZero(doc['pregelet'])
             ? pregElet = 0
             : pregElet = double.parse(doc['pregelet'].toString());
-        _isZero(doc['inexig'])
+        isZero(doc['inexig'])
             ? inexig = 0
             : inexig = double.parse(doc['inexig'].toString());
-        _isZero(doc['credenc'])
+        isZero(doc['credenc'])
             ? credenc = 0
             : credenc = double.parse(doc['credenc'].toString());
-        _isZero(doc['pregao'])
+        isZero(doc['pregao'])
             ? pregao = 0
             : pregao = double.parse(doc['pregao'].toString());
-        _isZero(doc['convite'])
+        isZero(doc['convite'])
             ? convite = 0
             : convite = double.parse(doc['convite'].toString());
-        _isZero(doc['convenio'])
+        isZero(doc['convenio'])
             ? convenio = 0
             : convenio = double.parse(doc['convenio'].toString());
-        _isZero(doc['concorrencia'])
+        isZero(doc['concorrencia'])
             ? concorrencia = 0
             : concorrencia = double.parse(doc['concorrencia'].toString());
-        _isZero(doc['tomadapreco'])
+        isZero(doc['tomadapreco'])
             ? tomadaPreco = 0
             : tomadaPreco = double.parse(doc['tomadapreco'].toString());
       });
     });
-
-    //FirebaseFirestore.instance.terminate();
     setState(() {});
   }
 

@@ -4,8 +4,8 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:fiscaliza_recife/funcoes.dart';
 
 // ignore: must_be_immutable
-class ChartTempAnualComp extends StatefulWidget {
-  ChartTempAnualComp({
+class ChartTempMensalComp extends StatefulWidget {
+  ChartTempMensalComp({
     Key key,
     this.desp,
     this.rec,
@@ -15,75 +15,75 @@ class ChartTempAnualComp extends StatefulWidget {
   final Map<double, double> rec;
 
   @override
-  _ChartTempAnualCompState createState() => _ChartTempAnualCompState();
+  _ChartTempMensalCompState createState() => _ChartTempMensalCompState();
 }
 
-class _ChartTempAnualCompState extends State<ChartTempAnualComp> {
+class _ChartTempMensalCompState extends State<ChartTempMensalComp> {
   void initState() {
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    List<charts.Series<ChartTempAnualCompData, String>> _seriesData = [];
+    List<charts.Series<ChartTempMensalCompData, String>> _seriesData = [];
 
-    List<ChartTempAnualCompData> _dataD = [];
-    List<ChartTempAnualCompData> _dataR = [];
+    List<ChartTempMensalCompData> _dataD = [];
+    List<ChartTempMensalCompData> _dataR = [];
 
     widget.desp.remove(0);
     widget.rec.remove(0);
 
     widget.desp.forEach((key, value) {
-      _dataD.add(new ChartTempAnualCompData(key.toStringAsFixed(0), value));
+      _dataD.add(new ChartTempMensalCompData(key.toStringAsFixed(0), value));
     });
 
     widget.rec.forEach((key, value) {
-      _dataR.add(new ChartTempAnualCompData(key.toStringAsFixed(0), value));
+      _dataR.add(new ChartTempMensalCompData(key.toStringAsFixed(0), value));
     });
 
     _seriesData.add(
       charts.Series(
-          labelAccessorFn: (ChartTempAnualCompData rec, _) =>
+          labelAccessorFn: (ChartTempMensalCompData rec, _) =>
               '${getCurrency(rec.valor)}',
-          insideLabelStyleAccessorFn: (ChartTempAnualCompData rec, _) =>
+          insideLabelStyleAccessorFn: (ChartTempMensalCompData rec, _) =>
               new charts.TextStyleSpec(
                 color: charts.ColorUtil.fromDartColor(Colors.white),
                 fontSize: 14,
               ),
-          outsideLabelStyleAccessorFn: (ChartTempAnualCompData rec, _) =>
+          outsideLabelStyleAccessorFn: (ChartTempMensalCompData rec, _) =>
               new charts.TextStyleSpec(
                 color: charts.ColorUtil.fromDartColor(Colors.black54),
                 fontSize: 14,
               ),
-          domainFn: (ChartTempAnualCompData rec, _) => rec.ano,
-          measureFn: (ChartTempAnualCompData rec, _) => rec.valor,
+          domainFn: (ChartTempMensalCompData rec, _) => rec.ano,
+          measureFn: (ChartTempMensalCompData rec, _) => rec.valor,
           id: 'DESP',
           data: _dataD,
           colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault),
     );
 
     _seriesData.add(charts.Series(
-        labelAccessorFn: (ChartTempAnualCompData rec, _) =>
+        labelAccessorFn: (ChartTempMensalCompData rec, _) =>
             '${getCurrency(rec.valor)}',
-        insideLabelStyleAccessorFn: (ChartTempAnualCompData rec, _) =>
+        insideLabelStyleAccessorFn: (ChartTempMensalCompData rec, _) =>
             new charts.TextStyleSpec(
               color: charts.ColorUtil.fromDartColor(Colors.white),
               fontSize: 14,
             ),
-        outsideLabelStyleAccessorFn: (ChartTempAnualCompData rec, _) =>
+        outsideLabelStyleAccessorFn: (ChartTempMensalCompData rec, _) =>
             new charts.TextStyleSpec(
               color: charts.ColorUtil.fromDartColor(Colors.black54),
               fontSize: 14,
             ),
-        domainFn: (ChartTempAnualCompData rec, _) => rec.ano,
-        measureFn: (ChartTempAnualCompData rec, _) => rec.valor,
+        domainFn: (ChartTempMensalCompData rec, _) => rec.ano,
+        measureFn: (ChartTempMensalCompData rec, _) => rec.valor,
         id: 'REC',
         data: _dataR,
         colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault));
 
     return Container(
       padding: const EdgeInsets.all(8),
-      height: 500,
+      height: 750,
       margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
       color: Colors.white,
       child: Column(
@@ -125,9 +125,9 @@ class _ChartTempAnualCompState extends State<ChartTempAnualComp> {
   }
 }
 
-class ChartTempAnualCompData {
+class ChartTempMensalCompData {
   String ano;
   double valor;
 
-  ChartTempAnualCompData(this.ano, this.valor);
+  ChartTempMensalCompData(this.ano, this.valor);
 }
