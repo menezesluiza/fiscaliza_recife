@@ -1,6 +1,7 @@
 // @dart=2.9
 import 'package:fiscaliza_recife/chartTempAnual.dart';
 import 'package:fiscaliza_recife/chartTempAnualComp.dart';
+import 'package:fiscaliza_recife/semDados.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -163,7 +164,7 @@ class _GridTempState extends State<GridTemp> {
                   alignment: Alignment.topLeft,
                   padding: EdgeInsets.fromLTRB(0, 15, 0, 10),
                   child: Text(
-                    'RECEITA X DESPESAS (R\$ MILHÃO)',
+                    'RECEITA X DESPESAS (R\$ BILHÃO)',
                     style: chartTitle,
                   ),
                   decoration: chartDecor,
@@ -173,7 +174,7 @@ class _GridTempState extends State<GridTemp> {
                         desp: desp,
                         rec: rec,
                       )
-                    : Text('SEM DADOS'),
+                    : SemDados(),
                 Container(
                   alignment: Alignment.topLeft,
                   padding: EdgeInsets.fromLTRB(0, 15, 0, 10),
@@ -188,7 +189,7 @@ class _GridTempState extends State<GridTemp> {
                         desp: desp,
                         rec: rec,
                       )
-                    : Text('SEM DADOS'),
+                    : SemDados(),
               ])),
         ),
       ],

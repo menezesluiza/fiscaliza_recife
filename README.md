@@ -7,19 +7,16 @@ Aplicativo em construção, com atualizações constantes.
 
 ## Demo:
 
-
-
 https://user-images.githubusercontent.com/48093105/119374444-f57eb880-bc8f-11eb-9085-ee5430597f7c.mp4
 
 
+## Sobre:
 
-## Como começar?
-
-Esse aplicativo é desenvolvido em Flutter/Dart, com suporte (até o momento) para dispositivos Android. 
+Esse aplicativo é desenvolvido em Flutter/Dart, com suporte (até o momento) para dispositivos Android, com backend rodando no Firebase. Para a geração dos gráficos, foi utilizada a library charts_flutter.
 
 - [Documentação Flutter](https://flutter.dev/docs/)
 
-Todos os dados utilizados são fornecidos pela Prefeitura do Recife, pela iniciativa de dados abertos. 
+Todos os dados utilizados são fornecidos pela Prefeitura do Recife, pela iniciativa de dados abertos. Para inserção no aplicativo, eles foram formatados utilizando os scripts que constam na pasta auxilares.
 
 - [Dados Abertos Recife](http://dados.recife.pe.gov.br/)
 
@@ -34,5 +31,3 @@ Todos os dados utilizados são fornecidos pela Prefeitura do Recife, pela inicia
 ### Desenvolvido por: 
 
 Desenvolvido por Luíza Menezes para a disciplina Fundamentos de Programação Aplicada (PPGIA/UFRPE)
-
-Contato: menezesluiza1@gmail.com
