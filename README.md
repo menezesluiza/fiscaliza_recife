@@ -26,7 +26,7 @@ Todos os dados utilizados são fornecidos pela Prefeitura do Recife, pela inicia
 
 ## Gráfico de Navegação
 
-![Gráfico de Navegação](https://github.com/menezesluiza/fiscaliza_recife/blob/master/images/grafico_navegacao.png)
+![Gráfico de Navegação](https://github.com/menezesluiza/fiscaliza_recife/blob/master/images/grafico_navegacao_new.png)
 
 ### Desenvolvido por: 
 
