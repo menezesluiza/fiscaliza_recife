@@ -16,7 +16,7 @@ Esse aplicativo é desenvolvido em Flutter/Dart, com suporte (até o momento) pa
 
 - [Documentação Flutter](https://flutter.dev/docs/)
 
-Todos os dados utilizados são fornecidos pela Prefeitura do Recife, pela iniciativa de dados abertos. Para inserção no aplicativo, eles foram formatados utilizando os scripts que constam na pasta auxilares.
+Todos os dados utilizados são fornecidos pela Prefeitura do Recife, pela iniciativa de dados abertos. Para inserção no aplicativo, eles foram formatados utilizando os scripts presentes na pasta 'auxilares'.
 
 - [Dados Abertos Recife](http://dados.recife.pe.gov.br/)
 
