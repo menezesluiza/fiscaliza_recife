@@ -64,7 +64,7 @@ class _ChartTempMensalState extends State<ChartTempMensal> {
           Expanded(
               child: charts.LineChart(
             _seriesData,
-            animate: true,
+            animate: false,
             defaultRenderer: new charts.LineRendererConfig(includePoints: true),
             domainAxis: new charts.NumericAxisSpec(
               tickProviderSpec:

@@ -107,7 +107,7 @@ class _TelaPrincipalState extends State<TelaPrincipal>
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: _buildIcon(Icons.pie_chart, 'COMPARATIVO', 1),
+            icon: _buildIcon(Icons.search_rounded, 'COMPARATIVO', 1),
             label: '',
             //icon: Icon(Icons.arrow_upward_outlined),
           ),

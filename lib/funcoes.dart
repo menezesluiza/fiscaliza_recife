@@ -13,7 +13,14 @@ String getCurrency(value) {
   return formatter.format(value);
 }
 
+num percentual(num num1, num num2) => ((num2 - num1) / num1) * 100;
+
 TextStyle chartTitle = TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
 
-BoxDecoration chartDecor =
-    BoxDecoration(border: Border(bottom: BorderSide(color: Colors.black26)));
+TextStyle percentText = TextStyle(fontSize: 14);
+
+BoxDecoration chartDecor = BoxDecoration(
+  border: Border(
+    bottom: BorderSide(color: Colors.black26),
+  ),
+);

@@ -4,7 +4,6 @@ import 'package:fiscaliza_recife/scrollAnual.dart';
 import 'package:fiscaliza_recife/scrollMensal.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'funcoes.dart';
 
 // ignore: must_be_immutable
@@ -64,11 +63,7 @@ class _GridTempState extends State<GridTemp> {
   double recArrecDez = 0;
 
   var loaded = false;
-
-  TextStyle chartTitle = TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
-
-  BoxDecoration chartDecor =
-      BoxDecoration(border: Border(bottom: BorderSide(color: Colors.black26)));
+  //var fist = true;
 
   void _getDataRec() async {
     await FirebaseFirestore.instance
@@ -82,7 +77,7 @@ class _GridTempState extends State<GridTemp> {
           double.parse(doc['ano_mov'].toString()):
               double.parse(doc['desp'].toString())
         });
-        setState(() {});
+        //setState(() {});
       });
     });
   }
@@ -99,6 +94,8 @@ class _GridTempState extends State<GridTemp> {
           double.parse(doc['ano'].toString()):
               double.parse(doc['recarrec'].toString())
         });
+        //fist ? setState(() {}) : null;
+        //fist = false;
         setState(() {});
       });
     });
@@ -162,7 +159,7 @@ class _GridTempState extends State<GridTemp> {
         despMensal.addAll({11: despNov});
         despMensal.addAll({12: despDez});
 
-        setState(() {});
+        //setState(() {});
       });
     });
   }
@@ -223,7 +220,7 @@ class _GridTempState extends State<GridTemp> {
         recMensal.addAll({10: recArrecOut});
         recMensal.addAll({11: recArrecNov});
         recMensal.addAll({12: recArrecDez});
-        setState(() {});
+        //setState(() {});
       });
     });
   }
