@@ -52,7 +52,7 @@ class _ChartTempMensalCompState extends State<ChartTempMensalComp> {
       if (widget.desp.containsKey(x) &&
           widget.desp[x] != 0 &&
           widget.rec[x] != 0) {
-        return percentual(widget.desp[x], widget.rec[x]);
+        return percentual(widget.desp[x], widget.rec[x]).round();
       } else
         return 0;
     }
@@ -63,7 +63,7 @@ class _ChartTempMensalCompState extends State<ChartTempMensalComp> {
       } else if (x < 0) {
         return Icon(Icons.trending_down_rounded, color: Colors.red);
       } else
-        return Icon(Icons.trending_up_rounded, color: Colors.grey);
+        return Icon(Icons.compare_arrows_rounded, color: Colors.white);
     }
 
     widget.desp.forEach((key, value) {
@@ -118,7 +118,7 @@ class _ChartTempMensalCompState extends State<ChartTempMensalComp> {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Expanded(
-          flex: 10,
+          flex: 12,
           child: Container(
             padding: const EdgeInsets.all(8),
             height: 822,
@@ -178,6 +178,7 @@ class _ChartTempMensalCompState extends State<ChartTempMensalComp> {
                   Column(
                     children: [
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
                             '${_calcPercent(int.parse(item)).abs().toStringAsFixed(0)}%',

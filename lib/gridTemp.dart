@@ -63,7 +63,6 @@ class _GridTempState extends State<GridTemp> {
   double recArrecDez = 0;
 
   var loaded = false;
-  //var fist = true;
 
   void _getDataRec() async {
     await FirebaseFirestore.instance
@@ -77,7 +76,8 @@ class _GridTempState extends State<GridTemp> {
           double.parse(doc['ano_mov'].toString()):
               double.parse(doc['desp'].toString())
         });
-        //setState(() {});
+
+        setState(() {});
       });
     });
   }
@@ -94,8 +94,7 @@ class _GridTempState extends State<GridTemp> {
           double.parse(doc['ano'].toString()):
               double.parse(doc['recarrec'].toString())
         });
-        //fist ? setState(() {}) : null;
-        //fist = false;
+
         setState(() {});
       });
     });
@@ -159,7 +158,7 @@ class _GridTempState extends State<GridTemp> {
         despMensal.addAll({11: despNov});
         despMensal.addAll({12: despDez});
 
-        //setState(() {});
+        setState(() {});
       });
     });
   }
@@ -220,7 +219,7 @@ class _GridTempState extends State<GridTemp> {
         recMensal.addAll({10: recArrecOut});
         recMensal.addAll({11: recArrecNov});
         recMensal.addAll({12: recArrecDez});
-        //setState(() {});
+        setState(() {});
       });
     });
   }
@@ -248,40 +247,44 @@ class _GridTempState extends State<GridTemp> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                height: 45,
-                margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
-                decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: new BorderRadius.circular(5)),
-                padding: EdgeInsets.fromLTRB(14, 0, 0, 4),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton<String>(
-                    value: dropTipo,
-                    elevation: 8,
-                    dropdownColor: Colors.grey[300],
-                    style: TextStyle(color: Colors.black87),
-                    onChanged: (String newValue) {
-                      setState(() {
-                        dropTipo = newValue;
-                        _getData();
-                      });
-                    },
-                    items: tipos.map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
-                          style: TextStyle(fontSize: 14),
-                        ),
-                      );
-                    }).toList(),
+              Flexible(
+                child: Container(
+                  height: 45,
+                  margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
+                  decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      borderRadius: new BorderRadius.circular(5)),
+                  padding: EdgeInsets.fromLTRB(14, 0, 0, 4),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<String>(
+                      isExpanded: true,
+                      value: dropTipo,
+                      elevation: 8,
+                      dropdownColor: Colors.grey[300],
+                      style: TextStyle(color: Colors.black87),
+                      onChanged: (String newValue) {
+                        setState(() {
+                          dropTipo = newValue;
+                          _getData();
+                        });
+                      },
+                      items:
+                          tipos.map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(
+                            value,
+                            style: TextStyle(fontSize: 14),
+                          ),
+                        );
+                      }).toList(),
+                    ),
                   ),
                 ),
               ),
               Container(
                 height: 45,
-                margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
+                margin: EdgeInsets.fromLTRB(0, 10, 10, 5),
                 decoration: BoxDecoration(
                     color: Colors.grey[300],
                     borderRadius: new BorderRadius.circular(5)),

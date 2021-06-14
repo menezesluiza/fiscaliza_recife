@@ -28,9 +28,9 @@ class _ChartRecPrevArrecState extends State<ChartRecPrevArrec> {
 
     var _data = [
       new ChartRecPrevArrecData('ARRECADADA: ${getCurrency(widget.recArrec)}',
-          widget.recArrec, Colors.green),
+          widget.recArrec, Colors.green[700]),
       new ChartRecPrevArrecData('PREVISTA: ${getCurrency(widget.recPrev)}',
-          widget.recPrev, Colors.amber[300]),
+          widget.recPrev, Colors.green[200]),
     ];
 
     _seriesData.add(

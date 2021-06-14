@@ -52,8 +52,10 @@ class _ChartTempAnualCompState extends State<ChartTempAnualComp> {
     _returnIcon(num x) {
       if (x > 0) {
         return Icon(Icons.trending_up_rounded, color: Colors.green);
-      } else
+      } else if (x < 0) {
         return Icon(Icons.trending_down_rounded, color: Colors.red);
+      } else
+        return Icon(Icons.compare_arrows_rounded, color: Colors.white);
     }
 
     widget.desp.remove(0);
@@ -111,7 +113,7 @@ class _ChartTempAnualCompState extends State<ChartTempAnualComp> {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Expanded(
-          flex: 13,
+          flex: 18,
           child: Container(
             padding: const EdgeInsets.all(8),
             height: 500,
@@ -173,6 +175,7 @@ class _ChartTempAnualCompState extends State<ChartTempAnualComp> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
                             '${_calcPercent(int.parse(item)).abs().toStringAsFixed(0)}%',

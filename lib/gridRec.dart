@@ -232,45 +232,11 @@ class _GridRecState extends State<GridRec> {
         Container(
           child: Row(
             children: [
-              Container(
-                //ANO
-                height: 45,
-                margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
-                decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: new BorderRadius.circular(5)),
-                padding: EdgeInsets.fromLTRB(14, 0, 0, 4),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton<String>(
-                    value: dropdownValueR,
-                    elevation: 8,
-                    dropdownColor: Colors.grey[300],
-                    style: TextStyle(color: Colors.black87),
-                    onChanged: (String newValue) {
-                      setState(() {
-                        dropdownValueR = newValue;
-                        orgaoCod = '0';
-                        orgaoR = 'TODOS OS ÓRGÃOS';
-                        _getData();
-                      });
-                    },
-                    items: anosR.map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
-                          style: TextStyle(fontSize: 14),
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                ),
-              ),
               Expanded(
                 //ORGAOS
                 child: Container(
                   height: 45,
-                  margin: EdgeInsets.fromLTRB(0, 10, 10, 5),
+                  margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
                   decoration: BoxDecoration(
                       color: Colors.grey[300],
                       borderRadius: new BorderRadius.circular(5)),
@@ -302,6 +268,40 @@ class _GridRecState extends State<GridRec> {
                         );
                       }).toList(),
                     ),
+                  ),
+                ),
+              ),
+              Container(
+                //ANO
+                height: 45,
+                margin: EdgeInsets.fromLTRB(0, 10, 10, 5),
+                decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: new BorderRadius.circular(5)),
+                padding: EdgeInsets.fromLTRB(14, 0, 0, 4),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+                    value: dropdownValueR,
+                    elevation: 8,
+                    dropdownColor: Colors.grey[300],
+                    style: TextStyle(color: Colors.black87),
+                    onChanged: (String newValue) {
+                      setState(() {
+                        dropdownValueR = newValue;
+                        orgaoCod = '0';
+                        orgaoR = 'TODOS OS ÓRGÃOS';
+                        _getData();
+                      });
+                    },
+                    items: anosR.map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(
+                          value,
+                          style: TextStyle(fontSize: 14),
+                        ),
+                      );
+                    }).toList(),
                   ),
                 ),
               )

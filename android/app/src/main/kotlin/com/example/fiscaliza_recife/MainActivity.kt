@@ -1,4 +1,4 @@
-package com.example.fiscaliza_recife
+package br.com.fiscaliza_recife
 
 import io.flutter.embedding.android.FlutterActivity
 
