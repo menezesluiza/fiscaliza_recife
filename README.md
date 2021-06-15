@@ -7,7 +7,9 @@ Aplicativo em construção, com atualizações constantes.
 
 ## Demo:
 
-https://user-images.githubusercontent.com/48093105/119374444-f57eb880-bc8f-11eb-9085-ee5430597f7c.mp4
+
+https://user-images.githubusercontent.com/48093105/122121170-af85c200-ce01-11eb-810a-3bef3a8d7a2f.mp4
+
 
 
 ## Sobre:
