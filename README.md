@@ -3,7 +3,7 @@
 
 Este aplicativo tem como objetivo facilitar o acesso e entendimento do conteúdo das bases de **dados abertos** orçamentários da **Prefeitura do Recife**.
 
-O Fiscaliza Recife possui três abas para visualização dos dados: comparativo, receitas e despesas. Na primeira é mostrada uma visão temporal (anual ou mensal) das despesas e receitas. A aba despesas mostra o total de despesas da Prefeitura com visões geral, mensal, por função e modalidade de licitação, e a aba receitas exibe os dados gerais, mensais, por categoria e fonte de origem. Em ambos os casos é possível alternar escolher entre a visão total ou por órgão. 
+O Fiscaliza Recife possui três abas para visualização dos dados: comparativo, receitas e despesas. Na primeira é mostrada uma **visão temporal** (anual ou mensal) das despesas e receitas. A aba despesas mostra o total de **despesas** da Prefeitura com visões geral, mensal, por função e modalidade de licitação, e a aba **receitas** exibe os dados gerais, mensais, por categoria e fonte de origem. Em ambos os casos é possível alternar escolher entre a visão total ou por órgão. 
 
 ## Vídeo de Marketing:
 
@@ -17,11 +17,13 @@ https://user-images.githubusercontent.com/48093105/122121170-af85c200-ce01-11eb-
 
 ## Sobre:
 
-Esse aplicativo é desenvolvido em Flutter/Dart, com suporte (até o momento) para dispositivos Android, com backend rodando no Firebase. Para a geração dos gráficos, foi utilizada a library charts_flutter.
+Esse aplicativo é desenvolvido em **Flutter/Dart**, com suporte (até o momento) para dispositivos Android, com backend rodando no **Firebase**. Para a geração dos gráficos, foi utilizada a library **charts_flutter**.
 
 - [Documentação Flutter](https://flutter.dev/docs/)
 
-Todos os dados utilizados são fornecidos pela Prefeitura do Recife, pela iniciativa de dados abertos. Para inserção no aplicativo, eles foram manipulados utilizando os scripts presentes na pasta 'auxilares'.
+- [Documentação charts_flutter](https://pub.dev/packages/charts_flutter)
+
+Todos os dados utilizados são fornecidos pela Prefeitura do Recife, pela iniciativa de **Dados Abertos**. Para inserção no aplicativo, eles foram manipulados utilizando os scripts presentes na pasta 'auxilares'.
 
 - [Dados Abertos Recife](http://dados.recife.pe.gov.br/)
 
@@ -35,4 +37,4 @@ Todos os dados utilizados são fornecidos pela Prefeitura do Recife, pela inicia
 
 ### Desenvolvido por: 
 
-Desenvolvido por Luíza Menezes para a disciplina Fundamentos de Programação Aplicada (PPGIA/UFRPE)
+Desenvolvido por Luíza Menezes para a disciplina **Fundamentos de Programação Aplicada** (PPGIA/UFRPE)
