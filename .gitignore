@@ -48,3 +48,6 @@ app.*.map.json
 #Firebase
 /android/app/google-services.json
 /android/app/src/main/google-services.json
+
+#Key
+/android/key.properties
