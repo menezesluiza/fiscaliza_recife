@@ -1,5 +1,6 @@
-
 # Fiscaliza Recife
+
+![FR_quadrado](https://user-images.githubusercontent.com/48093105/122655468-b9246800-d128-11eb-8115-2e4ddf3f36bf.png)
 
 Este aplicativo tem como objetivo facilitar o acesso e entendimento do conteúdo das bases de **dados abertos** orçamentários da **Prefeitura do Recife**.
 
