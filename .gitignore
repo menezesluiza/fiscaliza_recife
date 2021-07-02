@@ -51,3 +51,4 @@ app.*.map.json
 
 #Key
 /android/key.properties
+fiscaliza_recife/android/app/upload-keystore.jks
