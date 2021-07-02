@@ -59,7 +59,7 @@ android {
 
     buildTypes {
         release {
-S            signingConfig signingConfigs.release
+            signingConfig signingConfigs.release
             
         }
     }
